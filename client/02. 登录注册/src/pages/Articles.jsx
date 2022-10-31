@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Interviews(props) {
+function Articles(props) {
     return (
         <div>
-            面试题
+            文章
         </div>
     );
 }
 
-export default Interviews;
+export default Articles;

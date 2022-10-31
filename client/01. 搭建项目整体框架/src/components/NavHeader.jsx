@@ -13,7 +13,7 @@ function PageHeader() {
             <nav className="navContainer">
                 <NavLink to="/" className="navgation">问答</NavLink>
                 <NavLink to="/books" className="navgation">书籍</NavLink>
-                <NavLink to="/interviews" className="navgation">文章</NavLink>
+                <NavLink to="/articles" className="navgation">文章</NavLink>
                 <a
                     href="https://time.geekbang.org/"
                     className="navgation"
