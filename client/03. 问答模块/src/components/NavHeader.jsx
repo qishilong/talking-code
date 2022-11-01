@@ -14,9 +14,9 @@ function PageHeader(props) {
             <nav className="navContainer">
                 <NavLink to="/" className="navgation">问答</NavLink>
                 <NavLink to="/books" className="navgation">书籍</NavLink>
-                <NavLink to="/interviews" className="navgation">面试题</NavLink>
+                <NavLink to="/articles" className="navgation">文章</NavLink>
                 <a
-                    href="https://duyi.ke.qq.com/"
+                    href="https://time.geekbang.org/"
                     className="navgation"
                     target="_blank"
                     rel="noreferrer"
@@ -43,7 +43,7 @@ function PageHeader(props) {
             {/* 登录按钮 */}
             <div className="loginBtnContainer">
                 {/* 自定义头像组件 */}
-                <LoginAvatar loginHandle={props.loginHandle}/>
+                <LoginAvatar loginHandle={props.loginHandle} />
             </div>
         </div>
     );
