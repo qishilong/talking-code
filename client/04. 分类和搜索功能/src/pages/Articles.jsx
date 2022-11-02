@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Interviews(props) {
+function Articles(props) {
     return (
         <div>
             面试题
@@ -8,4 +8,4 @@ function Interviews(props) {
     );
 }
 
-export default Interviews;
+export default Articles;

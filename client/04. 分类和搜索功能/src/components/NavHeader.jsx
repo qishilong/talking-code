@@ -1,19 +1,19 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { NavLink } from "react-router-dom";
 import { Input, Select } from "antd";
 import LoginAvatar from "../components/LoginAvatar";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function PageHeader(props) {
 
     const navigate = useNavigate();
     const [searchOption, setSearchOption] = useState("issue");
 
-    function onSearch(value){
-        if(value){
+    function onSearch(value) {
+        if (value) {
             // 搜索框有内容，需要进行搜索操作
             navigate("/searchPage", {
-                state : {
+                state: {
                     value,
                     searchOption
                 }
@@ -24,7 +24,7 @@ function PageHeader(props) {
         }
     }
 
-    function onChange(val){
+    function onChange(val) {
         setSearchOption(val);
     }
 
@@ -38,9 +38,9 @@ function PageHeader(props) {
             <nav className="navContainer">
                 <NavLink to="/" className="navgation">问答</NavLink>
                 <NavLink to="/books" className="navgation">书籍</NavLink>
-                <NavLink to="/interviews" className="navgation">面试题</NavLink>
+                <NavLink to="/articles" className="navgation">文章</NavLink>
                 <a
-                    href="https://duyi.ke.qq.com/"
+                    href="https://time.geekbang.org/"
                     className="navgation"
                     target="_blank"
                     rel="noreferrer"
@@ -68,7 +68,7 @@ function PageHeader(props) {
             {/* 登录按钮 */}
             <div className="loginBtnContainer">
                 {/* 自定义头像组件 */}
-                <LoginAvatar loginHandle={props.loginHandle}/>
+                <LoginAvatar loginHandle={props.loginHandle} />
             </div>
         </div>
     );
