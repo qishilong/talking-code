@@ -28,7 +28,7 @@
   width: 100%;
   height: 40px;
   /* outline: 1px solid red; */
-  background: url("../../public/logo1.png");
+  background: url("../../public/talkingcode.png");
   background-size: contain;
   background-position: center;
   transform: scale(1.3);
@@ -97,11 +97,11 @@
 }
 
 
-.paginationContainer{
+.paginationContainer {
   width: 100%;
   height: 80px;
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   /* outline: 1px solid blue; */
 }

@@ -3,10 +3,10 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // 引入页面
 import Issues from '../pages/Issues';
 import Books from '../pages/Books';
-import Interviews from '../pages/Interviews';
 import AddIssue from "../pages/AddIssue";
 import IssueDetail from "../pages/IssueDetail";
 import SearchPage from "../pages/SearchPage";
+import Articles from '../pages/Articles';
 
 function RouteConfig() {
     return (
@@ -15,7 +15,7 @@ function RouteConfig() {
             <Route path="/issues/:id" element={<IssueDetail />} />
             <Route path="/addIssue" element={<AddIssue />} />
             <Route path="/books" element={<Books />} />
-            <Route path="/interviews" element={<Interviews />} />
+            <Route path="/articles" element={<Articles />} />
             <Route path="/searchPage" element={<SearchPage />} />
             <Route path="/" element={<Navigate replace to="/issues" />} />
         </Routes>

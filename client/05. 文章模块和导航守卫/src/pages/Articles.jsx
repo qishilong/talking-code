@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { getInterviewTitleAsync } from "../redux/interviewSlice";
+import { getArticleTitleAsync } from "../redux/articleSlice";
 import { getTypeList } from "../redux/typeSlice";
 import PageHeader from "../components/PageHeader";
 import { Tree, BackTop } from "antd";
-import { getInterviewById } from "../api/interview"
+import { getArticleById } from "../api/article"
 
-import styles from "../css/Interview.module.css"
+import styles from "../css/Article.module.css"
 
-function Interviews(props) {
-    const { interviewTitleList } = useSelector(state => state.interview);
+function Articles(props) {
+    const { articleTitleList } = useSelector(state => state.article);
     const { typeList } = useSelector(state => state.type);
     const dispatch = useDispatch();
     const [treeData, setTreeData] = useState([]);
     // 该状态用于存储 id 对应的面试题内容
-    const [interviewInfo, setInterviewInfo] = useState(null);
+    const [articleInfo, setArticleInfo] = useState(null);
 
     useEffect(() => {
         // 每个分类下面的面试题标题
-        if (!interviewTitleList.length) {
+        if (!articleTitleList.length) {
             // 初始化仓库里面的面试题标题
-            dispatch(getInterviewTitleAsync());
+            dispatch(getArticleTitleAsync());
         }
         // 分类名
         if (!typeList.length) {
             dispatch(getTypeList());
         }
         // 上面两个面试题准备好之后，就可以开始组装 tree 组件所需的 data 数组了
-        if (typeList.length && interviewTitleList.length) {
+        if (typeList.length && articleTitleList.length) {
             const arr = []; // 最终组装的数据会放入到该数组中
             // 添加分类标题
             for (let i = 0; i < typeList.length; i++) {
@@ -39,12 +39,12 @@ function Interviews(props) {
                 })
             }
             // 每一个分类下面的面试题标题
-            for (let i = 0; i < interviewTitleList.length; i++) {
+            for (let i = 0; i < articleTitleList.length; i++) {
                 const childArr = [];
-                for (let j = 0; j < interviewTitleList[i].length; j++) {
+                for (let j = 0; j < articleTitleList[i].length; j++) {
                     childArr.push({
-                        title: (<h4 style={{ fontWeight: '200' }} onClick={() => clickHandle(interviewTitleList[i][j]._id)}>
-                            {interviewTitleList[i][j].interviewTitle}
+                        title: (<h4 style={{ fontWeight: '200' }} onClick={() => clickHandle(articleTitleList[i][j]._id)}>
+                            {articleTitleList[i][j].articleTitle}
                         </h4>),
                         key: `${i}-${j}`
                     })
@@ -53,27 +53,27 @@ function Interviews(props) {
             }
             setTreeData(arr);
         }
-    }, [typeList, interviewTitleList])
+    }, [typeList, articleTitleList])
 
     async function clickHandle(id) {
-        const { data } = await getInterviewById(id);
-        setInterviewInfo(data);
+        const { data } = await getArticleById(id);
+        setArticleInfo(data);
     }
 
 
-    let interviewRightSide = null;
-    if (interviewInfo) {
+    let articleRightSide = null;
+    if (articleInfo) {
         // 赋值为面试题的内容
-        interviewRightSide = (
+        articleRightSide = (
             <div className={styles.content}>
-                <h1 className={styles.interviewRightTitle}>{interviewInfo?.interviewTitle}</h1>
+                <h1 className={styles.articleRightTitle}>{articleInfo?.articleTitle}</h1>
                 <div className={styles.contentContainer}>
-                    <div dangerouslySetInnerHTML={{ __html: interviewInfo?.interviewContent }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: articleInfo?.articleContent }}></div>
                 </div>
             </div>
         );
     } else {
-        interviewRightSide = (
+        articleRightSide = (
             <div style={{
                 textAlign: "center",
                 fontSize: "40px",
@@ -89,14 +89,14 @@ function Interviews(props) {
     return (
         <div className={styles.container}>
             <PageHeader title="面试题大全" />
-            <div className={styles.interviewContainer}>
+            <div className={styles.articleContainer}>
                 <div className={styles.leftSide}>
                     <Tree
                         treeData={treeData}
                     />
                 </div>
                 <div className={styles.rightSide}>
-                    {interviewRightSide}
+                    {articleRightSide}
                 </div>
             </div>
             <BackTop />
@@ -104,4 +104,4 @@ function Interviews(props) {
     );
 }
 
-export default Interviews;
+export default Articles;

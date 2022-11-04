@@ -1,12 +1,11 @@
-
-.interviewContainer{
+.articleContainer {
     /* outline:1px solid red; */
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     min-height: 800px;
 }
 
-.leftSide{
+.leftSide {
     width: 22%;
     height: 550px;
     overflow-y: auto;
@@ -19,12 +18,12 @@
     top: 80px;
 }
 
-.rightSide{
+.rightSide {
     width: 78%;
     /* outline:1px solid blue; */
 }
 
-.rightSide img{
+.rightSide img {
     max-width: 90%;
 }
 
@@ -50,23 +49,23 @@
     text-align: center;
 }
 
-.interviewLeftTitle{
+.articleLeftTitle {
     font-size: 16px;
     font-weight: 300;
 }
 
-.interviewRightTitle{
+.articleRightTitle {
     text-align: center;
     margin: 20px;
     font-size: 28px;
     font-weight: 300;
 }
 
-.contentContainer{
+.contentContainer {
     padding: 20px;
 }
 
-.content{
+.content {
     font-weight: 200;
     font-size: 16px;
 }

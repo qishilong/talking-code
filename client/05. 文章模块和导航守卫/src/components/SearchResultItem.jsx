@@ -1,5 +1,5 @@
 import React from 'react';
-import IssueItem from "../components/IssueItem";
+import IssueItem from "./IssueItem";
 
 /**
  * 存储搜索结果的项目
