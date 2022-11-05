@@ -3,9 +3,9 @@ import request from "./request";
 /**
  * 获取所有分类的面试题标题
  */
-export function getInterviewTitle() {
+export function getArticleTitle() {
   return request({
-    url: "/api/interview/interviewTitle",
+    url: "/api/article/articleTitle",
     method: "GET",
   });
 }
@@ -13,9 +13,9 @@ export function getInterviewTitle() {
 /**
  * 根据面试题 id 获取面试题
  */
-export function getInterviewById(interviewId) {
+export function getArticleById(articleId) {
   return request({
-    url: `/api/interview/${interviewId}`,
+    url: `/api/article/${articleId}`,
     method: "GET",
   });
 }
