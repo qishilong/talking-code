@@ -49,16 +49,13 @@ function NavHeader(props) {
                 {/* <NavLink to="/jobs" className="navgation">
             招聘
           </NavLink> */}
-                <NavLink to="/interviews" className="navgation">
-                    面试题
-                </NavLink>
+                <NavLink to="/articles" className="navgation">文章</NavLink>
                 <a
-                    href="https://duyi.ke.qq.com/"
-                    target="_blank"
+                    href="https://time.geekbang.org/"
                     className="navgation"
-                >
-                    视频教程
-                </a>
+                    target="_blank"
+                    rel="noreferrer"
+                >视频教程</a>
             </nav>
             {/* 搜索框 */}
             <div className="searchContainer">

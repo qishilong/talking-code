@@ -18,7 +18,7 @@ function Issue(props) {
     const [pageInfo, setPageInfo] = useState({
         current: 1,
         pageSize: 15,
-        total:0
+        total: 0
     });
 
     const { issueTypeId } = useSelector(state => state.type);
@@ -80,9 +80,9 @@ function Issue(props) {
                     {
                         issueInfo.length > 0 ? (
                             <div className="paginationContainer">
-                                <Pagination showQuickJumper defaultCurrent={1} {...pageInfo} onChange={handlePageChange}/>
+                                <Pagination showQuickJumper defaultCurrent={1} {...pageInfo} onChange={handlePageChange} />
                             </div>
-                        ) : (<div className={styles.noIssue}>有问题，就来 coder station！</div>)
+                        ) : (<div className={styles.noIssue}>有问题，就来 talking code！</div>)
                     }
 
                 </div>

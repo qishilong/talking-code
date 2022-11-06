@@ -2,45 +2,54 @@ import React from 'react';
 
 function PageFooter(props) {
     return (
-        <>
+        <div>
             <p className="links">
                 <span className="linkItem">友情链接：</span>
                 <a
-                    href="https://duyi.ke.qq.com/"
+                    href="https://time.geekbang.org/"
                     target="_blank"
                     rel="noreferrer"
                     className="linkItem"
                 >
-                    渡一教育-腾讯课堂
+                    极客时间
                 </a>
                 <a
-                    href="http://www.yuanjin.tech/"
+                    href="https://ke.qq.com/"
                     target="_blank"
                     rel="noreferrer"
                     className="linkItem"
                 >
-                    袁进的博客
+                    腾讯课堂
                 </a>
                 <a
-                    href="http://yanhongzhi.com/"
+                    href="https://juejin.cn/"
                     target="_blank"
                     rel="noreferrer"
                     className="linkItem"
                 >
-                    Mr.Yan
+                    掘金
                 </a>
                 <a
-                    href="https://blog.csdn.net/jackfrued"
+                    href="https://www.cnblogs.com/"
                     target="_blank"
                     rel="noreferrer"
                     className="linkItem"
                 >
-                    骆昊的技术专栏
+                    博客园
+                </a>
+                <a
+                    href="https://segmentfault.com/blogs"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="linkItem"
+                >
+                    思否
                 </a>
             </p>
-            <p>© 2022 - Coder Station</p>
-            <p>Powered by Create React App</p>
-        </>
+            <p>Talking Code</p>
+            <a href="https://beian.miit.gov.cn/" target="_blank">`备案号 `</a>
+            <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2023002610号</a>
+        </div>
     );
 }
 

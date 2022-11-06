@@ -80,7 +80,7 @@ function Articles(props) {
                 fontWeight: "100",
                 marginTop: "150px"
             }}>
-                请在左侧选择面试题
+                请在左侧选择文章
             </div>
         )
     }
@@ -88,7 +88,7 @@ function Articles(props) {
 
     return (
         <div className={styles.container}>
-            <PageHeader title="面试题大全" />
+            <PageHeader title="文章大全" />
             <div className={styles.articleContainer}>
                 <div className={styles.leftSide}>
                     <Tree

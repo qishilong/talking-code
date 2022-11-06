@@ -88,7 +88,7 @@ function Issues(props) {
                                 />
                             </div>
                         ) : (
-                            <div className={styles.noIssue}>有问题，就来 coder station！</div>
+                            <div className={styles.noIssue}>有问题，就来 talking code！</div>
                         )
                     }
 

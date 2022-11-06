@@ -2,51 +2,51 @@ import React from 'react';
 import { Tree, BackTop } from "antd"
 
 import { useSelector, useDispatch } from 'react-redux'
-import { getInterviewTitleList } from "../redux/interviewSlice"
+import { getArticleTitleList } from "../redux/articleSlice"
 import { getTypeList } from "../redux/typeSlice"
 import { useState, useEffect } from "react"
-import { getInterviewById } from "../api/interview"
+import { getArticleById } from "../api/article"
 
 import PageHeader from "../components/PageHeader"
 
-import styles from "../css/Interview.module.css"
+import styles from "../css/Article.module.css"
 
-function Interviews(props) {
+function Articles(props) {
 
     const dispatch = useDispatch();
     const { typeList } = useSelector(state => state.type);
-    const { interviewTitleList } = useSelector(state => state.interview);
+    const { articleTitleList } = useSelector(state => state.article);
     const [treeData, setTreeData] = useState([]);
-    const [interviewInfo, setInterviewInfo] = useState(null);
+    const [articleInfo, setArticleInfo] = useState(null);
 
     useEffect(() => {
-        if (!interviewTitleList.length) {
-            dispatch(getInterviewTitleList());
+        if (!articleTitleList.length) {
+            dispatch(getArticleTitleList());
         }
         if (!typeList.length) {
             dispatch(getTypeList())
         }
-        if (typeList.length && interviewTitleList.length) {
+        if (typeList.length && articleTitleList.length) {
             // 开始组装 treeData
             const arr = [];
             for (let i = 0; i < typeList.length; i++) {
                 arr.push({
                     title: (<h3 style={{
-                        fontWeight:"200"
+                        fontWeight: "200"
                     }}>{typeList[i].typeName}</h3>),
                     key: i
                 })
             }
-            for (let i = 0; i < interviewTitleList.length; i++) {
+            for (let i = 0; i < articleTitleList.length; i++) {
                 const childrenArr = [];
-                for (let j = 0; j < interviewTitleList[i].length; j++) {
+                for (let j = 0; j < articleTitleList[i].length; j++) {
                     childrenArr.push({
-                        title: (<h4 
-                            onClick={() => clickHandle(interviewTitleList[i][j]._id)}
+                        title: (<h4
+                            onClick={() => clickHandle(articleTitleList[i][j]._id)}
                             style={{
-                                fontWeight:"200"
+                                fontWeight: "200"
                             }}
-                            >{interviewTitleList[i][j].interviewTitle}</h4>),
+                        >{articleTitleList[i][j].articleTitle}</h4>),
                         key: `${i}-${j}`,
                     })
                 }
@@ -54,52 +54,52 @@ function Interviews(props) {
             }
             setTreeData(arr);
         }
-    }, [typeList, interviewTitleList])
+    }, [typeList, articleTitleList])
 
-    async function clickHandle(interviewId) {
-        const { data } = await getInterviewById(interviewId);
-        setInterviewInfo(data);
+    async function clickHandle(articleId) {
+        const { data } = await getArticleById(articleId);
+        setArticleInfo(data);
     }
 
-    let interviewRightSide = null;
-    if (interviewInfo) {
-        interviewRightSide = (
+    let articleRightSide = null;
+    if (articleInfo) {
+        articleRightSide = (
             <div className={styles.content}>
-                <h1 className={styles.interviewRightTitle}>{interviewInfo?.interviewTitle}</h1>
+                <h1 className={styles.articleRightTitle}>{articleInfo?.articleTitle}</h1>
                 <div className={styles.contentContainer}>
-                    <div dangerouslySetInnerHTML={{ __html: interviewInfo?.interviewContent }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: articleInfo?.articleContent }}></div>
                 </div>
             </div>
         );
     } else {
-        interviewRightSide = (
+        articleRightSide = (
             <div style={{
                 textAlign: "center",
                 fontSize: "40px",
                 fontWeight: "100",
                 marginTop: "150px"
             }}>
-                请在左侧选择面试题
+                请在左侧选择文章
             </div>
         )
     }
 
     return (
         <div className={styles.container}>
-            <PageHeader title="面试题大全" />
-            <div className={styles.interviewContainer}>
+            <PageHeader title="文章大全" />
+            <div className={styles.articleContainer}>
                 <div className={styles.leftSide}>
                     <Tree
                         treeData={treeData}
                     />
                 </div>
                 <div className={styles.rightSide}>
-                    {interviewRightSide}
+                    {articleRightSide}
                 </div>
             </div>
-            <BackTop/>
+            <BackTop />
         </div>
     );
 }
 
-export default Interviews;
+export default Articles;
