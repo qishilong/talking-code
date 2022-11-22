@@ -7,95 +7,112 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: {
-    title: 'coder station',
+    title: 'talking code',
   },
-  dva: {}, // 打开 dva 插件
+  dva: {},  // 使用 dva 插件
   routes: [
     {
       path: '/',
       redirect: '/home',
+      access: "NormalAdmin"
     },
     {
       name: '首页',
       path: '/home',
       component: './Home',
-      icon: "HomeOutlined"
+      icon: "HomeOutlined",
+      access: "NormalAdmin"
     },
     {
       name: "管理员",
       path: "/admin",
       icon: 'UserOutlined',
+      access: "SuperAdmin",
       routes: [{
         path: "adminList",
         name: "管理员列表",
         component: './Admin',
+        access: "SuperAdmin",
       }, {
         path: "addAdmin",
         name: "添加管理员",
         component: './Admin/addAdmin',
+        access: "SuperAdmin",
       }]
     },
     {
       name: "用户",
       path: "/user",
       icon: 'TeamOutlined',
+      access: "NormalAdmin",
       routes: [{
         path: "userList",
         name: "用户列表",
         component: './User',
+        access: "NormalAdmin"
       }, {
         path: "addUser",
         name: "添加用户",
         component: './User/addUser',
+        access: "NormalAdmin"
       }, {
         path: "editUser/:id",
         name: "编辑用户",
         component: './User/editUser',
-        hideInMenu: true
+        hideInMenu: true,
+        access: "NormalAdmin"
       }]
     },
     {
       name: "书籍",
       path: "/book",
       icon: 'ReadOutlined',
+      access: "NormalAdmin",
       routes: [{
         path: "bookList",
         name: "书籍列表",
         component: './Book',
+        access: "NormalAdmin"
       }, {
         path: "addBook",
         name: "添加书籍",
         component: './Book/addBook',
+        access: "NormalAdmin"
       }, {
         path: "editBook/:id",
         name: "编辑书籍",
         component: './Book/editBook',
-        hideInMenu: true
+        hideInMenu: true,
+        access: "NormalAdmin"
       }]
     },
     {
       name: "文章",
       path: "/article",
       icon: 'EditOutlined',
-      component: './Article'
+      component: './Article',
+      access: "NormalAdmin"
     },
     {
       name: "问答",
       path: "/issue",
       icon: 'ProfileOutlined',
-      component: './Issue'
+      component: './Issue',
+      access: "NormalAdmin"
     },
     {
       name: "评论",
       path: "/comment",
       icon: 'CalendarOutlined',
-      component: './Comment'
+      component: './Comment',
+      access: "NormalAdmin"
     },
     {
       name: "类型",
       path: "/type",
       component: './Type',
       icon: 'AppstoreOutlined',
+      access: "NormalAdmin"
     },
     {
       path: "/login",
