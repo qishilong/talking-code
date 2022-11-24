@@ -1,3 +1,8 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "typescript.tsserver.maxTsServerMemory": 8192,
+    "search.followSymlinks": false,
+    "cSpell.words": [
+        "antd"
+    ]
 }

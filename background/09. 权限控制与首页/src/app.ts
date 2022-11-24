@@ -45,7 +45,7 @@ export async function getInitialState() {
 
 export const layout = () => {
   return {
-    logo: 'https://qiniucloud.qishilong.space/images/202308251726769.png',
+    logo: 'https://qiniucloud.qishilong.space/images/202308261146613.png',
     menu: {
       locale: false,
     },
