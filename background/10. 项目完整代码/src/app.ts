@@ -15,7 +15,7 @@ export async function getInitialState() {
       if (result.data) {
         // 不仅有 token，而且 token 是有效的
         // 不允许你去 login
-        message.warning('请先退出后在登录');
+        message.warning('请先退出后再登录');
         history.go(-1);
       }
     }

@@ -7,7 +7,7 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: {
-    title: 'coder station',
+    title: 'talking code',
   },
   dva: {}, // 打开 dva 插件
   routes: [
