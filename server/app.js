@@ -18,7 +18,7 @@ const adminRouter = require("./routes/admin");
 const captchaRouter = require("./routes/captcha");
 const userRouter = require("./routes/user");
 const typeRouter = require("./routes/type");
-const interviewRouter = require("./routes/interview");
+const articleRouter = require("./routes/article");
 const commentRouter = require("./routes/comment");
 const uploadRouter = require("./routes/upload");
 
@@ -47,7 +47,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/type", typeRouter);
 app.use("/api/comment", commentRouter);
-app.use("/api/interview", interviewRouter);
+app.use("/api/article", articleRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/res/captcha", captchaRouter);
 

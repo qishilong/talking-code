@@ -119,7 +119,7 @@ exports.bookRule = {
     },
     type: "string",
   },
-  requirePoints:{
+  requirePoints: {
     presence: {
       allowEmpty: false,
     },
@@ -208,14 +208,14 @@ exports.issueRule = {
 /**
  * 面试题规则
  */
-exports.interviewRule = {
-  interviewTitle: {
+exports.articleRule = {
+  articleTitle: {
     presence: {
       allowEmpty: false,
     },
     type: "string",
   },
-  interviewContent: {
+  articleContent: {
     presence: {
       allowEmpty: false,
     },

@@ -6,13 +6,13 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  findInterviewByPageService,
-  findInterviewTitleByTypeService,
-  findInterviewByIdService,
-  addInterviewService,
-  deleteInterviewService,
-  updateInterviewService,
-} = require("../services/interviewService");
+  findArticleByPageService,
+  findArticleTitleByTypeService,
+  findArticleByIdService,
+  addArticleService,
+  deleteArticleService,
+  updateArticleService,
+} = require("../services/articleService");
 
 const { formatResponse } = require("../utils/tools");
 
@@ -20,15 +20,15 @@ const { formatResponse } = require("../utils/tools");
  * 根据分页获取面试题
  */
 router.get("/", async function (req, res) {
-  const result = await findInterviewByPageService(req.query);
+  const result = await findArticleByPageService(req.query);
   res.send(formatResponse(0, "", result));
 });
 
 /**
  * 获取所有分类的面试题标题
  */
-router.get("/interviewTitle", async function (req, res) {
-  const result = await findInterviewTitleByTypeService();
+router.get("/articleTitle", async function (req, res) {
+  const result = await findArticleTitleByTypeService();
   res.send(formatResponse(0, "", result));
 });
 
@@ -39,7 +39,7 @@ router.get("/interviewTitle", async function (req, res) {
  * 根据 id 获取面试题
  */
 router.get("/:id", async function (req, res) {
-  const result = await findInterviewByIdService(req.params.id);
+  const result = await findArticleByIdService(req.params.id);
   res.send(formatResponse(0, "", result));
 });
 
@@ -47,7 +47,7 @@ router.get("/:id", async function (req, res) {
  * 新增面试题
  */
 router.post("/", async function (req, res, next) {
-  const result = await addInterviewService(req.body);
+  const result = await addArticleService(req.body);
   if (result && result._id) {
     res.send(formatResponse(0, "", result));
   } else {
@@ -59,7 +59,7 @@ router.post("/", async function (req, res, next) {
  * 删除面试题
  */
 router.delete("/:id", async function (req, res) {
-  const result = await deleteInterviewService(req.params.id);
+  const result = await deleteArticleService(req.params.id);
   res.send(formatResponse(0, "", result));
 });
 
@@ -67,7 +67,7 @@ router.delete("/:id", async function (req, res) {
  * 修改面试题
  */
 router.patch("/:id", async function (req, res) {
-  const result = await updateInterviewService(req.params.id, req.body);
+  const result = await updateArticleService(req.params.id, req.body);
   res.send(formatResponse(0, "", result));
 });
 
