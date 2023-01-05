@@ -206,7 +206,7 @@ exports.issueRule = {
 };
 
 /**
- * 面试题规则
+ * 文章规则
  */
 exports.articleRule = {
   articleTitle: {

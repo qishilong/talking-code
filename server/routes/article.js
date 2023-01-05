@@ -1,5 +1,5 @@
 /**
- * 面试题模块对应二级路由
+ * 文章模块对应二级路由
  */
 
 const express = require("express");
@@ -17,7 +17,7 @@ const {
 const { formatResponse } = require("../utils/tools");
 
 /**
- * 根据分页获取面试题
+ * 根据分页获取文章
  */
 router.get("/", async function (req, res) {
   const result = await findArticleByPageService(req.query);
@@ -25,7 +25,7 @@ router.get("/", async function (req, res) {
 });
 
 /**
- * 获取所有分类的面试题标题
+ * 获取所有分类的文章标题
  */
 router.get("/articleTitle", async function (req, res) {
   const result = await findArticleTitleByTypeService();
@@ -36,7 +36,7 @@ router.get("/articleTitle", async function (req, res) {
 
 
 /**
- * 根据 id 获取面试题
+ * 根据 id 获取文章
  */
 router.get("/:id", async function (req, res) {
   const result = await findArticleByIdService(req.params.id);
@@ -44,7 +44,7 @@ router.get("/:id", async function (req, res) {
 });
 
 /**
- * 新增面试题
+ * 新增文章
  */
 router.post("/", async function (req, res, next) {
   const result = await addArticleService(req.body);
@@ -56,7 +56,7 @@ router.post("/", async function (req, res, next) {
 });
 
 /**
- * 删除面试题
+ * 删除文章
  */
 router.delete("/:id", async function (req, res) {
   const result = await deleteArticleService(req.params.id);
@@ -64,7 +64,7 @@ router.delete("/:id", async function (req, res) {
 });
 
 /**
- * 修改面试题
+ * 修改文章
  */
 router.patch("/:id", async function (req, res) {
   const result = await updateArticleService(req.params.id, req.body);

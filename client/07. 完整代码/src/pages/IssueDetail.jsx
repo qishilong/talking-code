@@ -18,9 +18,9 @@ function IssueDetail(props) {
 
     const [issueInfo, setIssueInfo] = useState(null);
     const [issueUser, setIssueUserName] = useState(null);
-    
 
-    // 根据传递过来的 id 获取面试题详情
+
+    // 根据传递过来的 id 获取文章详情
     useEffect(() => {
         async function fetchData() {
             // 根据问答 id 获取该问答具体的信息
@@ -30,10 +30,10 @@ function IssueDetail(props) {
             // 获取 userId 对应的用户
             const result = await getUserById(data.userId);
             setIssueUserName(result.data);
-            
+
             // 该问答的浏览数 +1
-            updateIssue(data._id,{
-                scanNumber : ++data.scanNumber
+            updateIssue(data._id, {
+                scanNumber: ++data.scanNumber
             })
         }
         fetchData();
@@ -57,7 +57,7 @@ function IssueDetail(props) {
                         </div>
                     </div>
                     {/* 下方评论模块 */}
-                    <Discuss 
+                    <Discuss
                         issueInfo={issueInfo}
                         commentType={1}
                         targetId={issueInfo?._id}

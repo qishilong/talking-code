@@ -68,7 +68,7 @@ function ArticleForm({
       ref={formRef}
       onFinish={addHandle}
     >
-      {/* 面试题标题 */}
+      {/* 文章标题 */}
       <Form.Item
         label="文章标题"
         name="articleTitle"
@@ -81,7 +81,7 @@ function ArticleForm({
         />
       </Form.Item>
 
-      {/* 面试题所属分类 */}
+      {/* 文章所属分类 */}
       <Form.Item
         label="文章分类"
         name="typeId"
@@ -92,7 +92,7 @@ function ArticleForm({
         </Select>
       </Form.Item>
 
-      {/* 面试题解答 */}
+      {/* 文章解答 */}
       <Form.Item
         label="文章内容"
         name="articleContent"

@@ -3,7 +3,7 @@ const articleModel = require("../models/articleModel");
 const { findAllTypeDao } = require("./typeDao");
 
 /**
- * 分页查找面试题
+ * 分页查找文章
  */
 module.exports.findArticleByPageDao = async function (queryObj) {
   const pageObj = {
@@ -33,7 +33,7 @@ module.exports.findArticleByPageDao = async function (queryObj) {
 };
 
 /**
- * 获取所有分类的面试题标题
+ * 获取所有分类的文章标题
  */
 module.exports.findArticleTitleByTypeDao = async function () {
   // 1. 获取所有分类
@@ -41,7 +41,7 @@ module.exports.findArticleTitleByTypeDao = async function () {
 
   const articleTitleData = [];
   for (let i = 0; i < typeData.length; i++) {
-    // 查询对应 typeId 的面试题，只需要题目即可
+    // 查询对应 typeId 的文章，只需要题目即可
     // 因此后面添加了 { articleTitle: 1 }
     const data = await articleModel.find(
       {
@@ -55,7 +55,7 @@ module.exports.findArticleTitleByTypeDao = async function () {
 };
 
 /**
- * 根据 id 返回面试题
+ * 根据 id 返回文章
  */
 module.exports.findArticleByIdDao = async function (id) {
   return articleModel.findOne({
@@ -64,14 +64,14 @@ module.exports.findArticleByIdDao = async function (id) {
 };
 
 /**
- * 新增面试题
+ * 新增文章
  */
 module.exports.addArticleDao = async function (newArticleInfo) {
   return await articleModel.create(newArticleInfo);
 };
 
 /**
- * 根据 id 删除面试题
+ * 根据 id 删除文章
  */
 module.exports.deleteArticleDao = async function (id) {
   return articleModel.deleteOne({
@@ -80,7 +80,7 @@ module.exports.deleteArticleDao = async function (id) {
 };
 
 /**
- * 根据 id 修改面试题
+ * 根据 id 修改文章
  */
 module.exports.updateArticleDao = async function (id, newInfo) {
   return articleModel.updateOne({ _id: id }, newInfo);

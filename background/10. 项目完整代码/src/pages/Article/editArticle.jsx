@@ -12,7 +12,7 @@ function EditArticle() {
   const [articleInfo, setArticleInfo] = useState(null);
   const navigate = useNavigate();
 
-  // 根据传递过来的 id 获取面试题详情
+  // 根据传递过来的 id 获取文章详情
   useEffect(() => {
     async function fetchData() {
       // 根据问答 id 获取该问答具体的信息
@@ -23,7 +23,7 @@ function EditArticle() {
   }, []);
 
   /**
-   * 修改面试题
+   * 修改文章
    */
   function submitHandle(articleContent) {
     // 因为没有使用状态机，所以直接调用控制器方法，进行新增

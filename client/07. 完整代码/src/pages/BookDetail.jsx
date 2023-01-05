@@ -22,7 +22,7 @@ function BookDetail(props) {
 
     const dispatch = useDispatch();
 
-    // 根据传递过来的 id 获取面试题详情
+    // 根据传递过来的 id 获取文章详情
     useEffect(() => {
         async function fetchData() {
             // 根据问答 id 获取该问答具体的信息

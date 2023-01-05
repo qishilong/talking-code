@@ -13,20 +13,20 @@ function Articles(props) {
     const { typeList } = useSelector(state => state.type);
     const dispatch = useDispatch();
     const [treeData, setTreeData] = useState([]);
-    // 该状态用于存储 id 对应的面试题内容
+    // 该状态用于存储 id 对应的文章内容
     const [articleInfo, setArticleInfo] = useState(null);
 
     useEffect(() => {
-        // 每个分类下面的面试题标题
+        // 每个分类下面的文章标题
         if (!articleTitleList.length) {
-            // 初始化仓库里面的面试题标题
+            // 初始化仓库里面的文章标题
             dispatch(getArticleTitleAsync());
         }
         // 分类名
         if (!typeList.length) {
             dispatch(getTypeList());
         }
-        // 上面两个面试题准备好之后，就可以开始组装 tree 组件所需的 data 数组了
+        // 上面两个文章准备好之后，就可以开始组装 tree 组件所需的 data 数组了
         if (typeList.length && articleTitleList.length) {
             const arr = []; // 最终组装的数据会放入到该数组中
             // 添加分类标题
@@ -38,7 +38,7 @@ function Articles(props) {
                     key: i
                 })
             }
-            // 每一个分类下面的面试题标题
+            // 每一个分类下面的文章标题
             for (let i = 0; i < articleTitleList.length; i++) {
                 const childArr = [];
                 for (let j = 0; j < articleTitleList[i].length; j++) {
@@ -63,7 +63,7 @@ function Articles(props) {
 
     let articleRightSide = null;
     if (articleInfo) {
-        // 赋值为面试题的内容
+        // 赋值为文章的内容
         articleRightSide = (
             <div className={styles.content}>
                 <h1 className={styles.articleRightTitle}>{articleInfo?.articleTitle}</h1>

@@ -12,28 +12,28 @@ const { articleRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
 
 /**
- * 按照分页查询面试题
+ * 按照分页查询文章
  */
 module.exports.findArticleByPageService = async function (queryObj) {
   return await findArticleByPageDao(queryObj);
 };
 
 /**
- * 获取所有分类的面试题标题
+ * 获取所有分类的文章标题
  */
 module.exports.findArticleTitleByTypeService = async function () {
   return await findArticleTitleByTypeDao();
 };
 
 /**
- * 根据 id 查找某一道面试题
+ * 根据 id 查找某一道文章
  */
 module.exports.findArticleByIdService = async function (id) {
   return await findArticleByIdDao(id);
 };
 
 /**
- * 新增面试题
+ * 新增文章
  */
 module.exports.addArticleService = async function (newArticleInfo) {
   // 首先进行同步的数据验证
@@ -50,7 +50,7 @@ module.exports.addArticleService = async function (newArticleInfo) {
 };
 
 /**
- * 删除面试题
+ * 删除文章
  */
 module.exports.deleteArticleService = async function (id) {
   // 接下来再删除该书籍
@@ -59,7 +59,7 @@ module.exports.deleteArticleService = async function (id) {
 
 
 /**
- * 修改面试题
+ * 修改文章
  */
 module.exports.updateArticleService = async function (id, newInfo) {
   return await updateArticleDao(id, newInfo);

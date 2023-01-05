@@ -1,7 +1,7 @@
 import request from "./request";
 
 /**
- * 获取所有分类的面试题标题
+ * 获取所有分类的文章标题
  */
 export function getArticleTitle() {
   return request({
@@ -11,7 +11,7 @@ export function getArticleTitle() {
 }
 
 /**
- * 根据面试题 id 获取面试题
+ * 根据文章 id 获取文章
  */
 export function getArticleById(articleId) {
   return request({
