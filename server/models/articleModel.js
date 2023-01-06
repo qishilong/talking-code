@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const articleSchema = new mongoose.Schema(
   {
     id: String, // mongodb 自动生成的 id
-    articleTitle: String, // 面试题标题
-    articleContent: String, // 面试题内容
+    articleTitle: String, // 文章标题
+    articleContent: String, // 文章内容
     onShelfDate: String, // 上架日期
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
