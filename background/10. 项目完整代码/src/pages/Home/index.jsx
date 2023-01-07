@@ -46,7 +46,7 @@ const HomePage = () => {
 
       draw() {
         ctx.beginPath();
-        ctx.fillStyle = '#abcbcd';
+        ctx.fillStyle = '#00aaffda';
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
         ctx.fill();
       }
