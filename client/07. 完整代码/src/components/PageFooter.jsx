@@ -47,8 +47,10 @@ function PageFooter(props) {
                 </a>
             </p>
             <p>Talking Code</p>
-            <a href="https://beian.miit.gov.cn/" target="_blank">`备案号 `</a>
-            <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2023002610号</a>
+            <p>
+                <a href="https://beian.miit.gov.cn/" target="_blank">备案号：</a>
+                <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2023002610号</a>
+            </p>
         </div>
     );
 }
