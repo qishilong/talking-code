@@ -80,7 +80,7 @@ function Login(props) {
                 config={{
                     pointColor: '255, 0, 0',
                     count: 66,
-                    follow: false,
+                    follow: true,
                 }}
                 style={{ zIndex: 1 }}
             />
