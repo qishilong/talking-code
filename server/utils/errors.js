@@ -16,6 +16,7 @@ class ServiceError extends Error {
   constructor(message, code) {
     super(message);
     this.code = code;
+    this.toResponseJSON();
   }
 
   // 方法

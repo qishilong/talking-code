@@ -151,7 +151,7 @@ module.exports.updateAdminService = async function (id, newInfo) {
  *
  * @param {*} loginId 管理员的登录账号
  */
- module.exports.adminIsExistService = async function (loginId) {
+module.exports.adminIsExistService = async function (loginId) {
   const data = await findAdminByLoginId(loginId);
   if (data.length) {
     return true;

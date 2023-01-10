@@ -39,17 +39,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(require('./middleware/token'))
 
 // 使用路由中间件
-app.use("/api/book", bookRouter);
-app.use("/api/issue", issueRouter);
-app.use("/api/admin", adminRouter);
-app.use("/api/user", userRouter);
-app.use("/api/type", typeRouter);
-app.use("/api/comment", commentRouter);
-app.use("/api/article", articleRouter);
-app.use("/api/upload", uploadRouter);
 app.use("/res/captcha", captchaRouter);
+app.use("/api/upload", uploadRouter);
+app.use("/api/type", typeRouter);
+app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
+app.use("/api/issue", issueRouter);
+app.use("/api/book", bookRouter);
+app.use("/api/article", articleRouter);
+app.use("/api/comment", commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

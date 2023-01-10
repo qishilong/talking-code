@@ -1,6 +1,7 @@
 // 运行时配置
 import AdminController from '@/services/admin';
 import { message } from 'antd';
+import type { RequestConfig } from 'umi';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
@@ -11,7 +12,6 @@ export async function getInitialState() {
     const token = localStorage.getItem('adminToken');
     if (token) {
       const result = await AdminController.getInfo();
-      console.log(result, 'result');
       if (result.data) {
         // 不仅有 token，而且 token 是有效的
         // 不允许你去 login
@@ -22,6 +22,7 @@ export async function getInitialState() {
   } else {
     // 强行要跳内部页面
     const result = await AdminController.getInfo();
+    console.log(location.pathname, result);
     if (result.data) {
       // 说明有 token，并且 token 有效
       // 获取该 id 对应的管理员信息
@@ -37,8 +38,8 @@ export async function getInitialState() {
       // token 验证失败，跳转至登录
       // 失效可能是因为 token 过期，也有可能是因为压根儿就没有 token，不管有没有，删除掉原有的
       localStorage.removeItem("adminToken");
-      location.href = "/login";
-      message.warning('登录过期，请重新登录');
+      Promise.resolve().then(() => message.warning('登录过期，请重新登录')).then(
+        () => location.href = "/login");
     }
   }
 }
@@ -59,7 +60,7 @@ export const layout = () => {
   };
 };
 
-export const request = {
+export const request: RequestConfig = {
   timeout: 3000,
   // 请求拦截器
   requestInterceptors: [
@@ -70,6 +71,6 @@ export const request = {
         options.headers['Authorization'] = 'Bearer ' + token;
       }
       return { url, options };
-    },
-  ],
+    }
+  ]
 };

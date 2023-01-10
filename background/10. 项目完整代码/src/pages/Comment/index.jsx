@@ -20,7 +20,7 @@ function Comment() {
   const actionRef = useRef();
 
   // 评论详情
-  const [commentInfo, setCommentInfo] = useState(null);
+  // const [commentInfo, setCommentInfo] = useState(null);
 
   // 评论类型
   const [commmentType, setCommentType] = useState(1);
@@ -38,6 +38,9 @@ function Comment() {
 
   // 存储评论对应的问答或者书籍标题
   const [titleArr, setTitleArr] = useState([]);
+
+  const [currentTitle, setCurrentTitle] = useState('');
+  const [currentContent, setCurrentContent] = useState('');
 
   useEffect(() => {
     // 如果类型列表为空，则初始化一次
@@ -146,7 +149,7 @@ function Comment() {
                 删除
               </Button>
             </Popconfirm>
-          </div>,
+          </div >,
         ];
       },
     },
@@ -156,7 +159,10 @@ function Comment() {
    * 打开修改对话框
    */
   function showModal(row) {
-    setCommentInfo(row);
+    const id = row.issueId ? row.issueId : row.bookId;
+    const title = titleArr.find((item) => item._id === id);
+    setCurrentTitle(commmentType === 1 ? title.issueTitle : title.bookTitle);
+    setCurrentContent(row.commentContent)
     setIsModalOpen(true);
   }
 
@@ -281,9 +287,15 @@ function Comment() {
         style={{ top: 50 }}
         footer={false}
       >
-        <h3>标题</h3>
-        <p>{/* {commmentType === 1 ? row.issueTitle : row.bookTitle} */}</p>
-      </Modal>
+        <h3>{'标题'}</h3>
+        <p>{currentTitle}</p>
+        <h3>{'内容'}</h3>
+        <div style={{
+          border: '1px solid #ccc',
+          padding: '10px',
+          borderRadius: '5px'
+        }} dangerouslySetInnerHTML={{ __html: currentContent }}></div>
+      </Modal >
     </>
   );
 }

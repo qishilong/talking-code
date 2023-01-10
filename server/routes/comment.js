@@ -47,7 +47,7 @@ router.get("/bookcomment/:id", async function (req, res) {
  * 新增评论
  */
 router.post("/", async function (req, res, next) {
-  
+
   const result = await addCommentService(req.body);
   if (result && result._id) {
     res.send(formatResponse(0, "", result));

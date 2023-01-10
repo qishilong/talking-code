@@ -1,49 +1,50 @@
+import { PageContainer } from '@ant-design/pro-components';
+import { useNavigate } from 'react-router-dom';
+import UserForm from './components/userForm';
 import { useState } from 'react';
-import { PageContainer } from "@ant-design/pro-components"
-import {message} from "antd";
-import UserForm from "./components/userForm";
-import { useNavigate } from "react-router-dom"
+import { message } from 'antd';
 
-import UserController from "@/services/user"
+// 请求方法
+import UserController from '@/services/user';
 
-function AddUser(props) {
+function AddUser() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const [newUserInfo, setNewUserInfo] = useState({
+    loginId: '',
+    loginPwd: '',
+    avatar: '',
+    nickname: '',
+    mail: '',
+    qq: '',
+    wechat: '',
+    intro: '',
+  });
 
-    // 该状态用于存储用户输入的新用户信息
-    const [newUserInfo, setNewUserInfo] = useState({
-        loginId: '',
-        loginPwd: '',
-        avatar: '',
-        nickname: '',
-        mail: '',
-        qq: '',
-        wechat: '',
-        intro: '',
-    })
+  /**
+   * 新增用户
+   */
+  function submitHandle() {
+    // 因为没有使用状态机，所以直接调用控制器方法，进行新增
+    UserController.addUser(newUserInfo);
 
-    /**
-     * 提交新增用户
-     */
-    function submitHandle(){
-        UserController.addUser(newUserInfo);
-        // 跳转回首页
-        navigate("/user/userList");
-        message.success("添加用户成功");
-    }
+    // 跳转回首页
+    navigate('/user/userList');
+    message.success('添加用户成功');
+  }
 
-    return (
-        <PageContainer>
-            <div className="container" style={{ width: "800px" }}>
-                <UserForm
-                    type="add"
-                    userInfo={newUserInfo}
-                    setUserInfo={setNewUserInfo}
-                    submitHandle={submitHandle}
-                />
-            </div>
-        </PageContainer>
-    );
+  return (
+    <PageContainer>
+      <div className="container" style={{ width: 800 }}>
+        <UserForm
+          type="add"
+          submitHandle={submitHandle}
+          userInfo={newUserInfo}
+          setUserInfo={setNewUserInfo}
+        />
+      </div>
+    </PageContainer>
+  );
 }
 
 export default AddUser;

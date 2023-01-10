@@ -79,33 +79,6 @@ function IssueDetail() {
           <h3>浏览数：{issueInfo?.scanNumber}</h3>
           <p></p>
           <h3>评论数：{issueInfo?.scanNumber}</h3>
-          <Card
-            size="small"
-            title="Small size card"
-            style={{
-              marginBottom: 10,
-            }}
-          >
-            <p>Card content</p>
-          </Card>
-          <Card
-            size="small"
-            title="Small size card"
-            style={{
-              marginBottom: 10,
-            }}
-          >
-            <p>Card content</p>
-          </Card>
-          <Card
-            size="small"
-            title="Small size card"
-            style={{
-              marginBottom: 10,
-            }}
-          >
-            <p>Card content</p>
-          </Card>
         </Card>
       </div>
     </PageContainer>

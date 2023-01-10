@@ -20,6 +20,7 @@ module.exports.analysisToken = function (token) {
     token.split(" ")[1],
     md5(process.env.JWT_SECRET),
     function (err, decode) {
+      console.log(decode, 11)
       return decode;
     }
   );

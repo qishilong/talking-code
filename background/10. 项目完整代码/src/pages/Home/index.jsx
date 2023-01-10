@@ -8,8 +8,9 @@ import { useRef, useEffect } from 'react'
 const HomePage = () => {
   const { name } = useModel('global');
   const ref = useRef();
-  useEffect(() => {
-    const canvas = ref.current;
+
+  const run = (canvas) => {
+    // const canvas = ref.current;
     const ctx = canvas.getContext('2d', {
       willReadFrequently: true
     });
@@ -140,6 +141,9 @@ const HomePage = () => {
     }
 
     createCircle();
+  }
+  useEffect(() => {
+    run(ref.current);
   })
 
   return (
