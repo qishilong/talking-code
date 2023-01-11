@@ -82,7 +82,7 @@ function Issue(props) {
                             <div className="paginationContainer">
                                 <Pagination showQuickJumper defaultCurrent={1} {...pageInfo} onChange={handlePageChange} />
                             </div>
-                        ) : (<div className={styles.noIssue}>有问题，就来 talking code！</div>)
+                        ) : (<div className={styles.noIssue}>有问题，就来 Talking Code！</div>)
                     }
 
                 </div>

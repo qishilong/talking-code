@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Tag } from "antd";
 import styles from "../css/IssueItem.module.css"
 import { getUserById } from "../api/user"
-import {formatDate} from "../utils/tool"
+import { formatDate } from "../utils/tool"
 
 function IssueItem(props) {
 
@@ -31,24 +31,24 @@ function IssueItem(props) {
         <div className={styles.container}>
             {/* 回答数 */}
             <div className={styles.issueNum}>
-                <div>{props.issueInfo.commentNumber}</div>
+                <div>{props?.issueInfo?.commentNumber}</div>
                 <div>回答</div>
             </div>
             {/* 浏览数 */}
             <div className={styles.issueNum}>
-                <div>{props.issueInfo.scanNumber}</div>
+                <div>{props?.issueInfo?.scanNumber}</div>
                 <div>浏览</div>
             </div>
             {/* 问题内容 */}
             <div className={styles.issueContainer}>
-                <div className={styles.top} onClick={() => navigate(`/issues/${props.issueInfo._id}`)}>{props.issueInfo.issueTitle}</div>
+                <div className={styles.top} onClick={() => navigate(`/issues/${props?.issueInfo?._id}`)}>{props?.issueInfo?.issueTitle}</div>
                 <div className={styles.bottom}>
                     <div className={styles.left}>
-                        <Tag color={colorArr[typeList.indexOf(type) % colorArr.length]}>{type.typeName}</Tag>
+                        <Tag color={colorArr[typeList.indexOf(type) % colorArr.length]}>{type?.typeName}</Tag>
                     </div>
                     <div className={styles.right}>
                         <Tag color="volcano">{userInfo?.nickname}</Tag>
-                        <span>{formatDate(props.issueInfo.issueDate, "year")}</span>
+                        <span>{formatDate(props?.issueInfo?.issueDate, "year")}</span>
                     </div>
                 </div>
             </div>
