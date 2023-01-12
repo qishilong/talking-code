@@ -2,16 +2,6 @@ const { publish, verify } = require('./jwt');
 const { pathToRegexp } = require('path-to-regexp');
 const { ValidationError } = require("../utils/errors");
 
-// app.use("/res/captcha", captchaRouter);
-// app.use("/api/upload", uploadRouter);
-// app.use("/api/type", typeRouter);
-// app.use("/api/user", userRouter);
-// app.use("/api/admin", adminRouter);
-// app.use("/api/issue", issueRouter);
-// app.use("/api/book", bookRouter);
-// app.use("/api/article", articleRouter);
-// app.use("/api/comment", commentRouter);
-
 const noNeedTokenApi = [
     {
         method: 'POST',
@@ -72,6 +62,10 @@ const noNeedTokenApi = [
     {
         method: 'GET',
         path: '/api/type'
+    },
+    {
+        method: 'POST',
+        path: '/api/user'
     },
     {
         method: 'POST',

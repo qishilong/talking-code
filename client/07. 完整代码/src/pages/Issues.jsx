@@ -17,7 +17,7 @@ function Issue(props) {
     const [issueInfo, setIssueInfo] = useState([]);
     const [pageInfo, setPageInfo] = useState({
         current: 1,
-        pageSize: 15,
+        pageSize: 10,
         total: 0
     });
 

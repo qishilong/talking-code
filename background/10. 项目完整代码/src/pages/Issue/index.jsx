@@ -51,10 +51,10 @@ function Issue() {
       render: (_, row) => {
         // 将问答标题进行简化
         let brief = null;
-        if (row.issueTitle.length > 22) {
-          brief = row.issueTitle.slice(0, 22) + '...';
+        if (row?.issueTitle.length > 22) {
+          brief = row?.issueTitle.slice(0, 22) + '...';
         } else {
-          brief = row.issueTitle;
+          brief = row?.issueTitle;
         }
         return [brief];
       },
@@ -68,7 +68,7 @@ function Issue() {
         // 将问答描述的文字进行简化
         // 在表格中显示书问答描述时，过滤掉 html 标签
         let reg = /<[^<>]+>/g;
-        let brief = row.issueContent;
+        let brief = row?.issueContent;
         brief = brief.replace(reg, '');
 
         if (brief.length > 30) {
@@ -109,10 +109,10 @@ function Issue() {
       },
       render: (_, row) => {
         // 寻找对应类型的类型名称
-        const type = typeList.find((item) => item._id === row.typeId);
+        const type = typeList.find((item) => item?._id === row?.typeId);
         return [
-          <Tag color="purple" key={row.typeId}>
-            {type.typeName}
+          <Tag color="purple" key={row?.typeId}>
+            {type?.typeName}
           </Tag>,
         ];
       },
@@ -123,7 +123,7 @@ function Issue() {
       key: 'issueStatus',
       align: 'center',
       render: (_, row, index, action) => {
-        const defaultChecked = row.issueStatus ? true : false;
+        const defaultChecked = row?.issueStatus ? true : false;
         return [
           <Switch
             key={row._id}
@@ -147,7 +147,7 @@ function Issue() {
             <Button
               type="link"
               size="small"
-              onClick={() => navigate(`/issue/${row._id}`)}
+              onClick={() => navigate(`/issue/${row?._id}`)}
             >
               详情
             </Button>
