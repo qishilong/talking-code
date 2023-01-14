@@ -96,7 +96,10 @@ function LoginForm(props) {
 
     if (value === 1) {
         container = (
-            <div className={styles.container}>
+            <div
+                className={styles.container}
+                key={'login'}
+            >
                 <Form
                     name="basic1"
                     autoComplete="off"
@@ -201,7 +204,10 @@ function LoginForm(props) {
         );
     } else {
         container = (
-            <div className={styles.container}>
+            <div
+                className={styles.container}
+                key={'register'}
+            >
                 <Form
                     name="basic2"
                     autoComplete="off"
