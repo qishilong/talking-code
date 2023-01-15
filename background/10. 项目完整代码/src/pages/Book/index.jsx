@@ -176,8 +176,8 @@ function Book() {
     });
   }
 
-  function deleteHandle(bookInfo) {
-    BookController.deleteBook(bookInfo._id);
+  async function deleteHandle(bookInfo) {
+    await BookController.deleteBook(bookInfo._id);
     actionRef.current.reload(); // 再次刷新请求
     message.success('删除书籍成功');
   }

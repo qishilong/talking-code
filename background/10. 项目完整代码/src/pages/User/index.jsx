@@ -118,8 +118,8 @@ function User() {
    * 删除用户
    * @param {*} userInfo 一条用户信息
    */
-  function deleteHandle(userInfo) {
-    UserController.deleteUser(userInfo._id);
+  async function deleteHandle(userInfo) {
+    await UserController.deleteUser(userInfo._id);
     actionRef.current.reload(); // 再次刷新请求
     message.success('删除用户成功');
   }
@@ -141,12 +141,11 @@ function User() {
    * @param {*} row 当前这一条管理员信息
    * @param {*} value 新的可用状态
    */
-  function switchChange(row, value) {
+  async function switchChange(row, value) {
     // 不同于管理员，这里直接通过控制器来发请求
-    UserController.editUser(row._id, {
+    await UserController.editUser(row._id, {
       enabled: value,
     });
-
     if (value) {
       message.success('用户状态已激活');
     } else {
@@ -182,7 +181,7 @@ function User() {
             onChange: handlePageChange,
           }}
           request={async (params) => {
-            console.log(params,'params');
+            console.log(params, 'params');
             const result = await UserController.getUserByPage(params);
             return {
               data: result.data.data,

@@ -177,8 +177,8 @@ function Issue() {
    * 删除该条问答
    * @param {*} bookInfo
    */
-  function deleteHandle(issueInfo) {
-    IssueController.deleteIssue(issueInfo._id);
+  async function deleteHandle(issueInfo) {
+    await IssueController.deleteIssue(issueInfo._id);
     actionRef.current.reload(); // 再次刷新请求
     message.success('删除问答成功');
   }
@@ -200,9 +200,9 @@ function Issue() {
    * @param {*} row 当前这一条管理员信息
    * @param {*} value 新的可用状态
    */
-  function switchChange(row, value) {
+  async function switchChange(row, value) {
     // 不同于管理员，这里直接通过控制器来发请求
-    IssueController.editIssue(row._id, {
+    await IssueController.editIssue(row._id, {
       issueStatus: value,
     });
 

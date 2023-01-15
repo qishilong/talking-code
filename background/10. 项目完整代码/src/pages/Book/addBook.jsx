@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BookForm from "./components/bookForm";
 import { PageContainer } from "@ant-design/pro-components"
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BookController from "@/services/book"
 import { message } from 'antd';
 
@@ -22,9 +22,9 @@ function AddBook(props) {
     /**
      * 确认新增书籍
      */
-    function submitHandle(bookIntro) {
+    async function submitHandle(bookIntro) {
         // 直接调用控制器方法进行一个信息
-        BookController.addBook({
+        await BookController.addBook({
             bookTitle: newBookInfo.bookTitle,
             bookIntro,
             downloadLink: newBookInfo.downloadLink,

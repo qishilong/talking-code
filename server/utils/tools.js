@@ -6,6 +6,8 @@ const path = require("path");
 const { UnknownError } = require("./errors");
 
 // 格式化要响应的数据
+/* `module.exports.formatResponse`
+函数用于以标准化方式格式化响应数据。它需要三个参数：“code”、“msg”和“data”。它创建一个具有“code”、“msg”和“data”属性的对象，并将参数值分配给这些属性。最后，它返回创建的对象。该函数可用于在将数据发送回客户端时创建一致的响应结构。 */
 module.exports.formatResponse = function (code, msg, data) {
   return {
     code,
@@ -20,7 +22,6 @@ module.exports.analysisToken = function (token) {
     token.split(" ")[1],
     md5(process.env.JWT_SECRET),
     function (err, decode) {
-      console.log(decode, 11)
       return decode;
     }
   );

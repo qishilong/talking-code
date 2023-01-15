@@ -77,7 +77,7 @@ function Article() {
         const type = typeList.find((item) => item._id === row.typeId);
         return [
           <Tag color="purple" key={row.typeId}>
-            {type.typeName}
+            {type?.typeName}
           </Tag>,
         ];
       },
@@ -150,8 +150,8 @@ function Article() {
     });
   }
 
-  function deleteHandle(articleInfo) {
-    ArticleController.deleteArticle(articleInfo._id);
+  async function deleteHandle(articleInfo) {
+    await ArticleController.deleteArticle(articleInfo._id);
     actionRef.current.reload(); // 再次刷新请求
     message.success('删除文章成功');
   }
@@ -180,12 +180,12 @@ function Article() {
           request={async (params) => {
             const result = await ArticleController.getArticleByPage(params);
             return {
-              data: result.data.data,
+              data: result?.data?.data,
               // success 请返回 true，
               // 不然 table 会停止解析数据，即使有数据
-              success: !result.code,
+              success: !result?.code,
               // 不传会使用 data 的长度，如果是分页一定要传
-              total: result.data.count,
+              total: result?.data?.count,
             };
           }}
         />

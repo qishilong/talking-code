@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "dev": "node ./bin/www",
+    "start": "nodemon ./bin/www & pm2 start app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -23,6 +24,7 @@
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0"
   }
 }

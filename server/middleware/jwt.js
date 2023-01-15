@@ -30,7 +30,6 @@ exports.verify = (req) => {
         const result = jwt.verify(token, md5(process.env.JWT_SECRET),);
         return result;
     } catch (err) {
-        console.log(err, 'err')
         return null;
     }
 }

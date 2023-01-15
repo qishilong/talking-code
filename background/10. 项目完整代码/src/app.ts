@@ -72,5 +72,19 @@ export const request: RequestConfig = {
       }
       return { url, options };
     }
+  ],
+  responseInterceptors: [
+    // 直接写一个 function，作为拦截器
+    // 一个二元组，第一个元素是 request 拦截器，第二个元素是错误处理
+    [
+      (response) => {
+        console.log(response);
+        return response;
+      },
+      (error) => {
+        message.error(error.response.data.msg);
+        return Promise.reject(error);
+      }
+    ],
   ]
 };

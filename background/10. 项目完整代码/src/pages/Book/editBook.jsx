@@ -26,18 +26,18 @@ function EditBook(props) {
         }
     }, [])
 
-    function submitHandle(bookIntro){
-        BookController.editBook(id, {
+    async function submitHandle(bookIntro) {
+        await BookController.editBook(id, {
             bookTitle: bookInfo.bookTitle,
             bookIntro,
             downloadLink: bookInfo.downloadLink,
-            requirePoints:bookInfo.requirePoints,
+            requirePoints: bookInfo.requirePoints,
             bookPic: bookInfo.bookPic,
             typeId: bookInfo.typeId,
-          });
-          // 跳转回首页
-          navigate('/book/bookList');
-          message.success('书籍信息修改成功');
+        });
+        // 跳转回首页
+        navigate('/book/bookList');
+        message.success('书籍信息修改成功');
     }
 
 

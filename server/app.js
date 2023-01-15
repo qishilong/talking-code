@@ -40,6 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(require('./middleware/token'))
+app.use(require('./middleware/questLimit'));
 
 // 使用路由中间件
 app.use("/res/captcha", captchaRouter);

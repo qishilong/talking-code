@@ -22,7 +22,7 @@ class ServiceError extends Error {
   // 方法
   // 格式化的返回错误信息
   toResponseJSON() {
-    return formatResponse(this.code, this.message, null);
+    return formatResponse(this.code, this.message);
   }
 }
 
@@ -36,7 +36,7 @@ exports.UploadError = class extends ServiceError {
 // 禁止访问错误
 exports.ForbiddenError = class extends ServiceError {
   constructor(message) {
-    super(message, 401);
+    super(message, 401, { questLimit: '10/minute' });
   }
 };
 

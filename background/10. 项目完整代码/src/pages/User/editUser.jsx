@@ -25,9 +25,9 @@ function EditUser() {
   /**
    * 修改用户
    */
-  function submitHandle() {
+  async function submitHandle() {
     // 因为没有使用状态机，所以直接调用控制器方法，进行新增
-    UserController.editUser(userInfo._id, userInfo);
+    await UserController.editUser(userInfo._id, userInfo);
     message.success('信息修改成功');
     navigate('/user/userList');
   }

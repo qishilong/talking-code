@@ -25,9 +25,9 @@ function EditArticle() {
   /**
    * 修改文章
    */
-  function submitHandle(articleContent) {
+  async function submitHandle(articleContent) {
     // 因为没有使用状态机，所以直接调用控制器方法，进行新增
-    ArticleController.editArticle(id, {
+    await ArticleController.editArticle(id, {
       articleTitle: articleInfo.articleTitle,
       articleContent,
       typeId: articleInfo.typeId,

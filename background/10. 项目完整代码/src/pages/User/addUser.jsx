@@ -24,9 +24,9 @@ function AddUser() {
   /**
    * 新增用户
    */
-  function submitHandle() {
+  async function submitHandle() {
     // 因为没有使用状态机，所以直接调用控制器方法，进行新增
-    UserController.addUser(newUserInfo);
+    await UserController.addUser(newUserInfo);
 
     // 跳转回首页
     navigate('/user/userList');

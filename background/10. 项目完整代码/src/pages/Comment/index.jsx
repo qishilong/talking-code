@@ -174,8 +174,8 @@ function Comment() {
    * 删除该条问答
    * @param {*} bookInfo
    */
-  function deleteHandle(commentInfo) {
-    CommentController.deleteComment(commentInfo._id);
+  async function deleteHandle(commentInfo) {
+    await CommentController.deleteComment(commentInfo._id);
     actionRef.current.reload(); // 再次刷新请求
     message.success('删除评论成功');
   }
