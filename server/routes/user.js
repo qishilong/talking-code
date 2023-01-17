@@ -36,7 +36,7 @@ router.post("/login", async function (req, res, next) {
   }
   const result = await loginService(req.body);
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -48,14 +48,14 @@ router.get("/whoami", async function (req, res, next) {
   // 查看解析 token 是否成功
   if (token) {
     // 2. 返回给客户端解析结果
-    res.send(
+    return res.send(
       formatResponse(0, "", {
         _id: token._id,
         loginId: token.loginId,
       })
     );
   } else {
-    res.send(
+    return res.send(
       formatResponse(416, "登录过期，请重新登录", nul)
     )
     next(new ValidationError("登录过期，请重新登录"));
@@ -68,13 +68,13 @@ router.get("/whoami", async function (req, res, next) {
 router.get("/", async function (req, res) {
   const result = await findUserByPageService(req.query);
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 router.get("/pointsrank", async function (req, res) {
   const result = await findUserByPointsRankService();
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -93,7 +93,7 @@ router.post("/", async function (req, res, next) {
   }
   const result = await addUserService(req.body);
   if (result && result._id) {
-    res.send(formatResponse(0, "", result));
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -104,7 +104,7 @@ router.post("/", async function (req, res, next) {
  */
 router.delete("/:id", async function (req, res) {
   const result = await deleteUserService(req.params.id);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -112,7 +112,7 @@ router.delete("/:id", async function (req, res) {
  */
 router.get("/:id", async function (req, res) {
   const result = await findUserByIdService(req.params.id);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -120,7 +120,7 @@ router.get("/:id", async function (req, res) {
  */
 router.patch("/:id", async function (req, res) {
   const result = await updateUserService(req.params.id, req.body);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -128,7 +128,7 @@ router.patch("/:id", async function (req, res) {
  */
 router.get("/userIsExist/:loginId", async function (req, res) {
   const result = await userIsExistService(req.params.loginId);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -136,7 +136,7 @@ router.get("/userIsExist/:loginId", async function (req, res) {
  */
 router.post("/passwordcheck", async function (req, res, next) {
   const result = await passwordcheckService(req.body);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 module.exports = router;

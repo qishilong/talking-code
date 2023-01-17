@@ -13,7 +13,7 @@ router.get('/', async function (req, res, next) {
     // 设置响应头
     res.setHeader("Content-Type", "image/svg+xml");
     // 将验证码返回给客户端
-    res.send(captcha.data);
+    return res.send(captcha.data);
 });
 
 module.exports = router;

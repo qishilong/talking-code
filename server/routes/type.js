@@ -20,7 +20,7 @@ const { formatResponse } = require("../utils/tools");
 router.get("/", async function (req, res) {
   const result = await findAllTypeService();
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -29,7 +29,7 @@ router.get("/", async function (req, res) {
 router.post("/", async function (req, res, next) {
   const result = await addTypeService(req.body);
   if (result && result._id) {
-    res.send(formatResponse(0, "", result));
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -40,7 +40,7 @@ router.post("/", async function (req, res, next) {
  */
 router.delete("/:id", async function (req, res) {
   const result = await deleteTypeService(req.params.id);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -48,7 +48,7 @@ router.delete("/:id", async function (req, res) {
  */
 router.patch("/:id", async function (req, res) {
   const result = await updateTypeService(req.params.id, req.body);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 module.exports = router;

@@ -63,7 +63,7 @@ app.use(function (req, res, next) {
 // 错误处理，一旦发生了错误，就会到这里来
 app.use(function (err, req, res, next) {
   if (err instanceof ServiceError) {
-    res.send(err.toResponseJSON());
+    return res.send(err.toResponseJSON());
   } else {
     res.send(new UnknownError().toResponseJSON());
     throw err;

@@ -35,7 +35,7 @@ router.post("/login", async function (req, res, next) {
 
   const result = await loginService(req.body);
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -50,7 +50,7 @@ router.get("/whoami", async function (req, res, next) {
     // 查看解析 token 是否成功
     if (token) {
       // 2. 返回给客户端解析结果
-      res.send(
+      return res.send(
         formatResponse(0, "", {
           _id: token._id,
           loginId: token.loginId,
@@ -70,7 +70,7 @@ router.get("/whoami", async function (req, res, next) {
 router.get("/", async function (req, res) {
   const result = await findAllAdminService();
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -79,7 +79,7 @@ router.get("/", async function (req, res) {
 router.post("/", async function (req, res, next) {
   const result = await addAdminService(req.body, next);
   if (result && result._id) {
-    res.send(formatResponse(0, "", result));
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -90,7 +90,7 @@ router.post("/", async function (req, res, next) {
  */
 router.delete("/:id", async function (req, res) {
   const result = await deleteAdminService(req.params.id);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -98,7 +98,7 @@ router.delete("/:id", async function (req, res) {
  */
 router.get("/:id", async function (req, res) {
   const result = await findAdminByIdService(req.params.id);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -106,7 +106,7 @@ router.get("/:id", async function (req, res) {
  */
 router.patch("/:id", async function (req, res) {
   const result = await updateAdminService(req.params.id, req.body);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -114,7 +114,7 @@ router.patch("/:id", async function (req, res) {
  */
 router.get("/adminIsExist/:loginId", async function (req, res) {
   const result = await adminIsExistService(req.params.loginId);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 module.exports = router;

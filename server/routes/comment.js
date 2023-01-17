@@ -24,7 +24,7 @@ router.get("/:commentType", async function (req, res) {
     req.query
   );
   // 对返回数据进行格式化
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -32,7 +32,7 @@ router.get("/:commentType", async function (req, res) {
  */
 router.get("/issuecomment/:id", async function (req, res) {
   const result = await findIssueCommentByIdService(req.params.id, req.query);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -40,7 +40,7 @@ router.get("/issuecomment/:id", async function (req, res) {
  */
 router.get("/bookcomment/:id", async function (req, res) {
   const result = await findBookCommentByIdService(req.params.id, req.query);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 /**
@@ -50,7 +50,7 @@ router.post("/", async function (req, res, next) {
 
   const result = await addCommentService(req.body);
   if (result && result._id) {
-    res.send(formatResponse(0, "", result));
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -61,7 +61,7 @@ router.post("/", async function (req, res, next) {
  */
 router.delete("/:id", async function (req, res) {
   const result = await deleteCommentService(req.params.id);
-  res.send(formatResponse(0, "", result));
+  return res.send(formatResponse(0, "", result));
 });
 
 module.exports = router;
