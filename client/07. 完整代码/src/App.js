@@ -27,11 +27,11 @@ function App() {
         // token 验证成功
 
         // 根据 id 获取
-        const { data } = await getUserById(result.data._id);
+        const { data } = await getUserById(result?.data._id);
         dispatch(initUserInfo(data));
         dispatch(changeLoginStatus(true));
       } else {
-        message.warning(result.msg);
+        message.warning(result?.msg);
         localStorage.removeItem("userToken");
       }
     }

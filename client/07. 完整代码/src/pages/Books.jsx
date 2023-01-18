@@ -25,25 +25,25 @@ function Books(props) {
     useEffect(() => {
         async function fetchData() {
             let searchParams = {
-                current: pageInfo.current,
-                pageSize: pageInfo.pageSize,
+                current: pageInfo?.current,
+                pageSize: pageInfo?.pageSize,
             };
             if (bookTypeId !== "all") {
                 searchParams.typeId = bookTypeId;
                 // 如果按照分类进行查找，需要将当前页重新设置为第一页
                 searchParams.current = 1;
             }
-            console.log(searchParams,'searchParams');
+            console.log(searchParams, 'searchParams');
             const { data } = await getBookByPage(searchParams)
-            setBookInfo(data.data);
+            setBookInfo(data?.data);
             setPageInfo({
-                current: data.currentPage,
-                pageSize: data.eachPage,
-                total: data.count,
+                current: data?.currentPage,
+                pageSize: data?.eachPage,
+                total: data?.count,
             });
         }
         fetchData();
-    }, [bookTypeId, pageInfo.current, pageInfo.pageSize])
+    }, [bookTypeId, pageInfo?.current, pageInfo?.pageSize])
 
     const bookData = [];
     if (bookInfo.length) {
@@ -105,7 +105,7 @@ function Books(props) {
                     ) : (
                         <div style={{
                             fontSize: "26px",
-                            fontWeight:"200"
+                            fontWeight: "200"
                         }}>该分类下暂无书籍</div>
                     )
                 }

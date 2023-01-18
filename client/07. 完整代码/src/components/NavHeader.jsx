@@ -46,9 +46,6 @@ function NavHeader(props) {
                 <NavLink to="/books" className="navgation">
                     书籍
                 </NavLink>
-                {/* <NavLink to="/jobs" className="navgation">
-            招聘
-          </NavLink> */}
                 <NavLink to="/articles" className="navgation">文章</NavLink>
                 <a
                     href="https://time.geekbang.org/"
@@ -86,7 +83,7 @@ function NavHeader(props) {
             </div>
             {/* 登录按钮 */}
             <div className="loginBtnContainer">
-                <LoginAvatar loginHandle={props.loginHandle} />
+                <LoginAvatar loginHandle={props?.loginHandle} />
             </div>
         </div>
     );

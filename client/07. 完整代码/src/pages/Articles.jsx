@@ -14,8 +14,8 @@ import styles from "../css/Article.module.css"
 function Articles(props) {
 
     const dispatch = useDispatch();
-    const { typeList } = useSelector(state => state.type);
-    const { articleTitleList } = useSelector(state => state.article);
+    const { typeList } = useSelector(state => state?.type);
+    const { articleTitleList } = useSelector(state => state?.article);
     const [treeData, setTreeData] = useState([]);
     const [articleInfo, setArticleInfo] = useState(null);
 
@@ -65,7 +65,7 @@ function Articles(props) {
     if (articleInfo) {
         articleRightSide = (
             <div className={styles.content}>
-                <h1 className={styles.articleRightTitle}>{articleInfo?.articleTitle}</h1>
+                <h1 className={styles?.articleRightTitle}>{articleInfo?.articleTitle}</h1>
                 <div className={styles.contentContainer}>
                     <div dangerouslySetInnerHTML={{ __html: articleInfo?.articleContent }}></div>
                 </div>

@@ -8,10 +8,10 @@ export const updateUserInfo = createAsyncThunk(
   "user/updateUserInfo",
   async (payload, action) => {
     // 发送 ajax 请求更新服务器数据
-    await editUser(payload.userId, payload.newInfo);
+    await editUser(payload?.userId, payload?.newInfo);
     // 直接在这里派发 action，更新仓库数据
     // 注意下面需要到处对应的 action
-    action.dispatch(updateStoreUserInfo(payload.newInfo));
+    action.dispatch(updateStoreUserInfo(payload?.newInfo));
   }
 );
 
@@ -27,22 +27,22 @@ export const userSlice = createSlice({
   },
   reducers: {
     changeLoginStatus: (state, { payload }) => {
-      state.isLogin = payload;
+      state?.isLogin = payload;
     },
     initUserInfo: (state, { payload }) => {
-      state.userInfo = payload;
+      state?.userInfo = payload;
     },
     updateStoreUserInfo: (state, { payload }) => {
       for (let key in payload) {
-        state.userInfo[key] = payload[key];
+        state?.userInfo[key] = payload[key];
       }
     },
-    clearUserInfo:(state,{payload}) => {
-      state.userInfo = [];
+    clearUserInfo: (state, { payload }) => {
+      state?.userInfo = [];
     }
   },
 });
 
-export const { changeLoginStatus, initUserInfo, updateStoreUserInfo ,clearUserInfo} =
+export const { changeLoginStatus, initUserInfo, updateStoreUserInfo, clearUserInfo } =
   userSlice.actions;
 export default userSlice.reducer;

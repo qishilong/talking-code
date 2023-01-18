@@ -31,7 +31,7 @@ function BookDetail(props) {
 
             // 该书籍的浏览数 +1
             updateBook(data._id, {
-                scanNumber: ++data.scanNumber
+                scanNumber: ++data?.scanNumber
             })
         }
         fetchData();
@@ -46,19 +46,19 @@ function BookDetail(props) {
     const handleOk = () => {
         // 确定下载
         // 需要判断积分是否足够
-        if (userInfo.points - bookInfo.requirePoints < 0) {
+        if (userInfo?.points - bookInfo?.requirePoints < 0) {
             message.warning("积分不足");
         } else {
             // 积分是够的 
             // 服务器扣积分
-            editUser(userInfo._id, {
-                points: userInfo.points - bookInfo.requirePoints
+            editUser(userInfo?._id, {
+                points: userInfo?.points - bookInfo?.requirePoints
             });
             // 本地仓库也需要更新
             dispatch(updateStoreUserInfo({
-                points: userInfo.points - bookInfo.requirePoints
+                points: userInfo?.points - bookInfo?.requirePoints
             }))
-            window.open(`${bookInfo.downloadLink}`);
+            window.open(`${bookInfo?.downloadLink}`);
             message.success("积分已扣除");
         }
         setIsModalOpen(false);

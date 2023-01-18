@@ -15,7 +15,7 @@ import styles from "../css/LoginAvatar.module.css"
 function LoginAvatar(props) {
 
     const navigate = useNavigate();
-    const { isLogin, userInfo } = useSelector(state => state.user);
+    const { isLogin, userInfo } = useSelector(state => state?.user);
     // console.log(isLogin,'isLogin');
     const dispatch = useDispatch();
 
@@ -39,7 +39,7 @@ function LoginAvatar(props) {
         );
     } else {
         loginStatus = (
-            <Button type="primary" size="large" onClick={props.loginHandle}>
+            <Button type="primary" size="large" onClick={props?.loginHandle}>
                 注册/登录
             </Button>
         );

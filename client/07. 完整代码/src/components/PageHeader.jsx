@@ -6,9 +6,9 @@ function PageHeader(props) {
     return (
         <div className={styles.row}>
             <div className={styles.pageHeader}>
-                {props.title}
+                {props?.title}
             </div>
-            {props.children}
+            {props?.children}
         </div>
 
     );

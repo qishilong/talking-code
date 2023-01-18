@@ -10,7 +10,7 @@ export const getArticleTitleList = createAsyncThunk(
     // 发送 ajax 请求获取数据
     const response = await getArticleTitle();
     // action.dispatch(initTypeList(response.data));
-    return response.data;
+    return response?.data;
   }
 );
 
@@ -24,8 +24,8 @@ export const articleSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [getArticleTitleList.fulfilled]: (state, action) => {
-      state.articleTitleList = action.payload;
+    [getArticleTitleList?.fulfilled]: (state, action) => {
+      state?.articleTitleList = action?.payload;
     }
   }
 });

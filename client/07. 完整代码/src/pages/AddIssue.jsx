@@ -6,7 +6,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import "@toast-ui/editor/dist/i18n/zh-cn";
 
 import styles from "../css/AddIssue.module.css"
-import { useSelector,useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 import { addIssue } from "../api/issue"
 import { typeOptionCreator } from "../utils/tool"
@@ -27,9 +27,9 @@ function AddIssue() {
     });
 
     // 从仓库获取类型列表
-    const { typeList } = useSelector(state => state.type);
+    const { typeList } = useSelector(state => state?.type);
     // 从仓库获取用户信息
-    const { userInfo } = useSelector(state => state.user);
+    const { userInfo } = useSelector(state => state?.user);
 
     useEffect(() => {
         if (!typeList.length) {
@@ -53,12 +53,12 @@ function AddIssue() {
      * 首先获取 md 编辑器中的内容，然后再手动触发 submitHandle
      */
     function addHandle() {
-        const content = editorRef.current.getInstance().getHTML();
+        const content = editorRef?.current?.getInstance()?.getHTML();
         addIssue({
-            issueTitle: issueInfo.issueTitle, // 问题标题
+            issueTitle: issueInfo?.issueTitle, // 问题标题
             issueContent: content, // 问题描述
-            userId: userInfo._id, // 用户 id
-            typeId : issueInfo.typeId,
+            userId: userInfo?._id, // 用户 id
+            typeId: issueInfo?.typeId,
         });
         // 跳转回首页
         navigate('/issues');
@@ -88,7 +88,7 @@ function AddIssue() {
                     <Input
                         placeholder="请输入标题"
                         size="large"
-                        value={issueInfo.issueTitle}
+                        value={issueInfo?.issueTitle}
                         onChange={(e) => updateInfo(e.target.value, 'issueTitle')}
                     />
                 </Form.Item>

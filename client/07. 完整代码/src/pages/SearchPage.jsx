@@ -29,48 +29,48 @@ function SearchPage(props) {
         async function fetchData(state) {
             const { value, searchOptions } = state;
             let searchParams = {
-                current: pageInfo.current,
-                pageSize: pageInfo.pageSize,
+                current: pageInfo?.current,
+                pageSize: pageInfo?.pageSize,
                 issueStatus: true,
             };
             switch (searchOptions) {
                 case "issue": {
-                    searchParams.issueTitle = value;
+                    searchParams?.issueTitle = value;
                     const { data } = await getIssueByPage(searchParams);
                     setPageInfo({
-                        current: data.currentPage,
-                        pageSize: data.eachPage,
-                        total: data.count,
+                        current: data?.currentPage,
+                        pageSize: data?.eachPage,
+                        total: data?.count,
                     });
-                    setSearchResult(data.data);
+                    setSearchResult(data?.data);
                     break;
                 }
                 case "book": {
                     searchParams.bookTitle = value;
                     const { data } = await getBookByPage(searchParams);
                     setPageInfo({
-                        current: data.currentPage,
-                        pageSize: data.eachPage,
-                        total: data.count,
+                        current: data?.currentPage,
+                        pageSize: data?.eachPage,
+                        total: data?.count,
                     });
-                    setSearchResult(data.data);
+                    setSearchResult(data?.data);
                     break;
                 }
             }
         }
 
 
-        if (location.state) {
-            fetchData(location.state)
+        if (location?.state) {
+            fetchData(location?.state)
         }
-    }, [location.state, pageInfo.current, pageInfo.pageSize]);
+    }, [location?.state, pageInfo?.current, pageInfo?.pageSize]);
 
     /**
      *
      * @param {*} page 当前页
      * @param {*} pageSize 每页条数
      */
-     function handlePageChange(current, pageSize) {
+    function handlePageChange(current, pageSize) {
         setPageInfo({
             current,
             pageSize,

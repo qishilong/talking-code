@@ -32,11 +32,11 @@ function LoginForm(props) {
 
     useEffect(() => {
         if (loginFormRef.current) {
-            loginFormRef.current.setFieldsValue(loginInfo);
+            loginFormRef.current?.setFieldsValue(loginInfo);
         }
 
         if (registerFormRef.current) {
-            registerFormRef.current.setFieldsValue(registerInfo);
+            registerFormRef.current?.setFieldsValue(registerInfo);
         }
     }, [loginInfo, registerInfo])
 
@@ -118,7 +118,7 @@ function LoginForm(props) {
                     >
                         <Input
                             placeholder="请输入你的登录账号"
-                            value={loginInfo.loginId}
+                            value={loginInfo?.loginId}
                             onChange={(e) => updateInfo(loginInfo, e.target.value, 'loginId', setLoginInfo)}
                         />
                     </Form.Item>
@@ -135,7 +135,7 @@ function LoginForm(props) {
                     >
                         <Input.Password
                             placeholder="请输入你的登录密码，新用户默认为123456"
-                            value={loginInfo.loginPwd}
+                            value={loginInfo?.loginPwd}
                             onChange={(e) => updateInfo(loginInfo, e.target.value, 'loginPwd', setLoginInfo)}
                         />
                     </Form.Item>
@@ -155,7 +155,7 @@ function LoginForm(props) {
                             <Col span={16}>
                                 <Input
                                     placeholder="请输入验证码"
-                                    value={loginInfo.captcha}
+                                    value={loginInfo?.captcha}
                                     onChange={(e) => updateInfo(loginInfo, e.target.value, 'captcha', setLoginInfo)}
                                 />
                             </Col>
@@ -178,7 +178,7 @@ function LoginForm(props) {
                     >
                         <Checkbox
                             onChange={(e) => updateInfo(loginInfo, e.target.checked, 'remember', setLoginInfo)}
-                            checked={loginInfo.remember}
+                            checked={loginInfo?.remember}
                         >记住我</Checkbox>
                     </Form.Item>
 
@@ -229,7 +229,7 @@ function LoginForm(props) {
                     >
                         <Input
                             placeholder="请输入账号"
-                            value={registerInfo.loginId}
+                            value={registerInfo?.loginId}
                             onChange={(e) => updateInfo(registerInfo, e.target.value, 'loginId', setRegisterInfo)}
                         />
                     </Form.Item>
@@ -240,7 +240,7 @@ function LoginForm(props) {
                     >
                         <Input
                             placeholder="请输入昵称，不填写默认为新用户xxx"
-                            value={registerInfo.nickname}
+                            value={registerInfo?.nickname}
                             onChange={(e) => updateInfo(registerInfo, e.target.value, 'nickname', setRegisterInfo)}
                         />
                     </Form.Item>
@@ -259,7 +259,7 @@ function LoginForm(props) {
                             <Col span={16}>
                                 <Input
                                     placeholder="请输入验证码"
-                                    value={registerInfo.captcha}
+                                    value={registerInfo?.captcha}
                                     onChange={(e) => updateInfo(registerInfo, e.target.value, 'captcha', setRegisterInfo)}
                                 />
                             </Col>

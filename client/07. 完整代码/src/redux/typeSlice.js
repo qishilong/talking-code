@@ -10,7 +10,7 @@ export const getTypeList = createAsyncThunk(
     // 发送 ajax 请求获取数据
     const response = await getType();
     // action.dispatch(initTypeList(response.data));
-    return response.data;
+    return response?.data;
   }
 );
 
@@ -26,19 +26,19 @@ export const typeSlice = createSlice({
   },
   reducers: {
     updateStoreIssueTypeId: (state, { payload }) => {
-      state.issueTypeId = payload;
+      state?.issueTypeId = payload;
     },
     updateStoreBookTypeId: (state, { payload }) => {
-      state.bookTypeId = payload;
+      state?.bookTypeId = payload;
     },
   },
   extraReducers: {
-    [getTypeList.fulfilled]: (state, action) => {
-      state.typeList = action.payload;
+    [getTypeList?.fulfilled]: (state, action) => {
+      state?.typeList = action?.payload;
     },
   },
 });
 
-export const { updateStoreIssueTypeId,updateStoreBookTypeId } = typeSlice.actions;
+export const { updateStoreIssueTypeId, updateStoreBookTypeId } = typeSlice.actions;
 
 export default typeSlice.reducer;

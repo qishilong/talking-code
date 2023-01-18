@@ -2,7 +2,7 @@ import { Tag } from 'antd';
 import { useSelector, useDispatch } from 'react-redux'
 import { getTypeList } from "../redux/typeSlice"
 import { useState, useEffect } from "react"
-import { updateStoreIssueTypeId,updateStoreBookTypeId } from "../redux/typeSlice"
+import { updateStoreIssueTypeId, updateStoreBookTypeId } from "../redux/typeSlice"
 
 function TypeSelect(props) {
 
@@ -29,12 +29,12 @@ function TypeSelect(props) {
                 arr.push(
                     <Tag
                         color={colorArr[i % colorArr.length]}
-                        value={typeList[i]._id}
-                        key={typeList[i]._id}
+                        value={typeList[i]?._id}
+                        key={typeList[i]?._id}
                         style={{ cursor: "pointer" }}
-                        onClick={() => changeType(typeList[i]._id)}
+                        onClick={() => changeType(typeList[i]?._id)}
                     >
-                        {typeList[i].typeName}
+                        {typeList[i]?.typeName}
                     </Tag>
                 )
             }
@@ -43,9 +43,9 @@ function TypeSelect(props) {
     }, [typeList])
 
     function changeType(typeId) {
-        if(location.pathname === "/issues"){
+        if (location.pathname === "/issues") {
             dispatch(updateStoreIssueTypeId(typeId));
-        } else if(location.pathname === "/books"){
+        } else if (location.pathname === "/books") {
             dispatch(updateStoreBookTypeId(typeId));
         }
     }

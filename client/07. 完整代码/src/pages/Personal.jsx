@@ -13,7 +13,7 @@ import { checkPasswordIsRight } from "../api/user"
 import styles from "../css/Personal.module.css"
 
 function Personal(props) {
-    const { userInfo } = useSelector(state => state.user);
+    const { userInfo } = useSelector(state => state?.user);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [panelName, setPanelName] = useState("");
     const [editInfo, setEditInfo] = useState({});
@@ -40,7 +40,7 @@ function Personal(props) {
         console.log(editInfo);
         // 派发异步 action
         dispatch(updateUserInfo({
-            userId: userInfo._id,
+            userId: userInfo?._id,
             newInfo: editInfo
         }));
         setIsModalOpen(false);
@@ -63,7 +63,7 @@ function Personal(props) {
         const newAvatar = { [key]: newInfo };
         dispatch(updateStoreUserInfo(newAvatar));
         dispatch(updateUserInfo({
-            userId: userInfo._id,
+            userId: userInfo?._id,
             newInfo: newAvatar
         }));
         message.success("头像修改成功");
@@ -117,7 +117,7 @@ function Personal(props) {
                         >
                             <Input.Password
                                 rows={6}
-                                value={passwordInfo.oldpassword}
+                                value={passwordInfo?.oldpassword}
                                 placeholder="如果要修改密码，请先输入旧密码"
                                 onChange={(e) => updatePasswordInfo(e.target.value, 'oldpassword')}
                             />
@@ -130,7 +130,7 @@ function Personal(props) {
                         >
                             <Input.Password
                                 rows={6}
-                                value={passwordInfo.newpassword}
+                                value={passwordInfo?.newpassword}
                                 placeholder="请输入新密码"
                                 onChange={(e) => updatePasswordInfo(e.target.value, 'newpassword')}
                             />
@@ -155,7 +155,7 @@ function Personal(props) {
                             <Input.Password
                                 rows={6}
                                 placeholder="请确认密码"
-                                value={passwordInfo.passwordConfirm}
+                                value={passwordInfo?.passwordConfirm}
                                 onChange={(e) => updatePasswordInfo(e.target.value, 'passwordConfirm')}
                             />
                         </Form.Item>
@@ -203,7 +203,7 @@ function Personal(props) {
                             name="mail"
                         >
                             <Input
-                                value={userInfo.mail}
+                                value={userInfo?.mail}
                                 placeholder="请填写邮箱"
                                 onChange={(e) => updateInfo(e.target.value, 'mail')}
                             />
@@ -213,7 +213,7 @@ function Personal(props) {
                             name="qq"
                         >
                             <Input
-                                value={userInfo.qq}
+                                value={userInfo?.qq}
                                 placeholder="请填写 QQ 号"
                                 onChange={(e) => updateInfo(e.target.value, 'qq')}
                             />
@@ -223,7 +223,7 @@ function Personal(props) {
                             name="wechat"
                         >
                             <Input
-                                value={userInfo.wechat}
+                                value={userInfo?.wechat}
                                 placeholder="请填写微信号"
                                 onChange={(e) => updateInfo(e.target.value, 'wechat')}
                             />
@@ -233,7 +233,7 @@ function Personal(props) {
                             name="github"
                         >
                             <Input
-                                value={userInfo.github}
+                                value={userInfo?.github}
                                 placeholder="请填写 github "
                                 onChange={(e) => updateInfo(e.target.value, 'github')}
                             />

@@ -5,7 +5,7 @@ import { Button, message } from "antd"
 
 function AddIssueBtn() {
 
-    const { isLogin } = useSelector(state => state.user);
+    const { isLogin } = useSelector(state => state?.user);
     const navigate = useNavigate();
 
     function clickHandle() {

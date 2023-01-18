@@ -28,12 +28,12 @@ function IssueDetail(props) {
             setIssueInfo(data);
 
             // 获取 userId 对应的用户
-            const result = await getUserById(data.userId);
-            setIssueUserName(result.data);
+            const result = await getUserById(data?.userId);
+            setIssueUserName(result?.data);
 
             // 该问答的浏览数 +1
-            updateIssue(data._id, {
-                scanNumber: ++data.scanNumber
+            updateIssue(data?._id, {
+                scanNumber: ++data?.scanNumber
             })
         }
         fetchData();

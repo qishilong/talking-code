@@ -20,7 +20,7 @@ import styles from "../css/Discuss.module.css"
 function Discuss(props) {
 
     // 获取用户信息
-    const { userInfo, isLogin } = useSelector(state => state.user);
+    const { userInfo, isLogin } = useSelector(state => state?.user);
     const [value, setValue] = useState('');
     const [commentList, setCommentList] = useState(null);
     const [refresh, setRefresh] = useState(false);
@@ -50,14 +50,14 @@ function Discuss(props) {
             // 获取每条评论对应的用户信息
             for (let i = 0; i < data.data.length; i++) {
                 const result = await getUserById(data.data[i].userId);
-                data.data[i].userInfo = result.data;
+                data?.data[i]?.userInfo = result?.data;
             }
-            setCommentList(data.data);
+            setCommentList(data?.data);
             setPageInfo({
-                currentPage: data.currentPage,
-                eachPage: data.eachPage,
-                count: data.count,
-                totalPage: data.totalPage
+                currentPage: data?.currentPage,
+                eachPage: data?.eachPage,
+                count: data?.count,
+                totalPage: data?.totalPage
             })
         }
         if (props.targetId) {
@@ -68,7 +68,7 @@ function Discuss(props) {
     // 头像
     let avatar = null;
     if (isLogin) {
-        avatar = (<Avatar src={userInfo.avatar} alt="用户头像" />);
+        avatar = (<Avatar src={userInfo?.avatar} alt="用户头像" />);
     } else {
         avatar = (<Avatar icon={<UserOutlined />} />);
     }
@@ -78,7 +78,7 @@ function Discuss(props) {
         let newComment = null;
         if (props.commentType === 1) {
             // 新增问答评论
-            newComment = editorRef.current.getInstance().getHTML();
+            newComment = editorRef?.current.getInstance().getHTML();
         } else if (props.commentType === 2) {
             // 新增书籍评论
             newComment = value;
@@ -89,34 +89,34 @@ function Discuss(props) {
         } else {
             // 用户提交评论
             addComment({
-                userId: userInfo._id,
-                bookId: props.bookInfo?._id,
-                issueId: props.issueInfo?._id,
-                typeId: props.issueInfo ? props.issueInfo.typeId : props.bookInfo.typeId,
+                userId: userInfo?._id,
+                bookId: props?.bookInfo?._id,
+                issueId: props?.issueInfo?._id,
+                typeId: props?.issueInfo ? props?.issueInfo?.typeId : props?.bookInfo?.typeId,
                 commentContent: newComment,
-                commentType: props.commentType
+                commentType: props?.commentType
             })
 
             // 该条问答或者书籍的评论数量加一
             if (props.commentType === 1) {
                 // 问答评论数 +1
-                updateIssue(props.issueInfo._id, {
-                    commentNumber: ++props.issueInfo.commentNumber
+                updateIssue(props?.issueInfo?._id, {
+                    commentNumber: ++props?.issueInfo?.commentNumber
                 })
                 // 增加对应用户的积分
-                editUser(userInfo._id, {
-                    points: userInfo.points + 4
+                editUser(userInfo?._id, {
+                    points: userInfo?.points + 4
                 });
                 message.success("评论添加成功，积分+4");
-                editorRef.current.getInstance().setHTML("");
-            } else if (props.commentType === 2) {
+                editorRef?.current.getInstance().setHTML("");
+            } else if (props?.commentType === 2) {
                 // 书籍评论数 + 1
-                updateBook(props.bookInfo._id, {
-                    commentNumber: ++props.bookInfo.commentNumber
+                updateBook(props?.bookInfo?._id, {
+                    commentNumber: ++props?.bookInfo?.commentNumber
                 })
                 // 增加对应用户的积分
-                editUser(userInfo._id, {
-                    points: userInfo.points + 2
+                editUser(userInfo?._id, {
+                    points: userInfo?.points + 2
                 });
                 message.success("评论添加成功，积分+2");
                 setValue("");
@@ -179,15 +179,15 @@ function Discuss(props) {
                     renderItem={function (props) {
                         return (
                             <Comment
-                                avatar={<Avatar src={props.userInfo.avatar} />}
+                                avatar={<Avatar src={props?.userInfo?.avatar} />}
                                 content={
                                     <div
-                                        dangerouslySetInnerHTML={{ __html: props.commentContent }}
+                                        dangerouslySetInnerHTML={{ __html: props?.commentContent }}
                                     ></div>
                                 }
                                 datetime={
-                                    <Tooltip title={formatDate(props.commentDate)}>
-                                        <span>{formatDate(props.commentDate, 'year')}</span>
+                                    <Tooltip title={formatDate(props?.commentDate)}>
+                                        <span>{formatDate(props?.commentDate, 'year')}</span>
                                     </Tooltip>
                                 }
                             />
@@ -200,13 +200,13 @@ function Discuss(props) {
             {
                 commentList?.length > 0 ? (
                     <div className={styles.paginationContainer}>
-                        <Pagination showQuickJumper defaultCurrent={1} total={pageInfo.totalPage} />
+                        <Pagination showQuickJumper defaultCurrent={1} total={pageInfo?.totalPage} />
                     </div>
                 ) : (
                     <div style={{
-                        fontWeight:"200",
-                        textAlign:"center",
-                        margin:"50px"
+                        fontWeight: "200",
+                        textAlign: "center",
+                        margin: "50px"
                     }}
                     >暂无评论</div>
                 )

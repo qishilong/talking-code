@@ -5,7 +5,7 @@ import { Alert } from "antd";
 function RouteBefore() {
   // 导航守卫
   const currentPath = RouteBeforeConfig.filter(
-    (item) => item.path === location.pathname
+    (item) => item?.path === location?.pathname
   )[0];
 
   function closeHandle() {

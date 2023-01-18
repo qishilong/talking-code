@@ -21,13 +21,13 @@ function Issue(props) {
         total: 0
     });
 
-    const { issueTypeId } = useSelector(state => state.type);
+    const { issueTypeId } = useSelector(state => state?.type);
 
     useEffect(() => {
         async function fetchData() {
             let searchParams = {
-                current: pageInfo.current,
-                pageSize: pageInfo.pageSize,
+                current: pageInfo?.current,
+                pageSize: pageInfo?.pageSize,
                 issueStatus: true,
             };
             if (issueTypeId !== "all") {
@@ -44,7 +44,7 @@ function Issue(props) {
             });
         }
         fetchData();
-    }, [issueTypeId, pageInfo.current, pageInfo.pageSize])
+    }, [issueTypeId, pageInfo?.current, pageInfo?.pageSize])
 
 
 

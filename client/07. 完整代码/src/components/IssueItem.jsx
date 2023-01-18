@@ -26,7 +26,7 @@ function IssueItem(props) {
         fetchUserData()
     }, [])
 
-    const type = typeList.find(item => item._id === props.issueInfo.typeId);
+    const type = typeList.find(item => item?._id === props?.issueInfo?.typeId);
     return (
         <div className={styles.container}>
             {/* 回答数 */}
