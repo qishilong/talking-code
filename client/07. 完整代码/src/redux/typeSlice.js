@@ -26,15 +26,15 @@ export const typeSlice = createSlice({
   },
   reducers: {
     updateStoreIssueTypeId: (state, { payload }) => {
-      state?.issueTypeId = payload;
+      state.issueTypeId = payload;
     },
     updateStoreBookTypeId: (state, { payload }) => {
-      state?.bookTypeId = payload;
+      state.bookTypeId = payload;
     },
   },
   extraReducers: {
     [getTypeList?.fulfilled]: (state, action) => {
-      state?.typeList = action?.payload;
+      state.typeList = action?.payload;
     },
   },
 });

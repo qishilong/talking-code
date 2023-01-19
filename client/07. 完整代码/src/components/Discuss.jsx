@@ -50,7 +50,7 @@ function Discuss(props) {
             // 获取每条评论对应的用户信息
             for (let i = 0; i < data.data.length; i++) {
                 const result = await getUserById(data.data[i].userId);
-                data?.data[i]?.userInfo = result?.data;
+                data.data[i].userInfo = result?.data;
             }
             setCommentList(data?.data);
             setPageInfo({
@@ -101,7 +101,7 @@ function Discuss(props) {
             if (props.commentType === 1) {
                 // 问答评论数 +1
                 updateIssue(props?.issueInfo?._id, {
-                    commentNumber: ++props?.issueInfo?.commentNumber
+                    commentNumber: ++props.issueInfo.commentNumber
                 })
                 // 增加对应用户的积分
                 editUser(userInfo?._id, {
@@ -112,7 +112,7 @@ function Discuss(props) {
             } else if (props?.commentType === 2) {
                 // 书籍评论数 + 1
                 updateBook(props?.bookInfo?._id, {
-                    commentNumber: ++props?.bookInfo?.commentNumber
+                    commentNumber: ++props.bookInfo.commentNumber
                 })
                 // 增加对应用户的积分
                 editUser(userInfo?._id, {

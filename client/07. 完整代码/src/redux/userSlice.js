@@ -27,18 +27,18 @@ export const userSlice = createSlice({
   },
   reducers: {
     changeLoginStatus: (state, { payload }) => {
-      state?.isLogin = payload;
+      state.isLogin = payload;
     },
     initUserInfo: (state, { payload }) => {
-      state?.userInfo = payload;
+      state.userInfo = payload;
     },
     updateStoreUserInfo: (state, { payload }) => {
       for (let key in payload) {
-        state?.userInfo[key] = payload[key];
+        state.userInfo[key] = payload[key];
       }
     },
     clearUserInfo: (state, { payload }) => {
-      state?.userInfo = [];
+      state.userInfo = [];
     }
   },
 });

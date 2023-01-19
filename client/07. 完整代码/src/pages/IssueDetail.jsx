@@ -33,7 +33,7 @@ function IssueDetail(props) {
 
             // 该问答的浏览数 +1
             updateIssue(data?._id, {
-                scanNumber: ++data?.scanNumber
+                scanNumber: ++data.scanNumber
             })
         }
         fetchData();

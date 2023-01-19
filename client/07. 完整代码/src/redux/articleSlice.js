@@ -25,7 +25,7 @@ export const articleSlice = createSlice({
   reducers: {},
   extraReducers: {
     [getArticleTitleList?.fulfilled]: (state, action) => {
-      state?.articleTitleList = action?.payload;
+      state.articleTitleList = action?.payload;
     }
   }
 });

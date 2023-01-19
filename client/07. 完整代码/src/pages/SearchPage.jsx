@@ -35,7 +35,7 @@ function SearchPage(props) {
             };
             switch (searchOptions) {
                 case "issue": {
-                    searchParams?.issueTitle = value;
+                    searchParams.issueTitle = value;
                     const { data } = await getIssueByPage(searchParams);
                     setPageInfo({
                         current: data?.currentPage,

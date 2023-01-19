@@ -30,8 +30,8 @@ function BookDetail(props) {
             setBookInfo(data);
 
             // 该书籍的浏览数 +1
-            updateBook(data._id, {
-                scanNumber: ++data?.scanNumber
+            updateBook(data?._id, {
+                scanNumber: ++data.scanNumber
             })
         }
         fetchData();

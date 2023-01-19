@@ -3,7 +3,7 @@ const { formatResponse } = require("../utils/tools");
 module.exports = async (req, res, next) => {
     const limitOptions = {
         duration: 60,
-        nums: 20,
+        nums: 100,
         message: '您的请求过于频繁，请稍后再试',
         limit: 60,
     };
