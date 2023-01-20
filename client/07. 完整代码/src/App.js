@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { changeLoginStatus, initUserInfo } from "./redux/userSlice";
 import { getInfo, getUserById } from "./api/user";
 import { getTypeList } from "./redux/typeSlice";
+import ErrorBoundary from './components/ErrorBoundary';
 
 import "./css/App.css";
 
@@ -66,7 +67,9 @@ function App() {
         </Header>
         {/* 内容区域 */}
         <Content className="content">
-          <RouterBefore />
+          <ErrorBoundary>
+            <RouterBefore />
+          </ErrorBoundary>
         </Content>
         <Footer className="footer">
           <PageFooter />
@@ -74,7 +77,7 @@ function App() {
       </Layout>
       {/* 登录弹窗 */}
       <Login isShow={isModalOpen} closeModal={closeModal} />
-    </div>
+    </div >
   );
 }
 

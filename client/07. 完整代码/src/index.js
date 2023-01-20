@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import zhCN from "antd/es/locale/zh_CN";
 import { ConfigProvider } from "antd";
+// import ErrorBoundary from './components/ErrorBoundary';
+
 
 import "antd/dist/antd.min.css";
 import "./index.css";
@@ -14,6 +16,7 @@ import store from "./redux/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
+  // <ErrorBoundary>
   <Provider store={store}>
     <BrowserRouter>
       <ConfigProvider locale={zhCN}>
@@ -21,4 +24,5 @@ root.render(
       </ConfigProvider>
     </BrowserRouter>
   </Provider>
+  // </ErrorBoundary>
 );
