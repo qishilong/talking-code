@@ -2,6 +2,7 @@
 import AdminController from '@/services/admin';
 import { message } from 'antd';
 import type { RequestConfig } from 'umi';
+import { history } from 'umi';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
@@ -88,3 +89,28 @@ export const request: RequestConfig = {
     ],
   ]
 };
+
+export function onRouteChange({ clientRoutes, location }: any) {
+  const { pathname } = location;
+  const lastPath = pathname.split('/').pop();
+  const path = [
+    {
+      from: 'admin',
+      to: '/admin/adminList'
+    }, {
+      from: 'user',
+      to: '/user/userList'
+    }, {
+      from: 'book',
+      to: '/book/bookList'
+    }, {
+      from: 'article',
+      to: '/article/articleList'
+    }
+  ];
+  path.forEach(item => {
+    if (item.from === lastPath) {
+      history.push(item.to);
+    }
+  });
+}
