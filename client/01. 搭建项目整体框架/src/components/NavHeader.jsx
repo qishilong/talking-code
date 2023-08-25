@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import {Input, Select, Button} from "antd";
+import { Input, Select, Button } from "antd";
 
 function PageHeader() {
     return (
@@ -13,9 +13,9 @@ function PageHeader() {
             <nav className="navContainer">
                 <NavLink to="/" className="navgation">问答</NavLink>
                 <NavLink to="/books" className="navgation">书籍</NavLink>
-                <NavLink to="/interviews" className="navgation">面试题</NavLink>
+                <NavLink to="/interviews" className="navgation">文章</NavLink>
                 <a
-                    href="https://duyi.ke.qq.com/"
+                    href="https://time.geekbang.org/"
                     className="navgation"
                     target="_blank"
                     rel="noreferrer"
@@ -24,7 +24,7 @@ function PageHeader() {
             {/* 搜索框 */}
             <div className="searchContainer">
                 <Input.Group compact>
-                    <Select defaultValue="issue" size="large" style={{width:"20%"}}>
+                    <Select defaultValue="issue" size="large" style={{ width: "20%" }}>
                         <Select.Option value="issue">问答</Select.Option>
                         <Select.Option value="book">书籍</Select.Option>
                     </Select>
@@ -34,7 +34,7 @@ function PageHeader() {
                         enterButton="搜索"
                         size="large"
                         style={{
-                            width:"80%"
+                            width: "80%"
                         }}
                     />
                 </Input.Group>
