@@ -351,7 +351,7 @@ function Personal(props) {
                                 }
                             }}
                             headers={{
-                                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                                'Authorization': `Bearer ${localStorage.getItem('userToken')}`
                             }}
                             onPreview={onPreview}
                         >

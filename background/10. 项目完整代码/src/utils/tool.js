@@ -9,7 +9,6 @@
  */
 export function formatDate(timestamp) {
   let date = new Date(parseInt(timestamp));
-
   let year = date.getFullYear(); // 年
   let month = date.getMonth() + 1; // 月
   let day = date.getDate(); // 日
