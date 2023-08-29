@@ -149,6 +149,7 @@ const HomePage = () => {
   return (
     <PageContainer ghost>
       <div className={styles.container}>
+        <div className={styles.show_style}>请注意，本系统为演示系统，所以请不要随意删除或者修改管理员或者用户的信息！！！</div>
         <Guide name={trim(name)} />
         <canvas ref={ref}></canvas>
       </div>

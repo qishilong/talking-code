@@ -31,6 +31,22 @@ function UserForm({ type, submitHandle, userInfo, setUserInfo }) {
     setUserInfo(newUserInfo);
   }
 
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    // const image = new Image();
+    const image = document.createElement('img');
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   return (
     <Form
       name="basic"
@@ -85,6 +101,10 @@ function UserForm({ type, submitHandle, userInfo, setUserInfo }) {
               updateInfo(url, 'avatar');
             }
           }}
+          headers={{
+            'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+          }}
+          onPreview={onPreview}
         >
           <div>
             <PlusOutlined />

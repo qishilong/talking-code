@@ -1,4 +1,5 @@
 import { defineConfig } from '@umijs/max';
+const path = require('path');
 
 export default defineConfig({
   antd: {},
@@ -182,4 +183,97 @@ export default defineConfig({
     },
   },
   npmClient: 'yarn',
+  chainWebpack(config, { webpack }) {
+    config.merge({
+      optimization: {
+        minimize: true,
+        splitChunks: {
+          chunk: 'async',
+          minSize: 3000,
+          minChunk: 2,
+          maxAsyncRequests: 5, // 同时加载的模块数量最多是5个，只分割出同时引入的前5个文件
+          maxInitialRequests: 3, // 首页加载的时候引入的文件最多3个
+          name: true,
+          automaticNameDelimiter: '.', //连接符
+          cacheGroups: {
+            // cacheAntdesign: {
+            //   name: 'antdesign',
+            //   test: /^.*node_modules[\\/](antd).*$/,
+            //   chunks: 'all',
+            //   priority: 10,
+            // },
+            cacheVendors: {
+              name: 'vendors',
+              test: /^.*node_modules[\\/](@toast-ui|react-canvas-nest)/,
+              chunk: 'all',
+              minChunks: 2,
+              priority: 9,
+            },
+            asyncCommons: {
+              // 其余异步加载包
+              chunks: 'async',
+              minChunks: 2,
+              name: 'asyncCommons',
+              priority: 8,
+            },
+            commons: {
+              // 其余同步加载包
+              chunks: 'all',
+              minChunks: 2,
+              name: 'commons',
+              priority: 7,
+            },
+          },
+        },
+      },
+    });
+    // config
+    //   .plugin('replace')
+    //   .use(require('webpack').ContextReplacementPlugin)
+    //   .tap(() => {
+    //     return [/moment[/\\]locale$/, /zh-cn/];
+    //   });
+  },
+
+  deadCode: {
+    patterns: [path.resolve(__dirname, './src')],
+  },
+
+  codeSplitting: {
+    jsStrategy: 'granularChunks',
+  },
+  hash: true,
+  jsMinifier: 'terser',
+  externals: {
+    react: 'window.React',
+    'react-dom': 'window.ReactDOM',
+    moment: 'window.moment',
+    antd: 'window.antd',
+    '@toast-ui/react-editor': 'window.Editor',
+    '@toast-ui/editor': 'window.Editor',
+  },
+  links: [
+    {
+      href: 'https://cdn.bootcdn.net/ajax/libs/antd/5.4.4/reset.min.css',
+      rel: 'stylesheet',
+    },
+  ],
+  headScripts: [
+    'https://cdn.bootcdn.net/ajax/libs/react/18.1.0/cjs/react-jsx-dev-runtime.production.min.js',
+    'https://cdn.bootcdn.net/ajax/libs/react-dom/18.1.0/cjs/react-dom-server-legacy.browser.production.min.js',
+    'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/locale/zh-cn.min.js',
+    'https://cdn.bootcdn.net/ajax/libs/antd/5.4.4/antd.min.js',
+    'https://cdn.jsdelivr.net/npm/@toast-ui/react-editor@3.2.3/dist/toastui-react-editor.min.js',
+  ],
+  analyze: {
+    analyzerMode: 'server',
+    analyzerPort: 8888,
+    openAnalyzer: true,
+    // generate stats file while ANALYZE_DUMP exist
+    generateStatsFile: false,
+    statsFilename: 'stats.json',
+    logLevel: 'info',
+    defaultSizes: 'parsed', // stat  // gzip
+  },
+  mfsu: false,
 });

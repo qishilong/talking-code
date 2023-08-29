@@ -86,7 +86,7 @@ function Personal(props) {
         const newPasswordInfo = { ...passwordInfo };
         newPasswordInfo[key] = newInfo.trim();
         setPasswordInfo(newPasswordInfo);
-        if(key === "newpassword"){
+        if (key === "newpassword") {
             updateInfo(newInfo, "loginPwd");
         }
     }
@@ -95,7 +95,7 @@ function Personal(props) {
      * 根据用户的输入更新 editInfo
      */
     function updateInfo(newInfo, key) {
-        if(key === "nickname" && !newInfo){
+        if (key === "nickname" && !newInfo) {
             message.warning("昵称不能为空");
             return;
         }
@@ -103,6 +103,22 @@ function Personal(props) {
         newUserInfo[key] = newInfo;
         setEditInfo(newUserInfo);
     }
+
+    const onPreview = async (file) => {
+        let src = file.url;
+        if (!src) {
+            src = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file.originFileObj);
+                reader.onload = () => resolve(reader.result);
+            });
+        }
+        // const image = new Image();
+        const image = document.createElement('img');
+        image.src = src;
+        const imgWindow = window.open(src);
+        imgWindow?.document.write(image.outerHTML);
+    };
 
     // 模态框中间显示的内容
     let modalContent = null;
@@ -121,7 +137,7 @@ function Personal(props) {
                             label="登录密码"
                             name="oldpassword"
                             rules={[
-                                {required: true},
+                                { required: true },
                                 {
                                     validator: checkPasswordIsRight
                                 }
@@ -154,7 +170,7 @@ function Personal(props) {
                             label="确认密码"
                             name="passwordConfirm"
                             rules={[
-                                {required: true},
+                                { required: true },
                                 ({ getFieldValue }) => ({
                                     validator(_, value) {
                                         if (!value || getFieldValue('newpassword') === value) {
@@ -334,6 +350,10 @@ function Personal(props) {
                                     handleAvatar(url, 'avatar');
                                 }
                             }}
+                            headers={{
+                                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                            }}
+                            onPreview={onPreview}
                         >
                             <PlusOutlined />
                         </Upload>

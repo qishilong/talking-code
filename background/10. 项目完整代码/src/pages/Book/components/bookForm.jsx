@@ -1,37 +1,36 @@
-import { useRef, useEffect, useState } from 'react';
-import { Button, Form, Input, Upload, Image, Select } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import '@toast-ui/editor/dist/i18n/zh-cn';
-import { Editor } from '@toast-ui/react-editor';
 import { typeOptionCreator } from '@/utils/tool';
-import { useSelector, useDispatch } from "umi";
+import { PlusOutlined } from '@ant-design/icons';
+import '@toast-ui/editor/dist/i18n/zh-cn';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/react-editor';
+import { Button, Form, Image, Input, Select, Upload } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'umi';
 
 function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
-
     const formRef = useRef(); // 关联表单
     const editorRef = useRef(); // 关联 markdown 编辑器
 
-    const [ firstIn, setFirstIn ] = useState(true); // 记录是否是第一次进入
+    const [firstIn, setFirstIn] = useState(true); // 记录是否是第一次进入
 
     const dispatch = useDispatch();
 
     // 这里需要注意的就是关于有 markdown 编辑器时数据的回填
-    useEffect(()=>{
-        if(formRef.current && firstIn && bookInfo){
+    useEffect(() => {
+        if (formRef.current && firstIn && bookInfo) {
             formRef.current.setFieldsValue(bookInfo);
             // 关键就是关于编辑器的回填
             editorRef.current.getInstance().setHTML(bookInfo?.bookIntro);
             // 将 firstIn 设置为 false
             setFirstIn(false);
         }
-        if(formRef.current){
+        if (formRef.current) {
             formRef.current.setFieldsValue(bookInfo);
         }
-    },[bookInfo])
+    }, [bookInfo]);
 
     let bookPicPreview = null;
-    if (type === "edit") {
+    if (type === 'edit') {
         bookPicPreview = (
             <Form.Item label="当前封面" name="bookPicPreview">
                 <Image src={bookInfo?.bookPic} width={100} />
@@ -45,11 +44,10 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
     useEffect(() => {
         if (!typeList.length) {
             dispatch({
-                type: "type/_initTypeList"
-            })
+                type: 'type/_initTypeList',
+            });
         }
-    }, [])
-
+    }, []);
 
     function addHandle() {
         // 因为我们需要获取 markdown editor 的值
@@ -59,8 +57,8 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
 
     /**
      * 用户在填写表单信息的时候，实时的修改 bookInfo 状态
-     * @param {*} newContent 
-     * @param {*} key 
+     * @param {*} newContent
+     * @param {*} key
      */
     function updateInfo(newContent, key) {
         const newBookInfo = { ...bookInfo };
@@ -81,6 +79,22 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
     function handleTypeChange(value) {
         updateInfo(value, 'typeId');
     }
+
+    const onPreview = async (file) => {
+        let src = file.url;
+        if (!src) {
+            src = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file.originFileObj);
+                reader.onload = () => resolve(reader.result);
+            });
+        }
+        // const image = new Image();
+        const image = document.createElement('img');
+        image.src = src;
+        const imgWindow = window.open(src);
+        imgWindow?.document.write(image.outerHTML);
+    };
 
     return (
         <Form
@@ -136,9 +150,15 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
                 rules={[{ required: true, message: '请选择下载所需积分' }]}
             >
                 <Select style={{ width: 200 }} onChange={handlePointChange}>
-                    <Select.Option value={20} key={20}>20</Select.Option>
-                    <Select.Option value={30} key={30}>30</Select.Option>
-                    <Select.Option value={40} key={40}>40</Select.Option>
+                    <Select.Option value={20} key={20}>
+                        20
+                    </Select.Option>
+                    <Select.Option value={30} key={30}>
+                        30
+                    </Select.Option>
+                    <Select.Option value={40} key={40}>
+                        40
+                    </Select.Option>
                 </Select>
             </Form.Item>
 
@@ -167,6 +187,10 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
                             updateInfo(url, 'bookPic');
                         }
                     }}
+                    headers={{
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    }}
+                    onPreview={onPreview}
                 >
                     <PlusOutlined />
                 </Upload>

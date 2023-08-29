@@ -88,7 +88,7 @@ function BookDetail(props) {
                         {
                             isLogin ? (
                                 <div className={styles.downloadLink} onClick={showModal}>
-                                    百度云下载地址
+                                    阿里云盘下载地址
                                 </div>
                             ) : null
                         }

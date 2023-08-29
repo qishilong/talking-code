@@ -12,16 +12,16 @@ function AdminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
 
     const formRef = useRef();
 
-    if(formRef.current){
+    if (formRef.current) {
         formRef.current.setFieldsValue(adminInfo);
     }
 
     // 头像的容器
     let avatarPreview = null;
-    if(type === 'edit'){
+    if (type === 'edit') {
         avatarPreview = (
             <Form.Item label="当前头像" name="avatarPreview">
-                <Image 
+                <Image
                     src={adminInfo?.avatar}
                     width={100}
                 />
@@ -50,6 +50,22 @@ function AdminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
             }
         }
     }
+
+    const onPreview = async (file) => {
+        let src = file.url;
+        if (!src) {
+            src = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file.originFileObj);
+                reader.onload = () => resolve(reader.result);
+            });
+        }
+        // const image = new Image();
+        const image = document.createElement('img');
+        image.src = src;
+        const imgWindow = window.open(src);
+        imgWindow?.document.write(image.outerHTML);
+    };
 
 
     return (
@@ -137,6 +153,10 @@ function AdminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
                             updateInfo(url, "avatar");
                         }
                     }}
+                    headers={{
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    }}
+                    onPreview={onPreview}
                 >
                     <div>
                         <PlusOutlined />

@@ -22,16 +22,31 @@ function adminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
         setAdminInfo(newAdminInfo);
     }
 
-    async function checkLoginId(){
-        if(adminInfo.loginId && type === "add"){
-            const {data} = await AdminController.adminIsExist(adminInfo.loginId);
-            console.log(data,'data');
-            if(data){
+    async function checkLoginId() {
+        if (adminInfo.loginId && type === "add") {
+            const { data } = await AdminController.adminIsExist(adminInfo.loginId);
+            console.log(data, 'data');
+            if (data) {
                 // 说明该 loginId 已经注册过了
                 return Promise.reject("该管理员已经注册过了");
             }
         }
     }
+    const onPreview = async (file) => {
+        let src = file.url;
+        if (!src) {
+            src = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file.originFileObj);
+                reader.onload = () => resolve(reader.result);
+            });
+        }
+        // const image = new Image();
+        const image = document.createElement('img');
+        image.src = src;
+        const imgWindow = window.open(src);
+        imgWindow?.document.write(image.outerHTML);
+    };
 
 
     return (
@@ -49,7 +64,7 @@ function adminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
                 name="loginId"
                 rules={[
                     { required: true, message: "请输入管理员账号" },
-                    { validateTrigger : "onBlur", validator: checkLoginId }
+                    { validateTrigger: "onBlur", validator: checkLoginId }
                 ]}
             >
                 <Input
@@ -114,6 +129,10 @@ function adminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
                             updateInfo(url, "avatar");
                         }
                     }}
+                    headers={{
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    }}
+                    onPreview={onPreview}
                 >
                     <div>
                         <PlusOutlined />

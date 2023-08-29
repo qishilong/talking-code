@@ -93,6 +93,22 @@ function Personal(props) {
         }
     }
 
+    const onPreview = async (file) => {
+        let src = file.url;
+        if (!src) {
+            src = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file.originFileObj);
+                reader.onload = () => resolve(reader.result);
+            });
+        }
+        // const image = new Image();
+        const image = document.createElement('img');
+        image.src = src;
+        const imgWindow = window.open(src);
+        imgWindow?.document.write(image.outerHTML);
+    };
+
     let modalContent = null;
     switch (panelName) {
         case "基本信息": {
@@ -353,6 +369,10 @@ function Personal(props) {
                                     handleAvatar(url, 'avatar');
                                 }
                             }}
+                            headers={{
+                                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                            }}
+                            onPreview={onPreview}
                         >
                             <PlusOutlined />
                         </Upload>
