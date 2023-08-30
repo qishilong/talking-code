@@ -8,8 +8,8 @@ import styles from './index.module.css';
 function Login(props) {
   // 该状态用于存储用户的表单输入
   const [loginInfo, setLoginInfo] = useState({
-    loginId: 'admin',
-    loginPwd: '123456',
+    loginId: '',
+    loginPwd: '',
     captcha: '',
     remember: true,
   });
@@ -83,7 +83,6 @@ function Login(props) {
       {/* 登录表单 */}
       <div className={styles.container}>
         <h1>Talking Code 后台管理系统</h1>
-        <p>（演示系统，登录账号、密码已提供）</p>
         <Form
           name="normal_login"
           className="login-form"
@@ -123,7 +122,6 @@ function Login(props) {
               type="password"
               placeholder="请输入密码"
               value={loginInfo.loginPwd}
-              // defaultValue={'123456'}
               onChange={(e) => updateInfo(e.target.value, 'loginPwd')}
             />
           </Form.Item>
