@@ -46,6 +46,7 @@
     "prompts": "^2.4.2",
     "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",
+    "react-app-rewired": "^2.2.1",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
@@ -68,9 +69,7 @@
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "analyze": "GENERATE_SOURCEMAP=false yarn build && webpack-bundle-analyzer build/static/js/*.js",
-    "eject": "react-scripts eject"
+    "test": "node scripts/test.js"
   },
   "browserslist": {
     "production": [

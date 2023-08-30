@@ -196,15 +196,9 @@ export default defineConfig({
           name: true,
           automaticNameDelimiter: '.', //连接符
           cacheGroups: {
-            // cacheAntdesign: {
-            //   name: 'antdesign',
-            //   test: /^.*node_modules[\\/](antd).*$/,
-            //   chunks: 'all',
-            //   priority: 10,
-            // },
             cacheVendors: {
               name: 'vendors',
-              test: /^.*node_modules[\\/](@toast-ui|react-canvas-nest)/,
+              test: /^.*node_modules[\\/](lodash|axios|antd|@ant-design|react|react-dom|react-canvas-nest|@toast-ui\/\react-editor|@toast-ui)/,
               chunk: 'all',
               minChunks: 2,
               priority: 9,
@@ -227,12 +221,6 @@ export default defineConfig({
         },
       },
     });
-    // config
-    //   .plugin('replace')
-    //   .use(require('webpack').ContextReplacementPlugin)
-    //   .tap(() => {
-    //     return [/moment[/\\]locale$/, /zh-cn/];
-    //   });
   },
 
   deadCode: {
@@ -245,25 +233,30 @@ export default defineConfig({
   hash: true,
   jsMinifier: 'terser',
   externals: {
-    react: 'window.React',
-    'react-dom': 'window.ReactDOM',
+    // react: 'window.React',
+    // 'react-dom': 'window.ReactDOM',
     moment: 'window.moment',
-    antd: 'window.antd',
-    '@toast-ui/react-editor': 'window.Editor',
-    '@toast-ui/editor': 'window.Editor',
+    // antd: 'window.antd',
+    // '@toast-ui/react-editor': 'window.Editor',
+    // '@toast-ui/editor': 'window.Editor',
   },
   links: [
-    {
-      href: 'https://cdn.bootcdn.net/ajax/libs/antd/5.4.4/reset.min.css',
-      rel: 'stylesheet',
-    },
+    // {
+    //   href: 'https://cdn.jsdelivr.net/npm/antd@5.4.0/dist/reset.min.css',
+    //   rel: 'stylesheet',
+    // },
+    // {
+    //   href: 'https://cdn.jsdelivr.net/npm/@toast-ui/editor@3.2.2/dist/toastui-editor.min.css',
+    //   rel: 'stylesheet',
+    // },
   ],
   headScripts: [
-    'https://cdn.bootcdn.net/ajax/libs/react/18.1.0/cjs/react-jsx-dev-runtime.production.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/react-dom/18.1.0/cjs/react-dom-server-legacy.browser.production.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/locale/zh-cn.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/antd/5.4.4/antd.min.js',
-    'https://cdn.jsdelivr.net/npm/@toast-ui/react-editor@3.2.3/dist/toastui-react-editor.min.js',
+    // 'https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js',
+    // 'https://cdn.jsdelivr.net/npm/react-dom@18.1.0/index.min.js',
+    // 'https://cdn.jsdelivr.net/npm/antd@5.4.0/dist/antd.min.js',
+    'https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js',
+    // 'https://cdn.jsdelivr.net/npm/@toast-ui/react-editor@3.2.3/dist/toastui-react-editor.min.js',
+    // 'https://cdn.jsdelivr.net/npm/@toast-ui/editor@3.2.2/dist/toastui-editor.min.js',
   ],
   analyze: {
     analyzerMode: 'server',

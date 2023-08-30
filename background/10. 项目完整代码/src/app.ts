@@ -23,7 +23,6 @@ export async function getInitialState() {
   } else {
     // 强行要跳内部页面
     const result = await AdminController.getInfo();
-    console.log(location.pathname, result);
     if (result.data) {
       // 说明有 token，并且 token 有效
       // 获取该 id 对应的管理员信息
@@ -38,9 +37,10 @@ export async function getInitialState() {
     } else {
       // token 验证失败，跳转至登录
       // 失效可能是因为 token 过期，也有可能是因为压根儿就没有 token，不管有没有，删除掉原有的
-      localStorage.removeItem("adminToken");
-      Promise.resolve().then(() => message.warning('登录过期，请重新登录')).then(
-        () => location.href = "/login");
+      localStorage.removeItem('adminToken');
+      Promise.resolve()
+        .then(() => message.warning('登录过期，请重新登录'))
+        .then(() => (location.href = '/login'));
     }
   }
 }
@@ -53,11 +53,11 @@ export const layout = () => {
     },
     logout: () => {
       // 删除本地 token
-      localStorage.removeItem("adminToken");
+      localStorage.removeItem('adminToken');
       // 跳转到登录页面
-      location.href = "/login";
+      location.href = '/login';
       message.success('退出登录成功');
-    }
+    },
   };
 };
 
@@ -72,22 +72,21 @@ export const request: RequestConfig = {
         options.headers['Authorization'] = 'Bearer ' + token;
       }
       return { url, options };
-    }
+    },
   ],
   responseInterceptors: [
     // 直接写一个 function，作为拦截器
     // 一个二元组，第一个元素是 request 拦截器，第二个元素是错误处理
     [
       (response) => {
-        console.log(response);
         return response;
       },
       (error) => {
         message.error(error.response.data.msg);
         return Promise.reject(error);
-      }
+      },
     ],
-  ]
+  ],
 };
 
 export function onRouteChange({ clientRoutes, location }: any) {
@@ -96,19 +95,22 @@ export function onRouteChange({ clientRoutes, location }: any) {
   const path = [
     {
       from: 'admin',
-      to: '/admin/adminList'
-    }, {
+      to: '/admin/adminList',
+    },
+    {
       from: 'user',
-      to: '/user/userList'
-    }, {
+      to: '/user/userList',
+    },
+    {
       from: 'book',
-      to: '/book/bookList'
-    }, {
+      to: '/book/bookList',
+    },
+    {
       from: 'article',
-      to: '/article/articleList'
-    }
+      to: '/article/articleList',
+    },
   ];
-  path.forEach(item => {
+  path.forEach((item) => {
     if (item.from === lastPath) {
       history.push(item.to);
     }
