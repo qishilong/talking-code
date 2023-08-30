@@ -780,7 +780,7 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
       new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     ].filter(Boolean),
     // Turn off performance processing because we utilize

@@ -1,9 +1,9 @@
 import Guide from '@/components/Guide';
+import { trim } from '@/utils/format';
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
+import { useEffect, useRef } from 'react';
 import styles from './index.less';
-import { trim } from '@/utils/format';
-import { useRef, useEffect } from 'react'
 
 const HomePage = () => {
   const { name } = useModel('global');
@@ -12,7 +12,7 @@ const HomePage = () => {
   const run = (canvas) => {
     // const canvas = ref.current;
     const ctx = canvas.getContext('2d', {
-      willReadFrequently: true
+      willReadFrequently: true,
     });
     function initCanvasSize() {
       /* 代码 `canvas.width = window.innerWidth * devicePixelRatio; canvas.height = window.innerHeight *
@@ -31,15 +31,15 @@ const HomePage = () => {
      * @returns 作为参数提供的最小值和最大值之间的随机整数。
      */
     function getRandom(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     class Particle {
       constructor() {
-        const r = Math.min(canvas.width, canvas.height) / 2
+        const r = Math.min(canvas.width, canvas.height) / 2;
         const cx = canvas.width / 2;
         const cy = canvas.height / 2;
-        const rad = getRandom(0, 360) * Math.PI / 180;
+        const rad = (getRandom(0, 360) * Math.PI) / 180;
         this.x = cx + r * Math.cos(rad);
         this.y = cy + r * Math.sin(rad);
         this.size = getRandom(2 * devicePixelRatio, 7 * devicePixelRatio);
@@ -53,8 +53,9 @@ const HomePage = () => {
       }
       moveTo(tx, ty) {
         // 控制每次 x, y 改变一点
-        const duration = 500;   // 500 ms 的运动时间 
-        const sx = this.x, sy = this.y;
+        const duration = 500; // 500 ms 的运动时间
+        const sx = this.x,
+          sy = this.y;
         const xSpeed = (tx - sx) / duration;
         const ySpeed = (ty - sy) / duration;
         const startTime = Date.now();
@@ -71,7 +72,7 @@ const HomePage = () => {
           }
           requestAnimationFrame(move);
           // requestIdleCallback(move)
-        }
+        };
         move();
       }
     }
@@ -82,7 +83,12 @@ const HomePage = () => {
     const getPoints = () => {
       const points = [];
       const gap = 6;
-      const { height, width, data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const { height, width, data } = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
       for (let i = 0; i < width; i += gap) {
         for (let j = 0; j < height; j += gap) {
           const index = (i + j * width) * 4;
@@ -96,14 +102,13 @@ const HomePage = () => {
         }
       }
       return points;
-    }
+    };
 
     function getText() {
       return new Date().toTimeString().substring(0, 8);
     }
 
     const clearText = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 
     function drawText() {
       const newText = getText();
@@ -136,20 +141,22 @@ const HomePage = () => {
     function createCircle() {
       clearText();
       drawText();
-      circles.forEach(item => item.draw());
+      circles.forEach((item) => item.draw());
       requestAnimationFrame(createCircle);
     }
 
     createCircle();
-  }
+  };
   useEffect(() => {
     run(ref.current);
-  })
+  });
 
   return (
     <PageContainer ghost>
       <div className={styles.container}>
-        <div className={styles.show_style}>请注意，本系统为演示系统，所以请不要随意删除或者修改管理员或者用户的信息！！！</div>
+        <div className={styles.show_style}>
+          请注意，本系统为演示系统，所以请不要随意删除或者修改管理员以及用户的信息！！！
+        </div>
         <Guide name={trim(name)} />
         <canvas ref={ref}></canvas>
       </div>

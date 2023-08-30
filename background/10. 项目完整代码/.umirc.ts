@@ -188,7 +188,7 @@ export default defineConfig({
       optimization: {
         minimize: true,
         splitChunks: {
-          chunk: 'async',
+          chunk: 'all',
           minSize: 3000,
           minChunk: 2,
           maxAsyncRequests: 5, // 同时加载的模块数量最多是5个，只分割出同时引入的前5个文件
@@ -197,8 +197,8 @@ export default defineConfig({
           automaticNameDelimiter: '.', //连接符
           cacheGroups: {
             cacheVendors: {
-              name: 'vendors',
-              test: /^.*node_modules[\\/](lodash|axios|antd|@ant-design|react|react-dom|react-canvas-nest|@toast-ui\/\react-editor|@toast-ui)/,
+              name: 'vendors', //|antd|@ant-design|react|react-dom |@toast-ui\/\react-editor|@toast-ui /^.*node_modules[\\/
+              test: /[\\/]node_modules[\\/](lodash|axios|antd|@ant-design|react|react-dom|react-canvas-nest|@toast-ui\/\react-editor|@toast-ui)/,
               chunk: 'all',
               minChunks: 2,
               priority: 9,
@@ -226,6 +226,7 @@ export default defineConfig({
   deadCode: {
     patterns: [path.resolve(__dirname, './src')],
   },
+  // phantomDependency: {},
 
   codeSplitting: {
     jsStrategy: 'granularChunks',
@@ -237,12 +238,12 @@ export default defineConfig({
     // 'react-dom': 'window.ReactDOM',
     moment: 'window.moment',
     // antd: 'window.antd',
-    // '@toast-ui/react-editor': 'window.Editor',
-    // '@toast-ui/editor': 'window.Editor',
+    // '@toast-ui/react-editor': 'commonjs Editor',
+    // '@toast-ui/editor': 'commonjs Editor',
   },
   links: [
     // {
-    //   href: 'https://cdn.jsdelivr.net/npm/antd@5.4.0/dist/reset.min.css',
+    //   href: 'https://cdnjs.cloudflare.com/ajax/libs/antd/5.4.0/reset.min.css',
     //   rel: 'stylesheet',
     // },
     // {
@@ -252,11 +253,11 @@ export default defineConfig({
   ],
   headScripts: [
     // 'https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js',
-    // 'https://cdn.jsdelivr.net/npm/react-dom@18.1.0/index.min.js',
-    // 'https://cdn.jsdelivr.net/npm/antd@5.4.0/dist/antd.min.js',
+    // 'https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.1.0/umd/react-dom.production.min.js',
     'https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js',
     // 'https://cdn.jsdelivr.net/npm/@toast-ui/react-editor@3.2.3/dist/toastui-react-editor.min.js',
     // 'https://cdn.jsdelivr.net/npm/@toast-ui/editor@3.2.2/dist/toastui-editor.min.js',
+    // 'https://cdnjs.cloudflare.com/ajax/libs/antd/5.4.0/antd-with-locales.min.js',
   ],
   analyze: {
     analyzerMode: 'server',
@@ -268,5 +269,4 @@ export default defineConfig({
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
   },
-  mfsu: false,
 });

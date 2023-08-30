@@ -2,10 +2,10 @@ const { formatResponse } = require("../utils/tools");
 
 module.exports = async (req, res, next) => {
   const limitOptions = {
-    duration: 30,
-    nums: 200,
+    duration: 60,
+    nums: 1000,
     message: "您的请求过于频繁，请稍后再试",
-    limit: 30,
+    limit: 60,
   };
   const now = Date.now();
   if (!Number.isInteger(req.session.nums)) {

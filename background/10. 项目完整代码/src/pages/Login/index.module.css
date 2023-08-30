@@ -13,9 +13,16 @@
 
 .container h1 {
     text-align: center;
-    margin: 30px auto;
+    /*margin: 30px auto;*/
+    margin: 30px auto 10px auto;
     font-weight: 200;
     font-size: 26px;
+}
+.container p{
+    font-size: 20px;
+    text-align: center;
+    font-weight: 200;
+    margin: 10px auto 30px auto;
 }
 
 .captchaImg {
