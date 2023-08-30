@@ -90,7 +90,9 @@ function Issue(props) {
           {/* 添加问答按钮 */}
           <div className={styles.tips}>
             <ExclamationCircleTwoTone className={styles.tips_info} />
-            <span>请注意，本系统为演示系统，数据均为虚拟数据！！！</span>
+            <span className={styles.tips_span_style}>
+              请注意，本系统为演示系统，数据均为虚拟数据！！！
+            </span>
           </div>
           <AddIssue />
           <div style={{ marginBottom: 20 }}>
