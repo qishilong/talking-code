@@ -26,8 +26,8 @@ function LoginForm(props) {
   const [value, setValue] = useState(1);
   const dispatch = useDispatch();
   const [loginInfo, setLoginInfo] = useState({
-    loginId: "admin",
-    loginPwd: "123456",
+    loginId: "",
+    loginPwd: "",
     captcha: "",
     remember: false,
   });
@@ -50,17 +50,10 @@ function LoginForm(props) {
     if (loginFormRef.current) {
       loginFormRef.current?.setFieldsValue(loginInfo);
     }
-
     if (registerFormRef.current) {
       registerFormRef.current?.setFieldsValue(registerInfo);
     }
   }, [loginInfo, registerInfo]);
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-    // 切换登录和注册时，重新获取验证码
-    captchaClickHandle();
-  };
 
   /**
    * 打开登录模态框
@@ -70,21 +63,35 @@ function LoginForm(props) {
   };
 
   /**
-   * 关闭登录模态框
+   * 重置数据
    */
-  const handleCancel = () => {
+  const initInfo = () => {
     setLoginInfo({
       loginId: "",
       loginPwd: "",
       captcha: "",
-      remember: true,
+      remember: false,
     });
     setRegisterInfo({
       loginId: "",
       nickname: "",
       captcha: "",
     });
+  };
+
+  /**
+   * 关闭登录模态框
+   */
+  const handleCancel = () => {
+    initInfo();
     props.closeModal();
+  };
+
+  const onChange = (e) => {
+    setValue(e.target.value);
+    initInfo();
+    // 切换登录和注册时，重新获取验证码
+    captchaClickHandle();
   };
 
   let container = "";
@@ -116,6 +123,7 @@ function LoginForm(props) {
           autoComplete="off"
           onFinish={loginHandle}
           ref={loginFormRef}
+          // initialValues={loginInfo}
         >
           <Form.Item
             label="登录账号"
@@ -130,7 +138,6 @@ function LoginForm(props) {
             <Input
               placeholder="请输入你的登录账号"
               value={loginInfo?.loginId}
-              defaultValue={"admin"}
               onChange={(e) =>
                 updateInfo(loginInfo, e.target.value, "loginId", setLoginInfo)
               }
@@ -150,7 +157,6 @@ function LoginForm(props) {
             <Input.Password
               placeholder="请输入你的登录密码，新用户默认为123456"
               value={loginInfo?.loginPwd}
-              defaultValue={"123456"}
               onChange={(e) =>
                 updateInfo(loginInfo, e.target.value, "loginPwd", setLoginInfo)
               }
@@ -159,7 +165,7 @@ function LoginForm(props) {
 
           {/* 验证码 */}
           <Form.Item
-            name="logincaptcha"
+            name="captcha"
             label="验证码"
             rules={[
               {
@@ -243,6 +249,7 @@ function LoginForm(props) {
           autoComplete="off"
           ref={registerFormRef}
           onFinish={registerHandle}
+          // initialValues={registerInfo}
         >
           <Form.Item
             label="登录账号"
@@ -287,7 +294,7 @@ function LoginForm(props) {
           </Form.Item>
 
           <Form.Item
-            name="registercaptcha"
+            name="captcha"
             label="验证码"
             rules={[
               {
@@ -412,7 +419,7 @@ function LoginForm(props) {
 
   return (
     <Modal
-      title="注册/登录（演示系统，登录账号、密码已提供）"
+      title="注册/登录"
       open={props.isShow}
       onOk={handleOk}
       onCancel={handleCancel}

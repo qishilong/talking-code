@@ -88,15 +88,6 @@ function Issue(props) {
         {/* 右边部分 */}
         <div className={styles.rightSide}>
           {/* 添加问答按钮 */}
-          <div className={styles.tips}>
-            <ExclamationCircleTwoTone
-              className={styles.tips_info}
-              twoToneColor="#FF0000"
-            />
-            <span className={styles.tips_span_style}>
-              请注意，本系统为演示系统，数据均为虚拟数据！！！
-            </span>
-          </div>
           <AddIssue />
           <div style={{ marginBottom: 20 }}>
             <Recommend />
