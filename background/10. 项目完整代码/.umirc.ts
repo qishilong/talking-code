@@ -170,15 +170,15 @@ export default defineConfig({
   ],
   proxy: {
     '/api': {
-      target: 'http://127.0.0.1:1000',
+      target: 'http://127.0.0.1:1818',
       changeOrigin: true,
     },
     '/static': {
-      target: 'http://127.0.0.1:1000',
+      target: 'http://127.0.0.1:1818',
       changeOrigin: true,
     },
     '/res': {
-      target: 'http://127.0.0.1:1000',
+      target: 'http://127.0.0.1:1818',
       changeOrigin: true,
     },
   },

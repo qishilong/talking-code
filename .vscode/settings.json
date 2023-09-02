@@ -1,10 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "typescript.tsserver.maxTsServerMemory": 1024,
-    "search.followSymlinks": false,
-    "cSpell.words": [
-        "antd"
-    ],
-    "typescript.tsserver.useSyntaxServer": "auto",
-    "typescript.tsserver.web.projectWideIntellisense.enabled": true
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
