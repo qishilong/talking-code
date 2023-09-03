@@ -56,7 +56,7 @@ function Type() {
    */
   function addHandle() {
     // 这里需要做一个判断，判断该类型是否已存在
-    if (typeList.find((item) => item.typeName === newTypeInfo)) {
+    if (typeList.find((item) => item?.typeName === newTypeInfo)) {
       message.warning('该类型已存在，请不要重复添加');
     } else {
       dispatch({

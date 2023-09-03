@@ -67,7 +67,7 @@ function Comment() {
 			search: false,
 			render: (_, row) => {
 				const id = row.issueId ? row.issueId : row.bookId;
-				const title = titleArr.find((item) => item._id === id);
+				const title = titleArr.find((item) => item?._id === id);
 				return [commmentType === 1 ? title.issueTitle : title.bookTitle];
 			},
 		},
@@ -92,10 +92,10 @@ function Comment() {
 			dataIndex: 'nickname',
 			search: false,
 			render: (_, row) => {
-				const user = userArr.find((item) => item._id === row.userId);
+				const user = userArr.find((item) => item?._id === row?.userId);
 				return [
 					<Tag color='blue' key={row.userId}>
-						{user.nickname}
+						{user?.nickname}
 					</Tag>,
 				];
 			},
@@ -118,10 +118,10 @@ function Comment() {
 			},
 			render: (_, row) => {
 				// 寻找对应类型的类型名称
-				const type = typeList.find((item) => item._id === row.typeId);
+				const type = typeList.find((item) => item?._id === row?.typeId);
 				return [
 					<Tag color='purple' key={row.typeId}>
-						{type.typeName}
+						{type?.typeName}
 					</Tag>,
 				];
 			},
@@ -135,7 +135,7 @@ function Comment() {
 			align: 'center',
 			render: (_, row, index, action) => {
 				return [
-					<div key={row._id}>
+					<div key={row?._id}>
 						{/* <Button
 							type='link'
 							size='small'
@@ -168,7 +168,7 @@ function Comment() {
 	 */
 	function showModal(row) {
 		const id = row.issueId ? row.issueId : row.bookId;
-		const title = titleArr.find((item) => item._id === id);
+		const title = titleArr.find((item) => item?._id === id);
 		setCurrentTitle(commmentType === 1 ? title.issueTitle : title.bookTitle);
 		setCurrentContent(row.commentContent);
 		setIsModalOpen(true);
@@ -183,7 +183,7 @@ function Comment() {
 	 * @param {*} bookInfo
 	 */
 	async function deleteHandle(commentInfo) {
-		await CommentController.deleteComment(commentInfo._id);
+		await CommentController.deleteComment(commentInfo?._id);
 		actionRef.current.reload(); // 再次刷新请求
 		message.success('删除评论成功');
 	}
@@ -232,7 +232,7 @@ function Comment() {
 					actionRef={actionRef}
 					columns={columns}
 					params={searchType}
-					rowKey={(row) => row._id}
+					rowKey={(row) => row?._id}
 					onReset={() => {
 						setSearchType({
 							typeId: null,

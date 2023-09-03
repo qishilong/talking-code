@@ -56,7 +56,7 @@ router.delete('/:id', async function (req, res) {
 /**
  * 根据 id 修改某一个问答
  */
-router.patch('/update/:id', async function (req, res) {
+router.patch('/:id', async function (req, res) {
 	const result = await updateIssueService(req.body.id, req.body);
 	return res.send(formatResponse(0, '', result));
 });
