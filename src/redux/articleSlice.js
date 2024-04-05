@@ -20,7 +20,7 @@ export const getArticleTitleList = createAsyncThunk(
 export const articleSlice = createSlice({
   name: "article",
   initialState: {
-    articleTitleList: [],
+    articleTitleList: []
   },
   reducers: {},
   extraReducers: {

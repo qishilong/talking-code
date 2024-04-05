@@ -20,7 +20,7 @@ function Personal(props) {
   const [passwordInfo, setPasswordInfo] = useState({
     oldpassword: "", // 旧密码
     newpassword: "", // 新密码
-    passwordConfirm: "", // 确认密码
+    passwordConfirm: "" // 确认密码
   });
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ function Personal(props) {
     dispatch(
       updateUserInfo({
         userId: userInfo?._id,
-        newInfo: editInfo,
+        newInfo: editInfo
       })
     );
     setIsModalOpen(false);
@@ -67,7 +67,7 @@ function Personal(props) {
     dispatch(
       updateUserInfo({
         userId: userInfo?._id,
-        newInfo: newAvatar,
+        newInfo: newAvatar
       })
     );
     message.success("头像修改成功");
@@ -118,49 +118,40 @@ function Personal(props) {
     case "基本信息": {
       modalContent = (
         <>
-          <Form
-            name="basic1"
-            autoComplete="off"
-            initialValues={userInfo}
-            onFinish={handleOk}
-          >
+          <Form name='basic1' autoComplete='off' initialValues={userInfo} onFinish={handleOk}>
             {/* 登录密码 */}
             <Form.Item
-              label="登录密码"
-              name="oldpassword"
+              label='登录密码'
+              name='oldpassword'
               rules={[
                 {
-                  validator: checkPassword,
-                },
+                  validator: checkPassword
+                }
               ]}
-              validateTrigger="onBlur"
+              validateTrigger='onBlur'
             >
               <Input.Password
                 rows={6}
                 value={passwordInfo?.oldpassword}
-                placeholder="如果要修改密码，请先输入旧密码"
-                onChange={(e) =>
-                  updatePasswordInfo(e.target.value, "oldpassword")
-                }
+                placeholder='如果要修改密码，请先输入旧密码'
+                onChange={(e) => updatePasswordInfo(e.target.value, "oldpassword")}
               />
             </Form.Item>
 
             {/* 新的登录密码 */}
-            <Form.Item label="新密码" name="newpassword">
+            <Form.Item label='新密码' name='newpassword'>
               <Input.Password
                 rows={6}
                 value={passwordInfo?.newpassword}
-                placeholder="请输入新密码"
-                onChange={(e) =>
-                  updatePasswordInfo(e.target.value, "newpassword")
-                }
+                placeholder='请输入新密码'
+                onChange={(e) => updatePasswordInfo(e.target.value, "newpassword")}
               />
             </Form.Item>
 
             {/* 确认密码 */}
             <Form.Item
-              label="确认密码"
-              name="passwordConfirm"
+              label='确认密码'
+              name='passwordConfirm'
               rules={[
                 ({ getFieldValue }) => ({
                   validator(_, value) {
@@ -168,25 +159,23 @@ function Personal(props) {
                       return Promise.resolve();
                     }
                     return Promise.reject(new Error("两次密码不一致"));
-                  },
-                }),
+                  }
+                })
               ]}
-              validateTrigger="onBlur"
+              validateTrigger='onBlur'
             >
               <Input.Password
                 rows={6}
-                placeholder="请确认密码"
+                placeholder='请确认密码'
                 value={passwordInfo?.passwordConfirm}
-                onChange={(e) =>
-                  updatePasswordInfo(e.target.value, "passwordConfirm")
-                }
+                onChange={(e) => updatePasswordInfo(e.target.value, "passwordConfirm")}
               />
             </Form.Item>
 
             {/* 用户昵称 */}
-            <Form.Item label="用户昵称" name="nickname">
+            <Form.Item label='用户昵称' name='nickname'>
               <Input
-                placeholder="昵称可选，默认为新用户"
+                placeholder='昵称可选，默认为新用户'
                 // value={userInfo.nickname}
                 value={123}
                 onBlur={(e) => updateInfo(e.target.value, "nickname")}
@@ -195,11 +184,11 @@ function Personal(props) {
 
             {/* 确认修改按钮 */}
             <Form.Item wrapperCol={{ offset: 5, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+              <Button type='primary' htmlType='submit'>
                 确认
               </Button>
 
-              <Button type="link" htmlType="submit" className="resetBtn">
+              <Button type='link' htmlType='submit' className='resetBtn'>
                 重置
               </Button>
             </Form.Item>
@@ -211,48 +200,43 @@ function Personal(props) {
     case "社交账号": {
       modalContent = (
         <>
-          <Form
-            name="basic2"
-            initialValues={userInfo}
-            autoComplete="off"
-            onFinish={handleOk}
-          >
-            <Form.Item label="邮箱" name="mail">
+          <Form name='basic2' initialValues={userInfo} autoComplete='off' onFinish={handleOk}>
+            <Form.Item label='邮箱' name='mail'>
               <Input
                 value={userInfo?.mail}
-                placeholder="请填写邮箱"
+                placeholder='请填写邮箱'
                 onChange={(e) => updateInfo(e.target.value, "mail")}
               />
             </Form.Item>
-            <Form.Item label="QQ号" name="qq">
+            <Form.Item label='QQ号' name='qq'>
               <Input
                 value={userInfo?.qq}
-                placeholder="请填写 QQ 号"
+                placeholder='请填写 QQ 号'
                 onChange={(e) => updateInfo(e.target.value, "qq")}
               />
             </Form.Item>
-            <Form.Item label="微信" name="wechat">
+            <Form.Item label='微信' name='wechat'>
               <Input
                 value={userInfo?.wechat}
-                placeholder="请填写微信号"
+                placeholder='请填写微信号'
                 onChange={(e) => updateInfo(e.target.value, "wechat")}
               />
             </Form.Item>
-            <Form.Item label="github" name="github">
+            <Form.Item label='github' name='github'>
               <Input
                 value={userInfo?.github}
-                placeholder="请填写 github "
+                placeholder='请填写 github '
                 onChange={(e) => updateInfo(e.target.value, "github")}
               />
             </Form.Item>
 
             {/* 确认修改按钮 */}
             <Form.Item wrapperCol={{ offset: 5, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+              <Button type='primary' htmlType='submit'>
                 确认
               </Button>
 
-              <Button type="link" htmlType="submit" className="resetBtn">
+              <Button type='link' htmlType='submit' className='resetBtn'>
                 重置
               </Button>
             </Form.Item>
@@ -264,29 +248,24 @@ function Personal(props) {
     case "个人简介": {
       modalContent = (
         <>
-          <Form
-            name="basic3"
-            initialValues={userInfo}
-            autoComplete="off"
-            onFinish={handleOk}
-          >
+          <Form name='basic3' initialValues={userInfo} autoComplete='off' onFinish={handleOk}>
             {/* 自我介绍 */}
-            <Form.Item label="自我介绍" name="intro">
+            <Form.Item label='自我介绍' name='intro'>
               <Input.TextArea
                 rows={6}
                 value={userInfo.intro}
-                placeholder="选填"
+                placeholder='选填'
                 onChange={(e) => updateInfo(e.target.value, "intro")}
               />
             </Form.Item>
 
             {/* 确认修改按钮 */}
             <Form.Item wrapperCol={{ offset: 5, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+              <Button type='primary' htmlType='submit'>
                 确认
               </Button>
 
-              <Button type="link" htmlType="submit" className="resetBtn">
+              <Button type='link' htmlType='submit' className='resetBtn'>
                 重置
               </Button>
             </Form.Item>
@@ -302,10 +281,7 @@ function Personal(props) {
    */
   async function checkPassword() {
     if (passwordInfo.oldpassword) {
-      const { data } = await checkPasswordIsRight(
-        userInfo._id,
-        passwordInfo.oldpassword
-      );
+      const { data } = await checkPasswordIsRight(userInfo._id, passwordInfo.oldpassword);
       if (!data) {
         return Promise.reject("密码不正确");
       }
@@ -314,17 +290,14 @@ function Personal(props) {
 
   return (
     <>
-      <PageHeader title="个人中心" />
+      <PageHeader title='个人中心' />
       {/* 信息展示 */}
       <div className={styles.container}>
         <div className={styles.row}>
           <Card
-            title="基本信息"
+            title='基本信息'
             extra={
-              <div
-                className={styles.edit}
-                onClick={() => showModal("基本信息")}
-              >
+              <div className={styles.edit} onClick={() => showModal("基本信息")}>
                 编辑
               </div>
             }
@@ -332,45 +305,45 @@ function Personal(props) {
             <PersonalInfoItem
               info={{
                 itemName: "登录账号",
-                itemValue: userInfo.loginId,
+                itemValue: userInfo.loginId
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "账号密码",
-                itemValue: "************",
+                itemValue: "************"
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "用户昵称",
-                itemValue: userInfo.nickname,
+                itemValue: userInfo.nickname
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "用户积分",
-                itemValue: userInfo.points,
+                itemValue: userInfo.points
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "注册时间",
-                itemValue: formatDate(userInfo.registerDate),
+                itemValue: formatDate(userInfo.registerDate)
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "上次登录时间",
-                itemValue: formatDate(userInfo.lastLoginDate),
+                itemValue: formatDate(userInfo.lastLoginDate)
               }}
             />
             <div style={{ fontWeight: 100, height: 50 }}>当前头像：</div>
             <Image src={userInfo.avatar} width={100} />
             <div style={{ fontWeight: 100, height: 50 }}>上传新头像：</div>
             <Upload
-              action="/api/upload"
-              listType="picture-card"
+              action='/api/upload'
+              listType='picture-card'
               maxCount={1}
               onChange={(e) => {
                 if (e.file.status === "done") {
@@ -380,7 +353,7 @@ function Personal(props) {
                 }
               }}
               headers={{
-                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("userToken")}`
               }}
               onPreview={onPreview}
             >
@@ -390,12 +363,9 @@ function Personal(props) {
         </div>
         <div className={styles.row}>
           <Card
-            title="社交账号"
+            title='社交账号'
             extra={
-              <div
-                className={styles.edit}
-                onClick={() => showModal("社交账号")}
-              >
+              <div className={styles.edit} onClick={() => showModal("社交账号")}>
                 编辑
               </div>
             }
@@ -403,44 +373,39 @@ function Personal(props) {
             <PersonalInfoItem
               info={{
                 itemName: "邮箱",
-                itemValue: userInfo.mail ? userInfo.mail : "未填写",
+                itemValue: userInfo.mail ? userInfo.mail : "未填写"
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "QQ号",
-                itemValue: userInfo.qq ? userInfo.qq : "未填写",
+                itemValue: userInfo.qq ? userInfo.qq : "未填写"
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "微信号",
-                itemValue: userInfo.wechat ? userInfo.wechat : "未填写",
+                itemValue: userInfo.wechat ? userInfo.wechat : "未填写"
               }}
             />
             <PersonalInfoItem
               info={{
                 itemName: "github",
-                itemValue: userInfo.github ? userInfo.github : "未填写",
+                itemValue: userInfo.github ? userInfo.github : "未填写"
               }}
             />
           </Card>
         </div>
         <div className={styles.row}>
           <Card
-            title="个人简介"
+            title='个人简介'
             extra={
-              <div
-                className={styles.edit}
-                onClick={() => showModal("个人简介")}
-              >
+              <div className={styles.edit} onClick={() => showModal("个人简介")}>
                 编辑
               </div>
             }
           >
-            <p className={styles.intro}>
-              {userInfo.intro ? userInfo.intro : "未填写"}
-            </p>
+            <p className={styles.intro}>{userInfo.intro ? userInfo.intro : "未填写"}</p>
           </Card>
         </div>
       </div>

@@ -6,7 +6,7 @@ import request from "./request";
 
 export function getUserById(userId) {
   return request(`/api/user/${userId}`, {
-    method: "GET",
+    method: "GET"
   });
 }
 
@@ -17,7 +17,7 @@ export function getUserById(userId) {
  */
 export function userIsExist(loginId) {
   return request(`/api/user/userIsExist/${loginId}`, {
-    method: "GET",
+    method: "GET"
   });
 }
 
@@ -27,7 +27,7 @@ export function userIsExist(loginId) {
 export function addUser(newUserInfo) {
   return request("/api/user", {
     method: "POST",
-    data: newUserInfo,
+    data: newUserInfo
   });
 }
 
@@ -38,7 +38,7 @@ export function addUser(newUserInfo) {
 export function editUser(userId, newUserInfo) {
   return request(`/api/user/${userId}`, {
     method: "PATCH",
-    data: newUserInfo,
+    data: newUserInfo
   });
 }
 
@@ -51,8 +51,8 @@ export function checkPasswordIsRight(userId, loginPwd) {
     method: "POST",
     data: {
       userId,
-      loginPwd,
-    },
+      loginPwd
+    }
   });
 }
 
@@ -74,7 +74,7 @@ export function userLogin(loginInfo) {
 export function getInfo() {
   return request({
     url: "/api/user/whoami",
-    method: "get",
+    method: "get"
   });
 }
 
@@ -84,16 +84,16 @@ export function getInfo() {
 export function getCaptcha() {
   return request({
     url: "/res/captcha",
-    method: "GET",
+    method: "GET"
   });
 }
 
 /**
  * 获取积分前十的用户
  */
-export function getUserByPointsRank(){
+export function getUserByPointsRank() {
   return request({
     url: "/api/user/pointsrank",
     method: "GET"
-  })
+  });
 }

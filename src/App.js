@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { changeLoginStatus, initUserInfo } from "./redux/userSlice";
 import { getInfo, getUserById } from "./api/user";
 import { getTypeList } from "./redux/typeSlice";
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import "./css/App.css";
 
@@ -59,25 +59,25 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className='App'>
       <Layout>
         {/* 头部 */}
-        <Header className="header">
+        <Header className='header'>
           <NavHeader loginHandle={loginHandle} />
         </Header>
         {/* 内容区域 */}
-        <Content className="content">
+        <Content className='content'>
           <ErrorBoundary>
             <RouterBefore />
           </ErrorBoundary>
         </Content>
-        <Footer className="footer">
+        <Footer className='footer'>
           <PageFooter />
         </Footer>
       </Layout>
       {/* 登录弹窗 */}
       <Login isShow={isModalOpen} closeModal={closeModal} />
-    </div >
+    </div>
   );
 }
 

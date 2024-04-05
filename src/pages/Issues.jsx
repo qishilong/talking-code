@@ -18,7 +18,7 @@ function Issue(props) {
   const [pageInfo, setPageInfo] = useState({
     current: 1,
     pageSize: 10,
-    total: 0,
+    total: 0
   });
 
   const { issueTypeId } = useSelector((state) => state?.type);
@@ -28,7 +28,7 @@ function Issue(props) {
       let searchParams = {
         current: pageInfo?.current,
         pageSize: pageInfo?.pageSize,
-        issueStatus: true,
+        issueStatus: true
       };
       if (issueTypeId !== "all") {
         searchParams.typeId = issueTypeId;
@@ -40,7 +40,7 @@ function Issue(props) {
       setPageInfo({
         current: data.currentPage,
         pageSize: data.eachPage,
-        total: data.count,
+        total: data.count
       });
     }
     fetchData();
@@ -59,21 +59,21 @@ function Issue(props) {
   function handlePageChange(current, pageSize) {
     setPageInfo({
       current,
-      pageSize,
+      pageSize
     });
   }
 
   return (
-    <div className="container">
-      <PageHeader title="问答列表">
+    <div className='container'>
+      <PageHeader title='问答列表'>
         <TypeSelect />
       </PageHeader>
       <div className={styles.issueContainer}>
         {/* 左边部分 */}
         <div className={styles.leftSide}>
           {questionData}
-          {issueInfo.length > 0 ? (
-            <div className="paginationContainer">
+          {issueInfo.length > 0 ?
+            <div className='paginationContainer'>
               <Pagination
                 showQuickJumper
                 defaultCurrent={1}
@@ -81,9 +81,7 @@ function Issue(props) {
                 onChange={handlePageChange}
               />
             </div>
-          ) : (
-            <div className={styles.noIssue}>有问题，就来 Talking Code！</div>
-          )}
+          : <div className={styles.noIssue}>有问题，就来 Talking Code！</div>}
         </div>
         {/* 右边部分 */}
         <div className={styles.rightSide}>

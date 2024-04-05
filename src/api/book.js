@@ -7,8 +7,8 @@ export function getBookByPage(params) {
   return request("/api/book", {
     method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -17,16 +17,16 @@ export function getBookByPage(params) {
  */
 export function getBookById(bookId) {
   return request(`/api/book/${bookId}`, {
-    method: "GET",
+    method: "GET"
   });
 }
 
 /**
  * 修改问答（主要是回答数和浏览数）
  */
- export function updateBook(bookId, newBookInfo) {
+export function updateBook(bookId, newBookInfo) {
   return request(`/api/book/${bookId}`, {
     method: "PATCH",
-    data: newBookInfo,
+    data: newBookInfo
   });
 }

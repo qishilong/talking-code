@@ -7,8 +7,8 @@ export function getIssueByPage(params) {
   return request("/api/issue", {
     method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -18,7 +18,7 @@ export function getIssueByPage(params) {
 export function addIssue(newIssue) {
   return request("/api/issue", {
     method: "POST",
-    data: newIssue,
+    data: newIssue
   });
 }
 
@@ -28,7 +28,7 @@ export function addIssue(newIssue) {
 
 export function getIssueById(issueId) {
   return request(`/api/issue/${issueId}`, {
-    method: "GET",
+    method: "GET"
   });
 }
 
@@ -38,6 +38,6 @@ export function getIssueById(issueId) {
 export function updateIssue(issueId, newIssueInfo) {
   return request(`/api/issue/${issueId}`, {
     method: "PATCH",
-    data: newIssueInfo,
+    data: newIssueInfo
   });
 }

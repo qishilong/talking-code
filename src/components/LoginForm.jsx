@@ -1,22 +1,6 @@
-import {
-  Modal,
-  Radio,
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  message,
-  Row,
-  Col,
-} from "antd";
+import { Modal, Radio, Form, Input, Button, Checkbox, message, Row, Col } from "antd";
 import { useState, useEffect, useRef } from "react";
-import {
-  userIsExist,
-  addUser,
-  userLogin,
-  getUserById,
-  getCaptcha,
-} from "../api/user";
+import { userIsExist, addUser, userLogin, getUserById, getCaptcha } from "../api/user";
 import { useDispatch } from "react-redux";
 import { changeLoginStatus, initUserInfo } from "../redux/userSlice";
 
@@ -29,12 +13,12 @@ function LoginForm(props) {
     loginId: "",
     loginPwd: "",
     captcha: "",
-    remember: false,
+    remember: false
   });
   const [registerInfo, setRegisterInfo] = useState({
     loginId: "",
     nickname: "",
-    captcha: "",
+    captcha: ""
   });
   const [captcha, setCaptcha] = useState(null);
 
@@ -70,12 +54,12 @@ function LoginForm(props) {
       loginId: "",
       loginPwd: "",
       captcha: "",
-      remember: false,
+      remember: false
     });
     setRegisterInfo({
       loginId: "",
       nickname: "",
-      captcha: "",
+      captcha: ""
     });
   };
 
@@ -119,74 +103,63 @@ function LoginForm(props) {
     container = (
       <div className={styles.container} key={"login"}>
         <Form
-          name="basic1"
-          autoComplete="off"
+          name='basic1'
+          autoComplete='off'
           onFinish={loginHandle}
           ref={loginFormRef}
           // initialValues={loginInfo}
         >
           <Form.Item
-            label="登录账号"
-            name="loginId"
+            label='登录账号'
+            name='loginId'
             rules={[
               {
                 required: true,
-                message: "请输入账号",
-              },
+                message: "请输入账号"
+              }
             ]}
           >
             <Input
-              placeholder="请输入你的登录账号"
+              placeholder='请输入你的登录账号'
               value={loginInfo?.loginId}
-              onChange={(e) =>
-                updateInfo(loginInfo, e.target.value, "loginId", setLoginInfo)
-              }
+              onChange={(e) => updateInfo(loginInfo, e.target.value, "loginId", setLoginInfo)}
             />
           </Form.Item>
 
           <Form.Item
-            label="登录密码"
-            name="loginPwd"
+            label='登录密码'
+            name='loginPwd'
             rules={[
               {
                 required: true,
-                message: "请输入密码",
-              },
+                message: "请输入密码"
+              }
             ]}
           >
             <Input.Password
-              placeholder="请输入你的登录密码，新用户默认为123456"
+              placeholder='请输入你的登录密码，新用户默认为123456'
               value={loginInfo?.loginPwd}
-              onChange={(e) =>
-                updateInfo(loginInfo, e.target.value, "loginPwd", setLoginInfo)
-              }
+              onChange={(e) => updateInfo(loginInfo, e.target.value, "loginPwd", setLoginInfo)}
             />
           </Form.Item>
 
           {/* 验证码 */}
           <Form.Item
-            name="captcha"
-            label="验证码"
+            name='captcha'
+            label='验证码'
             rules={[
               {
                 required: true,
-                message: "请输入验证码",
-              },
+                message: "请输入验证码"
+              }
             ]}
           >
-            <Row align="middle">
+            <Row align='middle'>
               <Col span={16}>
                 <Input
-                  placeholder="请输入验证码"
+                  placeholder='请输入验证码'
                   value={loginInfo?.captcha}
-                  onChange={(e) =>
-                    updateInfo(
-                      loginInfo,
-                      e.target.value,
-                      "captcha",
-                      setLoginInfo
-                    )
-                  }
+                  onChange={(e) => updateInfo(loginInfo, e.target.value, "captcha", setLoginInfo)}
                 />
               </Col>
               <Col span={6}>
@@ -200,21 +173,14 @@ function LoginForm(props) {
           </Form.Item>
 
           <Form.Item
-            name="remember"
+            name='remember'
             wrapperCol={{
               offset: 5,
-              span: 16,
+              span: 16
             }}
           >
             <Checkbox
-              onChange={(e) =>
-                updateInfo(
-                  loginInfo,
-                  e.target.checked,
-                  "remember",
-                  setLoginInfo
-                )
-              }
+              onChange={(e) => updateInfo(loginInfo, e.target.checked, "remember", setLoginInfo)}
               checked={loginInfo?.remember}
             >
               记住我
@@ -224,17 +190,13 @@ function LoginForm(props) {
           <Form.Item
             wrapperCol={{
               offset: 5,
-              span: 16,
+              span: 16
             }}
           >
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginRight: 20 }}
-            >
+            <Button type='primary' htmlType='submit' style={{ marginRight: 20 }}>
               登录
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button type='primary' htmlType='submit'>
               重置
             </Button>
           </Form.Item>
@@ -245,76 +207,59 @@ function LoginForm(props) {
     container = (
       <div className={styles.container} key={"register"}>
         <Form
-          name="basic2"
-          autoComplete="off"
+          name='basic2'
+          autoComplete='off'
           ref={registerFormRef}
           onFinish={registerHandle}
           // initialValues={registerInfo}
         >
           <Form.Item
-            label="登录账号"
-            name="loginId"
+            label='登录账号'
+            name='loginId'
             rules={[
               {
                 required: true,
-                message: "请输入账号，仅此项为必填项",
+                message: "请输入账号，仅此项为必填项"
               },
               // 验证用户是否已经存在
-              { validator: checkLoginIdIsExist },
+              { validator: checkLoginIdIsExist }
             ]}
-            validateTrigger="onBlur"
+            validateTrigger='onBlur'
           >
             <Input
-              placeholder="请输入账号"
+              placeholder='请输入账号'
               value={registerInfo?.loginId}
-              onChange={(e) =>
-                updateInfo(
-                  registerInfo,
-                  e.target.value,
-                  "loginId",
-                  setRegisterInfo
-                )
-              }
+              onChange={(e) => updateInfo(registerInfo, e.target.value, "loginId", setRegisterInfo)}
             />
           </Form.Item>
 
-          <Form.Item label="用户昵称" name="nickname">
+          <Form.Item label='用户昵称' name='nickname'>
             <Input
-              placeholder="请输入昵称，不填写默认为新用户xxx"
+              placeholder='请输入昵称，不填写默认为新用户xxx'
               value={registerInfo?.nickname}
               onChange={(e) =>
-                updateInfo(
-                  registerInfo,
-                  e.target.value,
-                  "nickname",
-                  setRegisterInfo
-                )
+                updateInfo(registerInfo, e.target.value, "nickname", setRegisterInfo)
               }
             />
           </Form.Item>
 
           <Form.Item
-            name="captcha"
-            label="验证码"
+            name='captcha'
+            label='验证码'
             rules={[
               {
                 required: true,
-                message: "请输入验证码",
-              },
+                message: "请输入验证码"
+              }
             ]}
           >
-            <Row align="middle">
+            <Row align='middle'>
               <Col span={16}>
                 <Input
-                  placeholder="请输入验证码"
+                  placeholder='请输入验证码'
                   value={registerInfo?.captcha}
                   onChange={(e) =>
-                    updateInfo(
-                      registerInfo,
-                      e.target.value,
-                      "captcha",
-                      setRegisterInfo
-                    )
+                    updateInfo(registerInfo, e.target.value, "captcha", setRegisterInfo)
                   }
                 />
               </Col>
@@ -331,17 +276,13 @@ function LoginForm(props) {
           <Form.Item
             wrapperCol={{
               offset: 5,
-              span: 16,
+              span: 16
             }}
           >
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginRight: 20 }}
-            >
+            <Button type='primary' htmlType='submit' style={{ marginRight: 20 }}>
               注册
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button type='primary' htmlType='submit'>
               重置
             </Button>
           </Form.Item>
@@ -370,7 +311,7 @@ function LoginForm(props) {
     const result = await addUser({
       loginId: registerInfo.loginId,
       nickname: registerInfo.nickname,
-      captcha: registerInfo.captcha,
+      captcha: registerInfo.captcha
     });
     if (result.data) {
       message.success("用户注册成功，新用户默认密码123456");
@@ -419,7 +360,7 @@ function LoginForm(props) {
 
   return (
     <Modal
-      title="注册/登录"
+      title='注册/登录'
       open={props.isShow}
       onOk={handleOk}
       onCancel={handleCancel}
@@ -428,7 +369,7 @@ function LoginForm(props) {
       <Radio.Group
         onChange={onChange}
         value={value}
-        buttonStyle="solid"
+        buttonStyle='solid'
         className={styles.radioGroup}
       >
         <Radio.Button value={1} className={styles.radioButton}>

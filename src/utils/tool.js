@@ -4,7 +4,7 @@
  * @returns
  */
 export function formatDate(timestamp, part) {
-  if(!timestamp){
+  if (!timestamp) {
     return;
   }
   let date = new Date(parseInt(timestamp));
@@ -17,15 +17,7 @@ export function formatDate(timestamp, part) {
   let minutes = date.getMinutes(); // 分
   let seconds = date.getSeconds(); // 秒
 
-  let weekArr = [
-    "星期日",
-    "星期一",
-    "星期二",
-    "星期三",
-    "星期四",
-    "星期五",
-    "星期六",
-  ];
+  let weekArr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
   let week = weekArr[date.getDay()];
 
   // 需要给一位数前面加 0
@@ -54,43 +46,45 @@ export function formatDate(timestamp, part) {
 
   var str = "";
 
-  switch(part){
-    case "year":{
+  switch (part) {
+    case "year": {
       str = `${year}-${month}-${day}`;
       break;
     }
-    case "time":{
+    case "time": {
       str = `${hour}:${minutes}:${seconds} `;
       break;
     }
-    case "year-time":{
+    case "year-time": {
       str = `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
       break;
     }
-    case "time-week":{
+    case "time-week": {
       str = `${hour}:${minutes}:${seconds} ${week}`;
-      break
+      break;
     }
-    default:{
-      str = `${year}-${month}-${day} ${hour}:${minutes}:${seconds} ${week}`
+    default: {
+      str = `${year}-${month}-${day} ${hour}:${minutes}:${seconds} ${week}`;
     }
   }
 
   return str;
-  
 }
-
 
 /**
  * 批量创建下拉列表的 option
  * @param {*} Option 要创建的 Option 组件
  * @param {*} typeList 类别集合
- * @returns 
+ * @returns
  */
- export function typeOptionCreator(Select, typeList) {
+export function typeOptionCreator(Select, typeList) {
   let optionContainer = [];
   for (let option of typeList) {
-    optionContainer.push(<Select.Option value={option._id} key={option._id}>{option.typeName}</Select.Option>);
+    optionContainer.push(
+      <Select.Option value={option._id} key={option._id}>
+        {option.typeName}
+      </Select.Option>
+    );
   }
   return optionContainer;
 }

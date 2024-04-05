@@ -4,9 +4,7 @@ import { Alert } from "antd";
 
 function RouteBefore() {
   // 导航守卫
-  const currentPath = RouteBeforeConfig.filter(
-    (item) => item?.path === location?.pathname
-  )[0];
+  const currentPath = RouteBeforeConfig.filter((item) => item?.path === location?.pathname)[0];
 
   function closeHandle() {
     location.pathname = "/issues";
@@ -14,14 +12,7 @@ function RouteBefore() {
 
   if (currentPath) {
     if (currentPath.needLogin && !localStorage.getItem("userToken")) {
-      return (
-        <Alert
-          message="请先登录"
-          type="warning"
-          closable
-          onClose={closeHandle}
-        />
-      );
+      return <Alert message='请先登录' type='warning' closable onClose={closeHandle} />;
     }
   }
 

@@ -5,7 +5,6 @@ import zhCN from "antd/es/locale/zh_CN";
 import { ConfigProvider } from "antd";
 // import ErrorBoundary from './components/ErrorBoundary';
 
-
 import "antd/dist/antd.min.css";
 import "./index.css";
 

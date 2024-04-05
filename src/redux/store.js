@@ -7,6 +7,6 @@ export default configureStore({
   reducer: {
     type: typeReducer,
     article: articleReducer,
-    user: userReducer,
-  },
+    user: userReducer
+  }
 });

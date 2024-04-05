@@ -5,7 +5,6 @@ import request from "./request";
  */
 export function getType() {
   return request("/api/type", {
-    method: "GET",
+    method: "GET"
   });
 }
-

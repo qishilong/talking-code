@@ -1,8 +1,8 @@
 import axios from "axios";
-import { message } from 'antd';
+import { message } from "antd";
 
 const service = axios.create({
-  timeout: 5000, // 超时时间
+  timeout: 5000 // 超时时间
 });
 
 // 请求拦截器
@@ -10,10 +10,10 @@ service.interceptors.request.use(
   // 正常请求被拦截下来的回调函数
   (config) => {
     // 从本地存储中获取 token
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem("userToken");
     if (token) {
       // 说明本地有 token 信息，在请求头的 Authorization 字段统一添加 token
-      config.headers['Authorization'] = "Bearer " + token
+      config.headers["Authorization"] = "Bearer " + token;
     }
     // console.log(config,'config');
     // 放行请求
@@ -44,7 +44,7 @@ service.interceptors.response.use(
   },
   // 发生错误时的回调函数
   (error) => {
-    message.error(error.response.data.msg)
+    message.error(error.response.data.msg);
     // console.log("响应拦截出错：", error);
   }
 );

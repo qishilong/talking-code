@@ -6,7 +6,7 @@ import request from "./request";
 
 export function getArticleTitle() {
   return request("/api/article/articleTitle/", {
-    method: "GET",
+    method: "GET"
   });
 }
 
@@ -16,6 +16,6 @@ export function getArticleTitle() {
 
 export function getArticleById(articleId) {
   return request(`/api/article/${articleId}`, {
-    method: "GET",
+    method: "GET"
   });
 }
