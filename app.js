@@ -30,7 +30,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: true
   })
 );
 
@@ -38,11 +38,13 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public"), {
-  maxAge: '1 day'
-}));
-app.use(require('./middleware/token'))
-app.use(require('./middleware/questLimit'));
+app.use(
+  express.static(path.join(__dirname, "public"), {
+    maxAge: "1 day"
+  })
+);
+app.use(require("./middleware/token"));
+app.use(require("./middleware/questLimit"));
 
 // 使用路由中间件
 app.use("/res/captcha", captchaRouter);
