@@ -1,8 +1,7 @@
-import React from 'react';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Popconfirm, Button, Form, Input, message } from 'antd';
-import { useDispatch, useSelector } from 'umi';
+import { Button, Form, Input, Popconfirm, message } from 'antd';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'umi';
 
 function Type() {
   const { typeList } = useSelector((state) => state.type);
@@ -12,9 +11,9 @@ function Type() {
   useEffect(() => {
     if (!typeList.length) {
       dispatch({
-          type: 'type/_initTypeList',
+        type: 'type/_initTypeList',
       });
-  }
+    }
   }, [typeList]);
 
   const columns = [

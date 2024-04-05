@@ -51,7 +51,7 @@ function adminIsExist(loginId) {
  * 获取验证码
  */
 
- function getCaptcha() {
+function getCaptcha() {
   return request('/res/captcha', {
     method: 'GET',
   });
@@ -60,7 +60,7 @@ function adminIsExist(loginId) {
 /**
  * 管理员登录
  */
- function login(loginInfo) {
+function login(loginInfo) {
   return request('/api/admin/login', {
     method: 'POST',
     data: loginInfo,
@@ -71,7 +71,7 @@ function adminIsExist(loginId) {
  * 恢复登录状态
  */
 
- function getInfo() {
+function getInfo() {
   return request('/api/admin/whoami', {
     method: 'GET',
   });
@@ -80,7 +80,7 @@ function adminIsExist(loginId) {
 /**
  * 根据 id 获取管理员
  */
- function getAdminById(adminId) {
+function getAdminById(adminId) {
   return request(`/api/admin/${adminId}`, {
     method: 'GET',
   });
@@ -95,5 +95,5 @@ export default {
   getCaptcha,
   login,
   getInfo,
-  getAdminById
+  getAdminById,
 };

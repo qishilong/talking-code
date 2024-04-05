@@ -1,8 +1,8 @@
 import { PageContainer } from '@ant-design/pro-components';
+import { message } from 'antd';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserForm from './components/userForm';
-import { useState } from 'react';
-import { message } from 'antd';
 
 // 请求方法
 import UserController from '@/services/user';

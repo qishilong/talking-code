@@ -2,14 +2,14 @@
   "private": true,
   "author": "qishilong <663253062@qq.com>",
   "scripts": {
-    "dev": "max dev",
+    "analyze": "cross-env ANALYZE=1 max build",
     "build": "max build",
-    "format": "prettier --cache --write .",
-    "prepare": "husky install",
+    "dev": "max dev",
+    "format": "prettier --write .",
     "postinstall": "max setup",
+    "prepare": "husky install",
     "setup": "max setup",
-    "start": "npm run dev",
-    "analyze": "cross-env ANALYZE=1 max build"
+    "start": "npm run dev"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",

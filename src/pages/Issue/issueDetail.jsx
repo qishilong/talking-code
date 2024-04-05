@@ -1,9 +1,9 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { Card, Image, Tag } from 'antd';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'umi';
 import { formatDate } from '@/utils/tool';
+import { PageContainer } from '@ant-design/pro-components';
+import { Card, Tag } from 'antd';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'umi';
 
 // 请求方法
 import IssueController from '@/services/issue';

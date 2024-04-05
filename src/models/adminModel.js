@@ -40,15 +40,15 @@ export default {
       return newState;
     },
     // 新增管理员
-    addAdmin(state, { payload }){
-        console.log(payload);
-        const newState = { ...state };
-        const arr = [...newState.adminList];
-        arr.push(payload);
-        newState.adminList = arr;
-        console.log(newState);
-        return newState;
-    }
+    addAdmin(state, { payload }) {
+      console.log(payload);
+      const newState = { ...state };
+      const arr = [...newState.adminList];
+      arr.push(payload);
+      newState.adminList = arr;
+      console.log(newState);
+      return newState;
+    },
   },
   // 处理异步副作用
   effects: {
@@ -87,12 +87,12 @@ export default {
     // 新增管理员信息
     *_addAdmin({ payload }, { put, call }) {
       // 和服务器通信
-      const {data} = yield call(AdminController.addAdmin, payload);
+      const { data } = yield call(AdminController.addAdmin, payload);
       // 调用 reducer 的方法更新本地状态仓库
-        yield put({
-            type : "addAdmin",
-            payload : data
-        })
+      yield put({
+        type: 'addAdmin',
+        payload: data,
+      });
     },
   },
 };

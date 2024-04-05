@@ -1,8 +1,8 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import UserForm from './components/userForm';
 import { PageContainer } from '@ant-design/pro-components';
 import { message } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import UserForm from './components/userForm';
 
 // 请求方法
 import UserController from '@/services/user';

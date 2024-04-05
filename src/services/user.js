@@ -27,7 +27,7 @@ function getUserById(userId) {
  * 新增用户
  */
 function addUser(newUserInfo) {
-  newUserInfo.type = "background";
+  newUserInfo.type = 'background';
   return request('/api/user', {
     method: 'POST',
     data: newUserInfo,

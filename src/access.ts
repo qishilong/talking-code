@@ -23,7 +23,7 @@ export default (initialState: any) => {
   } else {
     return {
       SuperAdmin: false,
-      NormalAdmin: false
+      NormalAdmin: false,
     };
   }
 

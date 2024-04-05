@@ -1,8 +1,8 @@
 import { PageContainer } from '@ant-design/pro-components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Card, Tag } from 'antd';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'umi';
-import { Card, Image, Tag } from 'antd';
 
 // 请求方法
 import ArticleController from '@/services/article';

@@ -1,9 +1,9 @@
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm, Modal, message, Tag, Switch, Image } from 'antd';
-import { useState, useRef } from 'react';
 import { formatDate } from '@/utils/tool';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { Button, Image, Modal, Popconfirm, Switch, Tag, message } from 'antd';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAccess, Access } from 'umi';
+import { Access, useAccess } from 'umi';
 
 // 请求方法
 import UserController from '@/services/user';

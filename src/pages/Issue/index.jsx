@@ -1,9 +1,9 @@
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm, message, Tag, Switch, Select } from 'antd';
-import { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'umi';
-import { useNavigate } from 'react-router-dom';
 import { typeOptionCreator } from '@/utils/tool';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { Button, Popconfirm, Select, Switch, Tag, message } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'umi';
 
 // 请求方法
 import IssueController from '@/services/issue';

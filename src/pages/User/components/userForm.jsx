@@ -1,5 +1,5 @@
-import { Button, Form, Input, Upload, Image } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Image, Input, Upload } from 'antd';
 import { useRef } from 'react';
 
 const { TextArea } = Input;
@@ -102,7 +102,7 @@ function UserForm({ type, submitHandle, userInfo, setUserInfo }) {
             }
           }}
           headers={{
-            'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
           }}
           onPreview={onPreview}
         >
