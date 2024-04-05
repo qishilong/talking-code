@@ -12,19 +12,15 @@ module.exports.formatResponse = function (code, msg, data) {
   return {
     code,
     msg,
-    data,
+    data
   };
 };
 
 // 解析客户端传递过来的 token
 module.exports.analysisToken = function (token) {
-  return jwt.verify(
-    token.split(" ")[1],
-    md5(process.env.JWT_SECRET),
-    function (err, decode) {
-      return decode;
-    }
-  );
+  return jwt.verify(token.split(" ")[1], md5(process.env.JWT_SECRET), function (err, decode) {
+    return decode;
+  });
 };
 
 /**
@@ -58,20 +54,14 @@ const storage = multer.diskStorage({
   // 上传到服务器的文件，文件名要做单独处理
   filename: function (req, file, cb) {
     // 获取文件名
-    const basename = path.basename(
-      file.originalname,
-      path.extname(file.originalname)
-    );
+    const basename = path.basename(file.originalname, path.extname(file.originalname));
     // 获取后缀名
     const extname = path.extname(file.originalname);
     // 构建新的名字
     const newName =
-      basename +
-      new Date().getTime() +
-      Math.floor(Math.random() * 9000 + 1000) +
-      extname;
+      basename + new Date().getTime() + Math.floor(Math.random() * 9000 + 1000) + extname;
     cb(null, newName);
-  },
+  }
 });
 
 // 文件上传
@@ -79,6 +69,6 @@ module.exports.uploading = multer({
   storage: storage,
   limits: {
     fileSize: 2000000,
-    files: 1,
-  },
+    files: 1
+  }
 });

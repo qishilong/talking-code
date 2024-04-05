@@ -23,7 +23,7 @@ const md5 = require("md5");
       loginPwd: md5("123456"),
       avatar: "/static/imgs/yinshi.jpg",
       permission: 1,
-      enabled: true,
+      enabled: true
     });
     console.log("初始化管理员数据完毕...");
   }

@@ -1,32 +1,32 @@
-const { validate } = require('validate.js');
-const { findAdminByLoginId } = require('../dao/adminDao');
-const { findUserByLoginId } = require('../dao/userDao');
-const { findTypeByTypeName } = require('../dao/typeDao');
+const { validate } = require("validate.js");
+const { findAdminByLoginId } = require("../dao/adminDao");
+const { findUserByLoginId } = require("../dao/userDao");
+const { findTypeByTypeName } = require("../dao/typeDao");
 
 /**
  * 管理员验证规则
  */
 exports.adminRule = {
-	loginId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-		adminLoginIdIsExist: true,
-	},
-	loginPwd: {
-		presence: {
-			allowEmpty: true,
-		},
-		type: 'string',
-	},
-	permission: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'number',
-	},
-	loginIdIsExist: true,
+  loginId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string",
+    adminLoginIdIsExist: true
+  },
+  loginPwd: {
+    presence: {
+      allowEmpty: true
+    },
+    type: "string"
+  },
+  permission: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "number"
+  },
+  loginIdIsExist: true
 };
 
 /**
@@ -34,24 +34,24 @@ exports.adminRule = {
  * @returns
  */
 validate.validators.adminLoginIdIsExist = async function (loginId) {
-	const adminInfo = await findAdminByLoginId(loginId);
-	if (adminInfo.length) {
-		return 'loginId is already exist';
-	}
-	return;
+  const adminInfo = await findAdminByLoginId(loginId);
+  if (adminInfo.length) {
+    return "loginId is already exist";
+  }
+  return;
 };
 
 /**
  * 用户验证规则
  */
 exports.userRule = {
-	loginId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-		userLoginIdIsExist: true,
-	},
+  loginId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string",
+    userLoginIdIsExist: true
+  }
 };
 
 /**
@@ -59,24 +59,24 @@ exports.userRule = {
  * @returns
  */
 validate.validators.userLoginIdIsExist = async function (loginId) {
-	const userInfo = await findUserByLoginId(loginId);
-	if (userInfo.length) {
-		return 'loginId is already exist';
-	}
-	return;
+  const userInfo = await findUserByLoginId(loginId);
+  if (userInfo.length) {
+    return "loginId is already exist";
+  }
+  return;
 };
 
 /**
  * 类型验证规则
  */
 exports.typeRule = {
-	typeName: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-		typeIsExist: true,
-	},
+  typeName: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string",
+    typeIsExist: true
+  }
 };
 
 /**
@@ -84,153 +84,153 @@ exports.typeRule = {
  * @returns
  */
 validate.validators.typeIsExist = async function (typeName) {
-	const typeInfo = await findTypeByTypeName(typeName);
-	if (typeInfo.length) {
-		return 'type is already exist';
-	}
-	return;
+  const typeInfo = await findTypeByTypeName(typeName);
+  if (typeInfo.length) {
+    return "type is already exist";
+  }
+  return;
 };
 
 /**
  * 书籍验证规则
  */
 exports.bookRule = {
-	bookTitle: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	bookPic: {
-		presence: {
-			allowEmpty: true,
-		},
-		type: 'string',
-	},
-	downloadLink: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	bookIntro: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	requirePoints: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'number',
-	},
-	typeId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
+  bookTitle: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  bookPic: {
+    presence: {
+      allowEmpty: true
+    },
+    type: "string"
+  },
+  downloadLink: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  bookIntro: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  requirePoints: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "number"
+  },
+  typeId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  }
 };
 
 /**
  * 评论验证规则
  */
 exports.commentRule = {
-	userId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	issueId: {
-		presence: {
-			allowEmpty: true,
-		},
-		type: 'string',
-	},
-	bookId: {
-		presence: {
-			allowEmpty: true,
-		},
-		type: 'string',
-	},
-	typeId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	commentContent: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	commentType: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'number',
-	},
+  userId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  issueId: {
+    presence: {
+      allowEmpty: true
+    },
+    type: "string"
+  },
+  bookId: {
+    presence: {
+      allowEmpty: true
+    },
+    type: "string"
+  },
+  typeId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  commentContent: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  commentType: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "number"
+  }
 };
 
 /**
  * 问答验证规则
  */
 exports.issueRule = {
-	issueTitle: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	issueContent: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	userId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	typeId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
+  issueTitle: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  issueContent: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  userId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  typeId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  }
 };
 
 /**
  * 文章规则
  */
 exports.articleRule = {
-	articleTitle: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	articleContent: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
-	onShelfDate: {
-		presence: {
-			allowEmpty: true,
-		},
-		type: 'string',
-	},
-	typeId: {
-		presence: {
-			allowEmpty: false,
-		},
-		type: 'string',
-	},
+  articleTitle: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  articleContent: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  },
+  onShelfDate: {
+    presence: {
+      allowEmpty: true
+    },
+    type: "string"
+  },
+  typeId: {
+    presence: {
+      allowEmpty: false
+    },
+    type: "string"
+  }
 };

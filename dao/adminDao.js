@@ -34,7 +34,7 @@ module.exports.addAdminDao = async function (newAdminInfo) {
  */
 module.exports.deleteAdminDao = async function (id) {
   return adminModel.deleteOne({
-    _id: id,
+    _id: id
   });
 };
 
@@ -45,7 +45,7 @@ module.exports.deleteAdminDao = async function (id) {
  */
 module.exports.findAdminByIdDao = async function (id) {
   return adminModel.findOne({
-    _id: id,
+    _id: id
   });
 };
 
@@ -58,12 +58,11 @@ module.exports.updateAdminDao = async function (id, newInfo) {
   return adminModel.updateOne({ _id: id }, newInfo);
 };
 
-
 /**
  * 根据 loginId 查找管理员
- * @param {*} loginId 
- * @returns 
+ * @param {*} loginId
+ * @returns
  */
-module.exports.findAdminByLoginId = async function (loginId){
-  return await adminModel.find({loginId});
-}
+module.exports.findAdminByLoginId = async function (loginId) {
+  return await adminModel.find({ loginId });
+};

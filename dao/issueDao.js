@@ -7,7 +7,7 @@ const issueModel = require("../models/issueModel");
 module.exports.findIssueByPageDao = async function (queryObj) {
   const pageObj = {
     currentPage: Number(queryObj.current),
-    eachPage: Number(queryObj.pageSize),
+    eachPage: Number(queryObj.pageSize)
   };
 
   const queryCondition = {};
@@ -38,7 +38,7 @@ module.exports.findIssueByPageDao = async function (queryObj) {
  */
 module.exports.findIssueByIdDao = async function (id) {
   return issueModel.findOne({
-    _id: id,
+    _id: id
   });
 };
 
@@ -55,7 +55,7 @@ module.exports.addIssueDao = async function (newIssueInfo) {
  */
 module.exports.deleteIssueDao = async function (id) {
   return issueModel.deleteOne({
-    _id: id,
+    _id: id
   });
 };
 

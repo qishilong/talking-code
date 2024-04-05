@@ -15,7 +15,7 @@ const {
   findUserByIdService,
   userIsExistService,
   passwordcheckService,
-  findUserByPointsRankService,
+  findUserByPointsRankService
 } = require("../services/userService");
 
 const { formatResponse, analysisToken } = require("../utils/tools");
@@ -51,13 +51,11 @@ router.get("/whoami", async function (req, res, next) {
     return res.send(
       formatResponse(0, "", {
         _id: token._id,
-        loginId: token.loginId,
+        loginId: token.loginId
       })
     );
   } else {
-    return res.send(
-      formatResponse(416, "登录过期，请重新登录", nul)
-    )
+    return res.send(formatResponse(416, "登录过期，请重新登录", nul));
     next(new ValidationError("登录过期，请重新登录"));
   }
 });

@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 const typeSchema = new mongoose.Schema(
   {
     id: String, // mongodb 自动生成的 id
-    typeName: String, // 类型名称
+    typeName: String // 类型名称
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 

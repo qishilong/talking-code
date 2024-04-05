@@ -9,7 +9,7 @@ const {
   findAllTypeService,
   addTypeService,
   deleteTypeService,
-  updateTypeService,
+  updateTypeService
 } = require("../services/typeService");
 
 const { formatResponse } = require("../utils/tools");

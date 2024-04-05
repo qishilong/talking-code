@@ -9,11 +9,11 @@ const articleSchema = new mongoose.Schema(
     onShelfDate: String, // 上架日期
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "typeModel", // 关联的模型
-    }, //  所属分类
+      ref: "typeModel" // 关联的模型
+    } //  所属分类
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 

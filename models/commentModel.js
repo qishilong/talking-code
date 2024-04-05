@@ -6,26 +6,26 @@ const commentSchema = new mongoose.Schema(
     id: String, // mongodb 自动生成的 id
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "userModel", // 关联的模型
+      ref: "userModel" // 关联的模型
     }, //  所属分类
     issueId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "issueModel", // 关联的模型
+      ref: "issueModel" // 关联的模型
     }, //  所属分类
     bookId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "bookModel", // 关联的模型
+      ref: "bookModel" // 关联的模型
     }, //  所属分类
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "typeModel", // 关联的模型
+      ref: "typeModel" // 关联的模型
     }, //  所属分类
     commentContent: String, // 对应评论
     commentDate: String, // 评论日期
-    commentType: Number, // 评论类型
+    commentType: Number // 评论类型
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 

@@ -11,7 +11,7 @@ const {
   findBookByPageService,
   findBookByIdService,
   updateBookService,
-  deleteBookService,
+  deleteBookService
 } = require("../services/bookService");
 
 const { formatResponse } = require("../utils/tools");
@@ -20,7 +20,7 @@ const { formatResponse } = require("../utils/tools");
  * 根据分页获取书籍
  */
 router.get("/", async function (req, res) {
-  const result = await findBookByPageService(req.query)
+  const result = await findBookByPageService(req.query);
   return res.send(formatResponse(0, "", result));
 });
 

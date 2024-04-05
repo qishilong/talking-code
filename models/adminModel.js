@@ -6,13 +6,13 @@ const adminSchema = new mongoose.Schema(
     id: String, // mongodb 自动生成的 id
     loginId: String, // 账号
     loginPwd: String, // 密码
-    nickname:String, //昵称
+    nickname: String, //昵称
     avatar: String, // 头像
     permission: Number, // 权限
-    enabled: Boolean, // 是否可用
+    enabled: Boolean // 是否可用
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 

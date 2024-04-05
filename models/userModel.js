@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema(
     registerDate: String, // 注册时间
     lastLoginDate: String, // 上次登录事件
     points: Number, // 积分
-    enabled: Boolean, // 是否可用
+    enabled: Boolean // 是否可用
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 

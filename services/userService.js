@@ -10,7 +10,7 @@ const {
   findUserByIdDao,
   updateUserDao,
   findUserByLoginId,
-  findUserByPointsRankDao,
+  findUserByPointsRankDao
 } = require("../dao/userDao");
 const { userRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
@@ -51,15 +51,15 @@ module.exports.loginService = async function (loginInfo) {
         data: {
           _id: data._id,
           loginId: data.loginId,
-          enabled: data.enabled,
-        },
+          enabled: data.enabled
+        }
       };
     }
     // 添加 token
     data = {
       _id: data._id,
       loginId: data.loginId,
-      enabled: data.enabled,
+      enabled: data.enabled
     };
     var loginPeriod = 1; // token 的有效时间默认是 1 天
     if (loginInfo.remember) {
@@ -68,16 +68,16 @@ module.exports.loginService = async function (loginInfo) {
     }
     // 生成 token
     const token = jwt.sign(data, md5(process.env.JWT_SECRET), {
-      expiresIn: 60 * 60 * 24 * loginPeriod,
+      expiresIn: 60 * 60 * 24 * loginPeriod
     });
     return {
       data,
-      token,
+      token
     };
   }
   // 没有进入上面的 if，说明账号密码不正确
   return {
-    data,
+    data
   };
 };
 

@@ -14,11 +14,11 @@ const bookSchema = new mongoose.Schema(
     requirePoints: Number, // 下砸所需积分
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "typeModel", // 关联的模型
-    }, //  所属分类
+      ref: "typeModel" // 关联的模型
+    } //  所属分类
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 

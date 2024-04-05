@@ -8,7 +8,7 @@ const userModel = require("../models/userModel");
 module.exports.findUserByPageDao = async function (queryObj) {
   const pageObj = {
     currentPage: Number(queryObj.current),
-    eachPage: Number(queryObj.pageSize),
+    eachPage: Number(queryObj.pageSize)
   };
 
   const queryCondition = {};
@@ -33,7 +33,7 @@ module.exports.findUserByPageDao = async function (queryObj) {
 
 /**
  * 查询积分前 10 名的用户
- * @returns 
+ * @returns
  */
 module.exports.findUserByPointsRankDao = async function () {
   return await userModel.find().sort({ points: -1, registerDate: -1 }).limit(10);
@@ -63,7 +63,7 @@ module.exports.addUserDao = async function (newUserInfo) {
  */
 module.exports.deleteUserDao = async function (id) {
   return userModel.deleteOne({
-    _id: id,
+    _id: id
   });
 };
 
@@ -74,7 +74,7 @@ module.exports.deleteUserDao = async function (id) {
  */
 module.exports.findUserByIdDao = async function (id) {
   return userModel.findOne({
-    _id: id,
+    _id: id
   });
 };
 

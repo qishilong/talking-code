@@ -36,7 +36,7 @@ exports.UploadError = class extends ServiceError {
 // 禁止访问错误
 exports.ForbiddenError = class extends ServiceError {
   constructor(message) {
-    super(message, 401, { questLimit: '10/minute' });
+    super(message, 401, { questLimit: "10/minute" });
   }
 };
 

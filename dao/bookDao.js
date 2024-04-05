@@ -1,7 +1,7 @@
 // 引入模型
 const bookModel = require("../models/bookModel");
 
-const {findTypeByTypeName} = require("./typeDao");
+const { findTypeByTypeName } = require("./typeDao");
 
 /**
  * 分页查找书籍
@@ -9,15 +9,15 @@ const {findTypeByTypeName} = require("./typeDao");
 module.exports.findBookByPageDao = async function (queryObj) {
   const pageObj = {
     currentPage: Number(queryObj.current),
-    eachPage: Number(queryObj.pageSize),
+    eachPage: Number(queryObj.pageSize)
   };
 
   const queryCondition = {};
-  if(queryObj.bookTitle){
+  if (queryObj.bookTitle) {
     // 用户要按照书籍标题进行搜索
-    queryCondition.bookTitle = new RegExp(queryObj.bookTitle,"i");
+    queryCondition.bookTitle = new RegExp(queryObj.bookTitle, "i");
   }
-  if(queryObj.typeId){
+  if (queryObj.typeId) {
     // 用户要按照分类进行搜索
     queryCondition.typeId = queryObj.typeId;
   }
@@ -36,7 +36,7 @@ module.exports.findBookByPageDao = async function (queryObj) {
  */
 module.exports.findBookByIdDao = async function (id) {
   return bookModel.findOne({
-    _id: id,
+    _id: id
   });
 };
 
@@ -44,7 +44,7 @@ module.exports.findBookByIdDao = async function (id) {
  * 新增书籍
  */
 module.exports.addBookDao = async function (newBookInfo) {
-  console.log(newBookInfo,'baga');
+  console.log(newBookInfo, "baga");
   return await bookModel.create(newBookInfo);
 };
 
@@ -53,7 +53,7 @@ module.exports.addBookDao = async function (newBookInfo) {
  */
 module.exports.deleteBookDao = async function (id) {
   return bookModel.deleteOne({
-    _id: id,
+    _id: id
   });
 };
 
@@ -64,4 +64,3 @@ module.exports.deleteBookDao = async function (id) {
 module.exports.updateBookDao = async function (id, newInfo) {
   return bookModel.updateOne({ _id: id }, newInfo);
 };
-

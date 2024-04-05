@@ -20,7 +20,7 @@ module.exports.addTypeDao = async function (newTypeInfo) {
  */
 module.exports.deleteTypeDao = async function (id) {
   return typeModel.deleteOne({
-    _id: id,
+    _id: id
   });
 };
 

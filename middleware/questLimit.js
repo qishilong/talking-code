@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
     duration: 60,
     nums: 1000,
     message: "您的请求过于频繁，请稍后再试",
-    limit: 60,
+    limit: 60
   };
   const now = Date.now();
   if (!Number.isInteger(req.session.nums)) {
@@ -34,9 +34,7 @@ module.exports = async (req, res, next) => {
     // 时间还没有过去，看请求次数是否超过
     if (currentNum > limitOptions.nums) {
       // 说明当前的次数已超过最大值，禁止请求
-      return res
-        .status(403)
-        .send(formatResponse(403, limitOptions.message, { data: null }));
+      return res.status(403).send(formatResponse(403, limitOptions.message, { data: null }));
     }
   }
 

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node ./bin/www",
-    "start": "nodemon ./bin/www & pm2 start app.js"
+    "start": "nodemon ./bin/www & pm2 start app.js",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

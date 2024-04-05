@@ -53,7 +53,7 @@ router.get("/whoami", async function (req, res, next) {
       return res.send(
         formatResponse(0, "", {
           _id: token._id,
-          loginId: token.loginId,
+          loginId: token.loginId
         })
       );
     } else {

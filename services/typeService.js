@@ -1,9 +1,4 @@
-const {
-  findAllTypeDao,
-  addTypeDao,
-  deleteTypeDao,
-  updateTypeDao,
-} = require("../dao/typeDao");
+const { findAllTypeDao, addTypeDao, deleteTypeDao, updateTypeDao } = require("../dao/typeDao");
 const { validate } = require("validate.js");
 const { typeRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
@@ -19,12 +14,15 @@ module.exports.findAllTypeService = async function () {
  * 增加类型
  */
 module.exports.addTypeService = async function (newTypeInfo) {
-    // 首先要进行验证，查看该类型是否已经存在
-    return validate.async(newTypeInfo, typeRule).then(async function(){
-        return await addTypeDao(newTypeInfo);
-    },function(){
-        return new ValidationError("数据验证失败"); 
-    })
+  // 首先要进行验证，查看该类型是否已经存在
+  return validate.async(newTypeInfo, typeRule).then(
+    async function () {
+      return await addTypeDao(newTypeInfo);
+    },
+    function () {
+      return new ValidationError("数据验证失败");
+    }
+  );
 };
 
 /**

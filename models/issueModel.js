@@ -13,15 +13,15 @@ const issueSchema = new mongoose.Schema(
     issueDate: String, //	问题时间
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "userModel", // 关联的模型
+      ref: "userModel" // 关联的模型
     }, //	用户 id
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "typeModel", // 关联的模型
-    }, //  所属分类
+      ref: "typeModel" // 关联的模型
+    } //  所属分类
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 
