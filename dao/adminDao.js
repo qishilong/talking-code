@@ -14,8 +14,6 @@ module.exports.findAllAdminDao = async function () {
  * @returns 返回查询到的数据
  */
 module.exports.loginDao = async function ({ loginId, loginPwd }) {
-  console.log(loginId);
-  console.log(loginPwd);
   return await adminModel.findOne({ loginId, loginPwd });
 };
 

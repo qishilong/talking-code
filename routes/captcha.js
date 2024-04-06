@@ -9,7 +9,6 @@ router.get("/", async function (req, res, next) {
   const captcha = await getCaptchaService();
   // 将生成的验证码保存至 session
   req.session.captcha = captcha.text;
-  console.log(req.session.captcha, "req.session.captcha>>>");
   // 设置响应头
   res.setHeader("Content-Type", "image/svg+xml");
   // 将验证码返回给客户端

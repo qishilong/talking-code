@@ -46,7 +46,6 @@ module.exports.findIssueByIdDao = async function (id) {
  * 新增问答
  */
 module.exports.addIssueDao = async function (newIssueInfo) {
-  console.log(newIssueInfo, "newIssueInfo>>>???");
   return await issueModel.create(newIssueInfo);
 };
 

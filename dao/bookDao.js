@@ -44,7 +44,6 @@ module.exports.findBookByIdDao = async function (id) {
  * 新增书籍
  */
 module.exports.addBookDao = async function (newBookInfo) {
-  console.log(newBookInfo, "baga");
   return await bookModel.create(newBookInfo);
 };
 

@@ -25,9 +25,6 @@ const { ValidationError } = require("../utils/errors");
  * 用户登录
  */
 router.post("/login", async function (req, res, next) {
-  console.log(req.body.captcha, "req.body.captcha");
-  console.log(req.session.captcha, "req.session.captcha");
-
   // 首先应该有一个验证码的验证
   if (req.body.captcha.toLowerCase() !== req.session.captcha.toLowerCase()) {
     // 如果进入此 if，说明是有问题的，用户输入的验证码不正确

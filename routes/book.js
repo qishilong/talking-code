@@ -48,7 +48,6 @@ router.post("/", async function (req, res, next) {
  * 删除书籍
  */
 router.delete("/:id", async function (req, res) {
-  console.log(req.params.id);
   const result = await deleteBookService(req.params.id);
   return res.send(formatResponse(0, "", result));
 });

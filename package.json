@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "node ./bin/www",
-    "start": "nodemon ./bin/www & pm2 start app.js",
+    "dev": "nodemon ./bin/www",
+    "start": "nodemon ./bin/www & pm2 start ./bin/www",
     "format": "prettier --write ."
   },
   "dependencies": {

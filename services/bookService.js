@@ -28,7 +28,6 @@ module.exports.findBookByIdService = async function (id) {
  * 新增书籍
  */
 module.exports.addBookService = async function (newBookInfo) {
-  console.log(newBookInfo, "newBookInfo");
   // 首先进行同步的数据验证
   const validateResult = validate.validate(newBookInfo, bookRule);
   if (!validateResult) {
@@ -61,7 +60,6 @@ module.exports.deleteBookService = async function (id) {
 
   // 获取该 bookId 对应的所有评论
   const commentResult = await findBookCommentByIdDao(id);
-  console.log(commentResult, "commentResult");
   for (let i = 0; i < commentResult.length; i++) {
     await deleteCommentDao(commentResult[i]._id);
   }
