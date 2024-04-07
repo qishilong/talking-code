@@ -131,7 +131,7 @@ function Discuss(props) {
         content={
           <>
             <Form.Item>
-              {props?.commentType === 1 ?
+              {props?.commentType === 1 ? (
                 <Editor
                   initialValue=''
                   previewStyle='vertical'
@@ -142,13 +142,14 @@ function Discuss(props) {
                   ref={editorRef}
                   className='editor'
                 />
-              : <Input.TextArea
+              ) : (
+                <Input.TextArea
                   rows={4}
                   placeholder={isLogin ? "" : "请登录后评论..."}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                 />
-              }
+              )}
             </Form.Item>
             <Form.Item>
               <Button type='primary' disabled={isLogin ? false : true} onClick={onSubmit}>
@@ -181,11 +182,12 @@ function Discuss(props) {
       )}
 
       {/* 分页 */}
-      {commentList?.length > 0 ?
+      {commentList?.length > 0 ? (
         <div className={styles.paginationContainer}>
           <Pagination showQuickJumper defaultCurrent={1} total={pageInfo?.totalPage} />
         </div>
-      : <div
+      ) : (
+        <div
           style={{
             fontWeight: "200",
             textAlign: "center",
@@ -194,7 +196,7 @@ function Discuss(props) {
         >
           暂无评论
         </div>
-      }
+      )}
     </div>
   );
 }
