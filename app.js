@@ -44,7 +44,7 @@ app.use(
   })
 );
 app.use(require("./middleware/token"));
-app.use(require("./middleware/questLimit"));
+// app.use(require("./middleware/questLimit"));
 
 // 使用路由中间件
 app.use("/res/captcha", captchaRouter);

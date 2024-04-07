@@ -13,11 +13,11 @@ module.exports.findUserByPageDao = async function (queryObj) {
 
   const queryCondition = {};
   if (queryObj.loginId) {
-    // 用户要按照书籍标题进行搜索
+    // 用户要按照loginId进行搜索
     queryCondition.loginId = new RegExp(queryObj.loginId, "i");
   }
   if (queryObj.nickname) {
-    // 用户要按照分类进行搜索
+    // 用户要按照nickname进行搜索
     queryCondition.nickname = new RegExp(queryObj.nickname, "i");
   }
 

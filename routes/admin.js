@@ -65,7 +65,7 @@ router.get("/whoami", async function (req, res, next) {
  * 获取所有管理员
  */
 router.get("/", async function (req, res) {
-  const result = await findAllAdminService();
+  const result = await findAllAdminService(req.query);
   // 对返回数据进行格式化
   return res.send(formatResponse(0, "", result));
 });

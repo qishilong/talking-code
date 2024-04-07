@@ -4,8 +4,36 @@ const adminModel = require("../models/adminModel");
 /**
  * 查询所有的管理员
  */
-module.exports.findAllAdminDao = async function () {
-  return await adminModel.find();
+module.exports.findAllAdminDao = async function (queryObj) {
+  console.log(queryObj, 22);
+  if (!queryObj) {
+    return await adminModel.find();
+  }
+
+  console.log(queryObj, 11);
+
+  const pageObj = {
+    current: Number(queryObj.current),
+    pageSize: Number(queryObj.pageSize)
+  };
+
+  const queryCondition = {};
+  if (queryObj.loginId) {
+    // 用户要按照loginId进行搜索
+    queryCondition.loginId = new RegExp(queryObj.loginId, "i");
+  }
+  if (queryObj.nickname) {
+    // 用户要按照nickname进行搜索
+    queryCondition.nickname = new RegExp(queryObj.nickname, "i");
+  }
+
+  pageObj.count = await adminModel.countDocuments(queryCondition); // 数据总条数
+  pageObj.totalPage = Math.ceil(pageObj.count / pageObj.pageSize); // 总页数
+  pageObj.data = await adminModel
+    .find(queryCondition)
+    .skip((pageObj.current - 1) * pageObj.pageSize)
+    .limit(pageObj.pageSize);
+  return pageObj;
 };
 
 /**

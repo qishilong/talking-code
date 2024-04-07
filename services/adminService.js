@@ -18,8 +18,8 @@ const { randomAvatar } = require("../utils/tools");
  * 查询所有的管理员的业务逻辑
  * @returns 返回查询结果
  */
-module.exports.findAllAdminService = async function () {
-  return await findAllAdminDao();
+module.exports.findAllAdminService = async function (queryObj) {
+  return await findAllAdminDao(queryObj);
 };
 
 /**
