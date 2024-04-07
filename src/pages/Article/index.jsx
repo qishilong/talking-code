@@ -1,6 +1,6 @@
 import { formatDate, typeOptionCreator } from "@/utils/tool";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
-import { Button, DatePicker, Popconfirm, Select, Tag, message } from "antd";
+import { Button, DatePicker, Popconfirm, Select, Tag, Tooltip, message } from "antd";
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "umi";
 
 // 请求方法
 import ArticleController from "@/services/article";
+
+import styles from "./index.module.less";
 
 function Article() {
   const [pagination, setPagination] = useState({
@@ -47,7 +49,7 @@ function Article() {
     {
       title: "序号",
       align: "center",
-      width: 50,
+      width: "5%",
       search: false,
       render: (text, record, index) => {
         return [(pagination.current - 1) * pagination.pageSize + index + 1];
@@ -57,15 +59,30 @@ function Article() {
       title: "文章名称",
       dataIndex: "articleTitle",
       key: "articleTitle",
+      width: "20%",
       render: (_, row) => {
         // 将书籍简介的文字进行简化
-        let brief = null;
-        if (row.articleTitle.length > 22) {
-          brief = row.articleTitle.slice(0, 22) + "...";
-        } else {
-          brief = row.articleTitle;
+        let text = "-";
+        if (row?.articleTitle) {
+          text = row.articleTitle;
         }
-        return [brief];
+        return (
+          <Tooltip
+            title={
+              row?.articleTitle.length > 0 ? (
+                <div className={styles["tooltip-styles"]}>{text}</div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{text}</div>
+          </Tooltip>
+        );
       }
     },
     {
@@ -73,6 +90,7 @@ function Article() {
       dataIndex: "typeId",
       key: "typeId",
       align: "center",
+      width: "10%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
           <Select placeholder='请选择查询分类' onChange={(e) => handleChange({ typeId: e })}>
@@ -95,6 +113,7 @@ function Article() {
       dataIndex: "onShelfDate",
       key: "onShelfDate",
       align: "center",
+      width: "10%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
           <DatePicker
@@ -117,14 +136,14 @@ function Article() {
     },
     {
       title: "操作",
-      width: 200,
+      width: "10%",
       key: "option",
       valueType: "option",
       fixed: "right",
       align: "center",
       render: (_, row, index, action) => {
         return [
-          <div key={row._id}>
+          <div key={row._id} className={styles["handle-style"]}>
             <Button
               type='link'
               size='small'
