@@ -1,10 +1,10 @@
 // 请求方法
-import TypeController from '@/services/type';
+import TypeController from "@/services/type";
 
 export default {
-  namespace: 'type',
+  namespace: "type",
   state: {
-    typeList: [],
+    typeList: []
   },
   reducers: {
     initTypeList: (state, { payload }) => {
@@ -26,7 +26,7 @@ export default {
       arr.splice(index, 1);
       newObj.typeList = arr;
       return newObj;
-    },
+    }
   },
   effects: {
     // 初始化管理员列表
@@ -34,21 +34,21 @@ export default {
       // 从服务器获取数据
       const { data } = yield call(TypeController.getType);
       // 调用 reducer 方法更新本地仓库
-      yield put({ type: 'initTypeList', payload: data });
+      yield put({ type: "initTypeList", payload: data });
     },
     // 新增类型
     *_addType({ payload }, { put, call }) {
       // 和服务器通信，进行新增
       const { data } = yield call(TypeController.addType, payload);
       // 调用 reducer 方法更新本地仓库
-      yield put({ type: 'addType', payload: data });
+      yield put({ type: "addType", payload: data });
     },
     // 删除类型
     *_deleteType({ payload }, { put, call }) {
       // 和服务器通信，进行删除
       yield call(TypeController.deleteType, payload._id);
       // 本地仓库也需要同步更新
-      yield put({ type: 'deleteType', payload });
-    },
-  },
+      yield put({ type: "deleteType", payload });
+    }
+  }
 };

@@ -1,11 +1,11 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { message } from 'antd';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import BookForm from './components/bookForm';
+import { PageContainer } from "@ant-design/pro-components";
+import { message } from "antd";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import BookForm from "./components/bookForm";
 
 // 请求方法
-import BookController from '@/services/book';
+import BookController from "@/services/book";
 
 function EditBook(props) {
   // 获取传递过来的 id
@@ -32,18 +32,18 @@ function EditBook(props) {
       downloadLink: bookInfo.downloadLink,
       requirePoints: bookInfo.requirePoints,
       bookPic: bookInfo.bookPic,
-      typeId: bookInfo.typeId,
+      typeId: bookInfo.typeId
     });
     // 跳转回首页
-    navigate('/book/bookList');
-    message.success('书籍信息修改成功');
+    navigate("/book/bookList");
+    message.success("书籍信息修改成功");
   }
 
   return (
     <PageContainer>
-      <div className="container" style={{ width: 800 }}>
+      <div className='container' style={{ width: 800 }}>
         <BookForm
-          type="edit"
+          type='edit'
           bookInfo={bookInfo}
           setBookInfo={setBookInfo}
           submitHandle={submitHandle}

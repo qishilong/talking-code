@@ -1,14 +1,14 @@
-import { request } from 'umi';
+import { request } from "umi";
 
 /**
  * 分页获取文章
  */
 function getArticleByPage(params) {
-  return request('/api/article', {
-    method: 'GET',
+  return request("/api/article", {
+    method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -17,7 +17,7 @@ function getArticleByPage(params) {
  */
 function getArticleById(articleId) {
   return request(`/api/article/${articleId}`, {
-    method: 'GET',
+    method: "GET"
   });
 }
 
@@ -25,9 +25,9 @@ function getArticleById(articleId) {
  * 新增文章
  */
 function addArticle(newArticleInfo) {
-  return request('/api/article', {
-    method: 'POST',
-    data: newArticleInfo,
+  return request("/api/article", {
+    method: "POST",
+    data: newArticleInfo
   });
 }
 
@@ -36,7 +36,7 @@ function addArticle(newArticleInfo) {
  */
 function deleteArticle(articleId) {
   return request(`/api/article/${articleId}`, {
-    method: 'DELETE',
+    method: "DELETE"
   });
 }
 
@@ -45,8 +45,8 @@ function deleteArticle(articleId) {
  */
 function editArticle(articleId, newArticleInfo) {
   return request(`/api/article/${articleId}`, {
-    method: 'PATCH',
-    data: newArticleInfo,
+    method: "PATCH",
+    data: newArticleInfo
   });
 }
 
@@ -55,5 +55,5 @@ export default {
   getArticleById,
   addArticle,
   deleteArticle,
-  editArticle,
+  editArticle
 };

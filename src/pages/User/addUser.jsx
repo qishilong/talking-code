@@ -1,24 +1,24 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { message } from 'antd';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import UserForm from './components/userForm';
+import { PageContainer } from "@ant-design/pro-components";
+import { message } from "antd";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import UserForm from "./components/userForm";
 
 // 请求方法
-import UserController from '@/services/user';
+import UserController from "@/services/user";
 
 function AddUser() {
   const navigate = useNavigate();
 
   const [newUserInfo, setNewUserInfo] = useState({
-    loginId: '',
-    loginPwd: '',
-    avatar: '',
-    nickname: '',
-    mail: '',
-    qq: '',
-    wechat: '',
-    intro: '',
+    loginId: "",
+    loginPwd: "",
+    avatar: "",
+    nickname: "",
+    mail: "",
+    qq: "",
+    wechat: "",
+    intro: ""
   });
 
   /**
@@ -29,15 +29,15 @@ function AddUser() {
     await UserController.addUser(newUserInfo);
 
     // 跳转回首页
-    navigate('/user/userList');
-    message.success('添加用户成功');
+    navigate("/user/userList");
+    message.success("添加用户成功");
   }
 
   return (
     <PageContainer>
-      <div className="container" style={{ width: 800 }}>
+      <div className='container' style={{ width: 800 }}>
         <UserForm
-          type="add"
+          type='add'
           submitHandle={submitHandle}
           userInfo={newUserInfo}
           setUserInfo={setNewUserInfo}

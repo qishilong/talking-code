@@ -1,11 +1,11 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { message } from 'antd';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import ArticleForm from './components/articleForm';
+import { PageContainer } from "@ant-design/pro-components";
+import { message } from "antd";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import ArticleForm from "./components/articleForm";
 
 // 请求方法
-import ArticleController from '@/services/article';
+import ArticleController from "@/services/article";
 
 function EditArticle() {
   const { id } = useParams(); // 获取可能传递过来的 id
@@ -22,8 +22,6 @@ function EditArticle() {
     fetchData();
   }, []);
 
-  console.log(articleInfo);
-
   /**
    * 修改文章
    */
@@ -33,18 +31,18 @@ function EditArticle() {
       articleTitle: articleInfo.articleTitle,
       articleContent,
       onShelfDate: articleInfo.onShelfDate,
-      typeId: articleInfo.typeId,
+      typeId: articleInfo.typeId
     });
     // 跳转回首页
-    navigate('/article/articleList');
-    message.success('修改文章成功');
+    navigate("/article/articleList");
+    message.success("修改文章成功");
   }
 
   return (
     <PageContainer>
-      <div className="container" style={{ width: 1000 }}>
+      <div className='container' style={{ width: 1000 }}>
         <ArticleForm
-          type="edit"
+          type='edit'
           submitHandle={submitHandle}
           articleInfo={articleInfo}
           setArticleInfo={setArticleInfo}

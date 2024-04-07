@@ -1,17 +1,17 @@
-import AdminController from '@/services/admin';
-import { BarcodeOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Col, Form, Input, Row, message } from 'antd';
-import { useEffect, useState } from 'react';
-import ReactCanvasNest from 'react-canvas-nest';
-import styles from './index.module.css';
+import AdminController from "@/services/admin";
+import { BarcodeOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Col, Form, Input, Row, message } from "antd";
+import { useEffect, useState } from "react";
+import ReactCanvasNest from "react-canvas-nest";
+import styles from "./index.module.css";
 
 function Login(props) {
   // 该状态用于存储用户的表单输入
   const [loginInfo, setLoginInfo] = useState({
-    loginId: '',
-    loginPwd: '',
-    captcha: '',
-    remember: true,
+    loginId: "",
+    loginPwd: "",
+    captcha: "",
+    remember: true
   });
 
   // 该状态用于存储验证码
@@ -35,18 +35,18 @@ function Login(props) {
       const adminInfo = result.data;
       if (!adminInfo.data) {
         // 账号密码不正确
-        message.warning('账号密码不正确');
+        message.warning("账号密码不正确");
         captchaClickHandle();
       } else if (!adminInfo.data.enabled) {
         // 这里还需要考虑一种情况，账号密码是正确的，但是账号已经被冻结
-        message.warning('该账号已经被冻结，请联系管理员');
+        message.warning("该账号已经被冻结，请联系管理员");
         captchaClickHandle();
       } else {
         // 说明账号密码正确，账号状态也是可用的
         // 存储 token
-        localStorage.setItem('adminToken', adminInfo.token);
+        localStorage.setItem("adminToken", adminInfo.token);
         // 跳转到后台管理系统的首页
-        location.href = '/';
+        location.href = "/";
       }
     } else {
       message.warning(result.msg);
@@ -73,9 +73,9 @@ function Login(props) {
       {/* canvas 动画 */}
       <ReactCanvasNest
         config={{
-          pointColor: '255, 0, 0',
+          pointColor: "255, 0, 0",
           count: 66,
-          follow: true,
+          follow: true
         }}
         style={{ zIndex: 1 }}
       />
@@ -84,65 +84,65 @@ function Login(props) {
       <div className={styles.container}>
         <h1>Talking Code 后台管理系统</h1>
         <Form
-          name="normal_login"
-          className="login-form"
+          name='normal_login'
+          className='login-form'
           initialValues={loginInfo}
           onFinish={onFinish}
         >
           {/* 登录账号 */}
           <Form.Item
-            name="loginId"
+            name='loginId'
             rules={[
               {
                 required: true,
-                message: '请输入账号',
-              },
+                message: "请输入账号"
+              }
             ]}
           >
             <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="请输入账号"
+              prefix={<UserOutlined className='site-form-item-icon' />}
+              placeholder='请输入账号'
               value={loginInfo.loginId}
-              onChange={(e) => updateInfo(e.target.value, 'loginId')}
+              onChange={(e) => updateInfo(e.target.value, "loginId")}
             />
           </Form.Item>
 
           {/* 登录密码 */}
           <Form.Item
-            name="loginPwd"
+            name='loginPwd'
             rules={[
               {
                 required: true,
-                message: '请输入密码',
-              },
+                message: "请输入密码"
+              }
             ]}
           >
             <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="请输入密码"
+              prefix={<LockOutlined className='site-form-item-icon' />}
+              type='password'
+              placeholder='请输入密码'
               value={loginInfo.loginPwd}
-              onChange={(e) => updateInfo(e.target.value, 'loginPwd')}
+              onChange={(e) => updateInfo(e.target.value, "loginPwd")}
             />
           </Form.Item>
 
           {/* 验证码 */}
           <Form.Item
-            name="captcha"
+            name='captcha'
             rules={[
               {
                 required: true,
-                message: '请输入验证码',
-              },
+                message: "请输入验证码"
+              }
             ]}
           >
-            <Row align="middle">
+            <Row align='middle'>
               <Col span={16}>
                 <Input
-                  prefix={<BarcodeOutlined className="site-form-item-icon" />}
-                  placeholder="请输入验证码"
+                  prefix={<BarcodeOutlined className='site-form-item-icon' />}
+                  placeholder='请输入验证码'
                   value={loginInfo.captcha}
-                  onChange={(e) => updateInfo(e.target.value, 'captcha')}
+                  onChange={(e) => updateInfo(e.target.value, "captcha")}
                 />
               </Col>
               <Col span={6}>
@@ -156,10 +156,10 @@ function Login(props) {
           </Form.Item>
 
           {/* 7天免登录 */}
-          <Form.Item name="remember" className={styles.remember}>
+          <Form.Item name='remember' className={styles.remember}>
             <Checkbox
               checked={loginInfo.remember}
-              onChange={(e) => updateInfo(e.target.checked, 'remember')}
+              onChange={(e) => updateInfo(e.target.checked, "remember")}
             >
               7天免登录
             </Checkbox>
@@ -167,11 +167,7 @@ function Login(props) {
 
           {/* 登录按钮 */}
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.loginBtn}
-            >
+            <Button type='primary' htmlType='submit' className={styles.loginBtn}>
               登录
             </Button>
           </Form.Item>

@@ -1,14 +1,14 @@
-import { request } from 'umi';
+import { request } from "umi";
 
 /**
  * 分页获取问答
  */
 function getIssueByPage(params) {
-  return request('/api/issue', {
-    method: 'GET',
+  return request("/api/issue", {
+    method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -17,7 +17,7 @@ function getIssueByPage(params) {
  */
 function getIssueById(issueId) {
   return request(`/api/issue/${issueId}`, {
-    method: 'GET',
+    method: "GET"
   });
 }
 
@@ -26,7 +26,7 @@ function getIssueById(issueId) {
  */
 function deleteIssue(issueId) {
   return request(`/api/issue/${issueId}`, {
-    method: 'DELETE',
+    method: "DELETE"
   });
 }
 
@@ -35,8 +35,8 @@ function deleteIssue(issueId) {
  */
 function editIssue(issueId, issueInfo) {
   return request(`/api/issue/${issueId}`, {
-    method: 'PATCH',
-    data: issueInfo,
+    method: "PATCH",
+    data: issueInfo
   });
 }
 
@@ -44,5 +44,5 @@ export default {
   getIssueByPage,
   getIssueById,
   deleteIssue,
-  editIssue,
+  editIssue
 };

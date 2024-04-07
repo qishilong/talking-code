@@ -1,11 +1,11 @@
-import { request } from '@umijs/max';
+import { request } from "@umijs/max";
 
 /**
  * 获取所有的管理员
  */
 function getAdmin() {
-  return request('/api/admin', {
-    method: 'GET',
+  return request("/api/admin", {
+    method: "GET"
   });
 }
 
@@ -14,7 +14,7 @@ function getAdmin() {
  */
 function deleteAdmin(adminId) {
   return request(`/api/admin/${adminId}`, {
-    method: 'DELETE',
+    method: "DELETE"
   });
 }
 
@@ -23,8 +23,8 @@ function deleteAdmin(adminId) {
  */
 function editAdmin(adminId, newAdminInfo) {
   return request(`/api/admin/${adminId}`, {
-    method: 'PATCH',
-    data: newAdminInfo,
+    method: "PATCH",
+    data: newAdminInfo
   });
 }
 
@@ -32,9 +32,9 @@ function editAdmin(adminId, newAdminInfo) {
  * 新增管理员
  */
 function addAdmin(newAdminInfo) {
-  return request('/api/admin', {
-    method: 'POST',
-    data: newAdminInfo,
+  return request("/api/admin", {
+    method: "POST",
+    data: newAdminInfo
   });
 }
 
@@ -43,7 +43,7 @@ function addAdmin(newAdminInfo) {
  */
 function adminIsExist(loginId) {
   return request(`/api/admin/adminIsExist/${loginId}`, {
-    method: 'GET',
+    method: "GET"
   });
 }
 
@@ -52,8 +52,8 @@ function adminIsExist(loginId) {
  */
 
 function getCaptcha() {
-  return request('/res/captcha', {
-    method: 'GET',
+  return request("/res/captcha", {
+    method: "GET"
   });
 }
 
@@ -61,9 +61,9 @@ function getCaptcha() {
  * 管理员登录
  */
 function login(loginInfo) {
-  return request('/api/admin/login', {
-    method: 'POST',
-    data: loginInfo,
+  return request("/api/admin/login", {
+    method: "POST",
+    data: loginInfo
   });
 }
 
@@ -72,8 +72,8 @@ function login(loginInfo) {
  */
 
 function getInfo() {
-  return request('/api/admin/whoami', {
-    method: 'GET',
+  return request("/api/admin/whoami", {
+    method: "GET"
   });
 }
 
@@ -82,7 +82,7 @@ function getInfo() {
  */
 function getAdminById(adminId) {
   return request(`/api/admin/${adminId}`, {
-    method: 'GET',
+    method: "GET"
   });
 }
 
@@ -95,5 +95,5 @@ export default {
   getCaptcha,
   login,
   getInfo,
-  getAdminById,
+  getAdminById
 };

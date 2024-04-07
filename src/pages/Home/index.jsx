@@ -1,18 +1,18 @@
-import Guide from '@/components/Guide';
-import { trim } from '@/utils/format';
-import { PageContainer } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
-import { useEffect, useRef } from 'react';
-import styles from './index.less';
+import Guide from "@/components/Guide";
+import { trim } from "@/utils/format";
+import { PageContainer } from "@ant-design/pro-components";
+import { useModel } from "@umijs/max";
+import { useEffect, useRef } from "react";
+import styles from "./index.less";
 
 const HomePage = () => {
-  const { name } = useModel('global');
+  const { name } = useModel("global");
   const ref = useRef();
 
   const run = (canvas) => {
     // const canvas = ref.current;
-    const ctx = canvas.getContext('2d', {
-      willReadFrequently: true,
+    const ctx = canvas.getContext("2d", {
+      willReadFrequently: true
     });
     function initCanvasSize() {
       /* 代码 `canvas.width = window.innerWidth * devicePixelRatio; canvas.height = window.innerHeight *
@@ -47,7 +47,7 @@ const HomePage = () => {
 
       draw() {
         ctx.beginPath();
-        ctx.fillStyle = '#00aaffda';
+        ctx.fillStyle = "#00aaffda";
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
         ctx.fill();
       }
@@ -83,12 +83,7 @@ const HomePage = () => {
     const getPoints = () => {
       const points = [];
       const gap = 6;
-      const { height, width, data } = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      );
+      const { height, width, data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < width; i += gap) {
         for (let j = 0; j < height; j += gap) {
           const index = (i + j * width) * 4;
@@ -118,8 +113,8 @@ const HomePage = () => {
       clearText();
       text = newText;
       const { width, height } = canvas;
-      ctx.fillStyle = '#000';
-      ctx.textBaseline = 'middle';
+      ctx.fillStyle = "#000";
+      ctx.textBaseline = "middle";
       ctx.font = `${200 * devicePixelRatio}px 'DS-Digital', sans-serif`;
       ctx.fillText(text, (width - ctx.measureText(text).width) / 2, height / 2);
       const points = getPoints();

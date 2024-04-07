@@ -1,14 +1,14 @@
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { useDispatch, useModel, useSelector } from '@umijs/max';
-import { Button, Modal, Popconfirm, Switch, Tag, message } from 'antd';
-import { useEffect, useState } from 'react';
+import { PageContainer, ProTable } from "@ant-design/pro-components";
+import { useDispatch, useModel, useSelector } from "@umijs/max";
+import { Button, Modal, Popconfirm, Switch, Tag, message } from "antd";
+import { useEffect, useState } from "react";
 
-import AdminForm from './components/adminForm';
+import AdminForm from "./components/adminForm";
 
 function Admin(props) {
   const dispatch = useDispatch();
 
-  const { initialState } = useModel('@@initialState');
+  const { initialState } = useModel("@@initialState");
 
   // 控制修改面包开启的状态
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +21,7 @@ function Admin(props) {
   useEffect(() => {
     if (!adminList.length) {
       dispatch({
-        type: 'admin/_initAdminList',
+        type: "admin/_initAdminList"
       });
     }
   }, [adminList]);
@@ -29,95 +29,95 @@ function Admin(props) {
   // 对应表格每一列的配置
   const columns = [
     {
-      title: '登录账号',
-      dataIndex: 'loginId',
-      key: 'loginId',
-      align: 'center',
+      title: "登录账号",
+      dataIndex: "loginId",
+      key: "loginId",
+      align: "center"
     },
     {
-      title: '登录密码',
-      dataIndex: 'loginPwd',
-      key: 'loginPwd',
-      align: 'center',
+      title: "登录密码",
+      dataIndex: "loginPwd",
+      key: "loginPwd",
+      align: "center"
     },
     {
-      title: '昵称',
-      dataIndex: 'nickname',
-      key: 'nickname',
-      align: 'center',
+      title: "昵称",
+      dataIndex: "nickname",
+      key: "nickname",
+      align: "center"
     },
     {
-      title: '头像',
-      dataIndex: 'avatar',
-      key: 'avatar',
-      align: 'center',
-      valueType: 'avatar',
+      title: "头像",
+      dataIndex: "avatar",
+      key: "avatar",
+      align: "center",
+      valueType: "avatar"
     },
     {
-      title: '权限',
-      dataIndex: 'permission',
-      key: 'permission',
-      align: 'center',
+      title: "权限",
+      dataIndex: "permission",
+      key: "permission",
+      align: "center",
       render: (_, row) => {
         let tag =
           row.permission === 1 ? (
-            <Tag color="orange" key={row._id}>
+            <Tag color='orange' key={row._id}>
               超级管理员
             </Tag>
           ) : (
-            <Tag color="blue" key={row._id}>
+            <Tag color='blue' key={row._id}>
               普通管理员
             </Tag>
           );
         return tag;
-      },
+      }
     },
     {
-      title: '账号状态',
-      dataIndex: 'enabled',
-      key: 'enabled',
-      align: 'center',
+      title: "账号状态",
+      dataIndex: "enabled",
+      key: "enabled",
+      align: "center",
       render: (_, row) => {
         if (row._id === initialState.adminInfo._id) {
           // 说明是当前登录的账号
-          return <Tag color="red">-</Tag>;
+          return <Tag color='red'>-</Tag>;
         } else {
           return (
             <Switch
               key={row._id}
-              size="small"
+              size='small'
               defaultChecked={row.enabled ? true : false}
               onChange={(value) => switchChange(row, value)}
             />
           );
         }
-      },
+      }
     },
     {
-      title: '操作',
+      title: "操作",
       width: 150,
-      key: 'option',
-      align: 'center',
+      key: "option",
+      align: "center",
       render: (_, row) => {
         return (
           <div key={row._id}>
-            <Button type="link" size="small" onClick={() => showModal(row)}>
+            <Button type='link' size='small' onClick={() => showModal(row)}>
               编辑
             </Button>
             <Popconfirm
-              title="是否确定删除此管理员"
+              title='是否确定删除此管理员'
               onConfirm={() => deleteHandle(row)}
-              okText="确定"
-              cancelText="取消"
+              okText='确定'
+              cancelText='取消'
             >
-              <Button type="link" size="small">
+              <Button type='link' size='small'>
                 删除
               </Button>
             </Popconfirm>
           </div>
         );
-      },
-    },
+      }
+    }
   ];
 
   /**
@@ -133,13 +133,13 @@ function Admin(props) {
    */
   const handleOk = () => {
     dispatch({
-      type: 'admin/_editAdmin',
+      type: "admin/_editAdmin",
       payload: {
         adminInfo,
-        newAdminInfo: adminInfo,
-      },
+        newAdminInfo: adminInfo
+      }
     });
-    message.success('修改管理员信息成功');
+    message.success("修改管理员信息成功");
     setIsModalOpen(false);
   };
 
@@ -159,10 +159,10 @@ function Admin(props) {
 
     // 派发删除对应的 action
     dispatch({
-      type: 'admin/_deleteAdmin',
-      payload: adminInfo,
+      type: "admin/_deleteAdmin",
+      payload: adminInfo
     });
-    message.success('删除管理员成功');
+    message.success("删除管理员成功");
   }
 
   /**
@@ -171,43 +171,41 @@ function Admin(props) {
   function switchChange(row, value) {
     // 派发一个 action
     dispatch({
-      type: 'admin/_editAdmin',
+      type: "admin/_editAdmin",
       payload: {
         adminInfo: row,
         newAdminInfo: {
-          enabled: value,
-        },
-      },
+          enabled: value
+        }
+      }
     });
-    value
-      ? message.success('管理员状态已激活')
-      : message.success('管理员已禁用');
+    value ? message.success("管理员状态已激活") : message.success("管理员已禁用");
   }
 
   return (
     <div>
       <PageContainer>
         <ProTable
-          headerTitle="管理员列表"
+          headerTitle='管理员列表'
           dataSource={adminList}
           rowKey={(row) => row._id}
           columns={columns}
           search={false}
           pagination={{
-            pageSize: 5,
+            pageSize: 5
           }}
         />
       </PageContainer>
       {/* 修改面板 */}
       <Modal
-        title="修改管理员信息"
+        title='修改管理员信息'
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        style={{ top: '50px' }}
+        style={{ top: "50px" }}
       >
         <AdminForm
-          type="edit"
+          type='edit'
           adminInfo={adminInfo}
           setAdminInfo={setAdminInfo}
           submitHandle={handleOk}

@@ -1,53 +1,53 @@
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Form, Input, Popconfirm, message } from 'antd';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'umi';
+import { PageContainer, ProTable } from "@ant-design/pro-components";
+import { Button, Form, Input, Popconfirm, message } from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "umi";
 
 function Type() {
   const { typeList } = useSelector((state) => state.type);
   const dispatch = useDispatch(); // 获取 dispatch
-  const [newTypeInfo, setNewTypeInfo] = useState('');
+  const [newTypeInfo, setNewTypeInfo] = useState("");
 
   useEffect(() => {
     if (!typeList.length) {
       dispatch({
-        type: 'type/_initTypeList',
+        type: "type/_initTypeList"
       });
     }
   }, [typeList]);
 
   const columns = [
     {
-      title: '分类名称',
-      dataIndex: 'typeName',
-      key: 'typeName',
-      align: 'center',
-      editable: true,
+      title: "分类名称",
+      dataIndex: "typeName",
+      key: "typeName",
+      align: "center",
+      editable: true
     },
     {
-      title: '操作',
+      title: "操作",
       width: 200,
-      key: 'option',
-      valueType: 'option',
-      fixed: 'right',
-      align: 'center',
+      key: "option",
+      valueType: "option",
+      fixed: "right",
+      align: "center",
       render: (_, row, index, action) => {
         return [
           <div key={row._id}>
             <Popconfirm
-              title="你确定要删除？"
+              title='你确定要删除？'
               onConfirm={() => deleteHandle(row)}
-              okText="删除"
-              cancelText="取消"
+              okText='删除'
+              cancelText='取消'
             >
-              <Button type="link" size="small">
+              <Button type='link' size='small'>
                 删除
               </Button>
             </Popconfirm>
-          </div>,
+          </div>
         ];
-      },
-    },
+      }
+    }
   ];
 
   /**
@@ -56,15 +56,15 @@ function Type() {
   function addHandle() {
     // 这里需要做一个判断，判断该类型是否已存在
     if (typeList.find((item) => item?.typeName === newTypeInfo)) {
-      message.warning('该类型已存在，请不要重复添加');
+      message.warning("该类型已存在，请不要重复添加");
     } else {
       dispatch({
-        type: 'type/_addType',
+        type: "type/_addType",
         payload: {
-          typeName: newTypeInfo,
-        },
+          typeName: newTypeInfo
+        }
       });
-      message.success('新增类型成功');
+      message.success("新增类型成功");
     }
   }
 
@@ -77,10 +77,10 @@ function Type() {
     // 这一块暂时放一放，回头来做
 
     dispatch({
-      type: 'type/_deleteType',
-      payload: typeInfo,
+      type: "type/_deleteType",
+      payload: typeInfo
     });
-    message.success('删除类型成功');
+    message.success("删除类型成功");
   }
 
   return (
@@ -88,17 +88,17 @@ function Type() {
       <>
         {/* 新增分类 */}
         <div style={{ width: 500, margin: 10, marginBottom: 30 }}>
-          <Form layout="inline">
-            <Form.Item name="newTypeName">
+          <Form layout='inline'>
+            <Form.Item name='newTypeName'>
               <Input
-                placeholder="填写新增类型"
-                name="typeName"
+                placeholder='填写新增类型'
+                name='typeName'
                 value={newTypeInfo}
                 onChange={(e) => setNewTypeInfo(e.target.value)}
               />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" shape="round" onClick={addHandle}>
+              <Button type='primary' shape='round' onClick={addHandle}>
                 新增
               </Button>
             </Form.Item>
@@ -107,13 +107,13 @@ function Type() {
 
         {/* 分类列表 */}
         <ProTable
-          headerTitle="分类信息"
+          headerTitle='分类信息'
           columns={columns}
           dataSource={typeList}
           rowKey={(row) => row._id}
           search={false}
           pagination={{
-            pageSize: 5,
+            pageSize: 5
           }}
         />
       </>

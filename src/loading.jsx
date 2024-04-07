@@ -1,17 +1,17 @@
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 function loading() {
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
       }}
     >
-      <Spin size="large" tip="努力加载中..." />
+      <Spin size='large' tip='努力加载中...' />
     </div>
   );
 }

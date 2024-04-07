@@ -1,15 +1,15 @@
-import { request } from 'umi';
+import { request } from "umi";
 
 /**
  * 分页获取用户信息
  */
 
 function getUserByPage(params) {
-  return request('/api/user', {
-    method: 'GET',
+  return request("/api/user", {
+    method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -19,7 +19,7 @@ function getUserByPage(params) {
 
 function getUserById(userId) {
   return request(`/api/user/${userId}`, {
-    method: 'GET',
+    method: "GET"
   });
 }
 
@@ -27,10 +27,10 @@ function getUserById(userId) {
  * 新增用户
  */
 function addUser(newUserInfo) {
-  newUserInfo.type = 'background';
-  return request('/api/user', {
-    method: 'POST',
-    data: newUserInfo,
+  newUserInfo.type = "background";
+  return request("/api/user", {
+    method: "POST",
+    data: newUserInfo
   });
 }
 
@@ -39,7 +39,7 @@ function addUser(newUserInfo) {
  */
 function deleteUser(userId) {
   return request(`/api/user/${userId}`, {
-    method: 'DELETE',
+    method: "DELETE"
   });
 }
 
@@ -48,8 +48,8 @@ function deleteUser(userId) {
  */
 function editUser(userId, newUserInfo) {
   return request(`/api/user/${userId}`, {
-    method: 'PATCH',
-    data: newUserInfo,
+    method: "PATCH",
+    data: newUserInfo
   });
 }
 
@@ -58,5 +58,5 @@ export default {
   getUserById,
   addUser,
   deleteUser,
-  editUser,
+  editUser
 };

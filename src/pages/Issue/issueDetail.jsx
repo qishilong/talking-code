@@ -1,13 +1,13 @@
-import { formatDate } from '@/utils/tool';
-import { PageContainer } from '@ant-design/pro-components';
-import { Card, Tag } from 'antd';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'umi';
+import { formatDate } from "@/utils/tool";
+import { PageContainer } from "@ant-design/pro-components";
+import { Card, Tag } from "antd";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "umi";
 
 // 请求方法
-import IssueController from '@/services/issue';
-import UserController from '@/services/user';
+import IssueController from "@/services/issue";
+import UserController from "@/services/user";
 
 function IssueDetail() {
   const { id } = useParams(); // 获取可能传递过来的 id
@@ -22,7 +22,7 @@ function IssueDetail() {
   // 如果类型列表为空，则初始化一次
   if (!typeList.length) {
     dispatch({
-      type: 'type/_initTypeList',
+      type: "type/_initTypeList"
     });
   }
 
@@ -44,35 +44,33 @@ function IssueDetail() {
   return (
     <PageContainer>
       <div
-        className="container"
+        className='container'
         style={{
-          width: '100%',
-          margin: 'auto',
+          width: "100%",
+          margin: "auto"
         }}
       >
         <Card
           title={issueInfo?.issueTitle}
           bordered={false}
           style={{
-            marginTop: 20,
+            marginTop: 20
           }}
           extra={
-            <Tag color="purple" key={issueInfo?.typeId}>
+            <Tag color='purple' key={issueInfo?.typeId}>
               {typeName}
             </Tag>
           }
         >
           <h2>提问用户</h2>
           <p>
-            <Tag color="volcano" key={issueInfo?.userId}>
+            <Tag color='volcano' key={issueInfo?.userId}>
               {userName}
             </Tag>
           </p>
           <h2>问题描述</h2>
           <p>
-            <div
-              dangerouslySetInnerHTML={{ __html: issueInfo?.issueContent }}
-            ></div>
+            <div dangerouslySetInnerHTML={{ __html: issueInfo?.issueContent }}></div>
           </p>
           <h2>提问时间</h2>
           <p>{formatDate(issueInfo?.issueDate)}</p>

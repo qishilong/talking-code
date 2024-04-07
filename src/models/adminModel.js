@@ -1,11 +1,11 @@
-import AdminController from '@/services/admin';
+import AdminController from "@/services/admin";
 
 export default {
   // 命名空间
-  namespace: 'admin',
+  namespace: "admin",
   // 仓库数据
   state: {
-    adminList: [], // 存储所有的管理员信息
+    adminList: [] // 存储所有的管理员信息
   },
   // 同步更新仓库状态数据
   reducers: {
@@ -48,7 +48,7 @@ export default {
       newState.adminList = arr;
       console.log(newState);
       return newState;
-    },
+    }
   },
   // 处理异步副作用
   effects: {
@@ -58,8 +58,8 @@ export default {
       const { data } = yield call(AdminController.getAdmin);
       // 调用 reducer 更新本地仓库
       yield put({
-        type: 'initAdminList',
-        payload: data,
+        type: "initAdminList",
+        payload: data
       });
     },
     // 删除一个管理员
@@ -68,20 +68,16 @@ export default {
       yield call(AdminController.deleteAdmin, payload._id);
       // 更新本地仓库
       yield put({
-        type: 'deleteAdmin',
-        payload,
+        type: "deleteAdmin",
+        payload
       });
     },
     // 更新管理员信息
     *_editAdmin({ payload }, { put, call }) {
-      yield call(
-        AdminController.editAdmin,
-        payload.adminInfo._id,
-        payload.newAdminInfo,
-      );
+      yield call(AdminController.editAdmin, payload.adminInfo._id, payload.newAdminInfo);
       yield put({
-        type: 'updateAdmin',
-        payload,
+        type: "updateAdmin",
+        payload
       });
     },
     // 新增管理员信息
@@ -90,9 +86,9 @@ export default {
       const { data } = yield call(AdminController.addAdmin, payload);
       // 调用 reducer 的方法更新本地状态仓库
       yield put({
-        type: 'addAdmin',
-        payload: data,
+        type: "addAdmin",
+        payload: data
       });
-    },
-  },
+    }
+  }
 };

@@ -1,14 +1,14 @@
-import { request } from 'umi';
+import { request } from "umi";
 
 /**
  * 分页获取书籍
  */
 function getBookByPage(params) {
-  return request('/api/book', {
-    method: 'GET',
+  return request("/api/book", {
+    method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -17,7 +17,7 @@ function getBookByPage(params) {
  */
 function getBookById(bookId) {
   return request(`/api/book/${bookId}`, {
-    method: 'GET',
+    method: "GET"
   });
 }
 
@@ -25,9 +25,9 @@ function getBookById(bookId) {
  * 新增书籍
  */
 function addBook(newBookInfo) {
-  return request('/api/book', {
-    method: 'POST',
-    data: newBookInfo,
+  return request("/api/book", {
+    method: "POST",
+    data: newBookInfo
   });
 }
 
@@ -37,7 +37,7 @@ function addBook(newBookInfo) {
 
 function deleteBook(bookId) {
   return request(`/api/book/${bookId}`, {
-    method: 'DELETE',
+    method: "DELETE"
   });
 }
 
@@ -46,8 +46,8 @@ function deleteBook(bookId) {
  */
 function editBook(bookId, newBookInfo) {
   return request(`/api/book/${bookId}`, {
-    method: 'PATCH',
-    data: newBookInfo,
+    method: "PATCH",
+    data: newBookInfo
   });
 }
 
@@ -56,5 +56,5 @@ export default {
   getBookById,
   addBook,
   deleteBook,
-  editBook,
+  editBook
 };
