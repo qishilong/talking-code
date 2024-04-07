@@ -1,14 +1,14 @@
-import { request } from 'umi';
+import { request } from "umi";
 
 /**
  * 分页获取某一个板块的评论
  */
 function getCommentByType(params, commentType) {
   return request(`/api/comment/${commentType}`, {
-    method: 'GET',
+    method: "GET",
     params: {
-      ...params,
-    },
+      ...params
+    }
   });
 }
 
@@ -17,7 +17,7 @@ function getCommentByType(params, commentType) {
  */
 function deleteComment(commentId) {
   return request(`/api/comment/${commentId}`, {
-    method: 'DELETE',
+    method: "DELETE"
   });
 }
 
@@ -26,13 +26,13 @@ function deleteComment(commentId) {
  */
 function updateComment(commentId, newCommentInfo) {
   return request(`/api/comment/update/${commentId}`, {
-    method: 'PATCH',
-    data: newCommentInfo,
+    method: "PATCH",
+    data: newCommentInfo
   });
 }
 
 export default {
   getCommentByType,
   deleteComment,
-  updateComment,
+  updateComment
 };

@@ -1,22 +1,22 @@
 // 运行时配置
-import AdminController from '@/services/admin';
-import { message } from 'antd';
-import type { RequestConfig } from 'umi';
-import { history } from 'umi';
+import AdminController from "@/services/admin";
+import { message } from "antd";
+import type { RequestConfig } from "umi";
+import { history } from "umi";
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState() {
-  if (location.pathname === '/login') {
+  if (location.pathname === "/login") {
     // 强行跳登录页
     // 判断是否有有效的 token
-    const token = localStorage.getItem('adminToken');
+    const token = localStorage.getItem("adminToken");
     if (token) {
       const result = await AdminController.getInfo();
       if (result.data) {
         // 不仅有 token，而且 token 是有效的
         // 不允许你去 login
-        message.warning('请先退出后再登录');
+        message.warning("请先退出后再登录");
         history.go(-1);
       }
     }
@@ -32,32 +32,32 @@ export async function getInitialState() {
       return {
         name: data.nickname,
         avatar: data.avatar,
-        adminInfo: data,
+        adminInfo: data
       };
     } else {
       // token 验证失败，跳转至登录
       // 失效可能是因为 token 过期，也有可能是因为压根儿就没有 token，不管有没有，删除掉原有的
-      localStorage.removeItem('adminToken');
+      localStorage.removeItem("adminToken");
       Promise.resolve()
-        .then(() => message.warning('登录过期，请重新登录'))
-        .then(() => (location.href = '/login'));
+        .then(() => message.warning("登录过期，请重新登录"))
+        .then(() => (location.href = "/login"));
     }
   }
 }
 
 export const layout = () => {
   return {
-    logo: 'https://qiniucloud.qishilong.space/images/202308261146613.png',
+    logo: "https://qiniucloud.qishilong.space/images/202308261146613.png",
     menu: {
-      locale: false,
+      locale: false
     },
     logout: () => {
       // 删除本地 token
-      localStorage.removeItem('adminToken');
+      localStorage.removeItem("adminToken");
       // 跳转到登录页面
-      location.href = '/login';
-      message.success('退出登录成功');
-    },
+      location.href = "/login";
+      message.success("退出登录成功");
+    }
   };
 };
 
@@ -67,12 +67,12 @@ export const request: RequestConfig = {
   requestInterceptors: [
     function (url: any, options: any) {
       // 从本地获取 token
-      const token = localStorage.getItem('adminToken');
+      const token = localStorage.getItem("adminToken");
       if (token) {
-        options.headers['Authorization'] = 'Bearer ' + token;
+        options.headers["Authorization"] = "Bearer " + token;
       }
       return { url, options };
-    },
+    }
   ],
   responseInterceptors: [
     // 直接写一个 function，作为拦截器
@@ -82,33 +82,33 @@ export const request: RequestConfig = {
         return response;
       },
       (error) => {
-        message.error(error.response.data.msg);
+        message.error(error.message);
         return Promise.reject(error);
-      },
-    ],
-  ],
+      }
+    ]
+  ]
 };
 
-export function onRouteChange({ clientRoutes, location }: any) {
+export function onRouteChange({ location }: any) {
   const { pathname } = location;
-  const lastPath = pathname.split('/').pop();
+  const lastPath = pathname.split("/").pop();
   const path = [
     {
-      from: 'admin',
-      to: '/admin/adminList',
+      from: "admin",
+      to: "/admin/adminList"
     },
     {
-      from: 'user',
-      to: '/user/userList',
+      from: "user",
+      to: "/user/userList"
     },
     {
-      from: 'book',
-      to: '/book/bookList',
+      from: "book",
+      to: "/book/bookList"
     },
     {
-      from: 'article',
-      to: '/article/articleList',
-    },
+      from: "article",
+      to: "/article/articleList"
+    }
   ];
   path.forEach((item) => {
     if (item.from === lastPath) {
