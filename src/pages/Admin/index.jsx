@@ -286,12 +286,10 @@ function Admin(props) {
           }}
           request={async (params) => {
             const result = await AdminController.getAdmin(params);
-            if (!adminList.length) {
-              dispatch({
-                type: "admin/_initAdminList",
-                payload: [...result.data.data]
-              });
-            }
+            dispatch({
+              type: "admin/_initAdminList",
+              payload: [...result.data.data]
+            });
 
             return {
               data: result.data.data,

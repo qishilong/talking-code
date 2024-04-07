@@ -3,9 +3,12 @@ import { request } from "umi";
 /**
  * 获取类型列表
  */
-function getType() {
+function getType(params) {
   return request("/api/type", {
-    method: "GET"
+    method: "GET",
+    params: {
+      ...params
+    }
   });
 }
 

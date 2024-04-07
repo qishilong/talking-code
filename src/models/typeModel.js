@@ -29,12 +29,10 @@ export default {
     }
   },
   effects: {
-    // 初始化管理员列表
-    *_initTypeList(_, { put, call }) {
-      // 从服务器获取数据
-      const { data } = yield call(TypeController.getType);
+    // 初始化类型列表
+    *_initTypeList({ payload }, { put, call }) {
       // 调用 reducer 方法更新本地仓库
-      yield put({ type: "initTypeList", payload: data });
+      yield put({ type: "initTypeList", payload: payload });
     },
     // 新增类型
     *_addType({ payload }, { put, call }) {

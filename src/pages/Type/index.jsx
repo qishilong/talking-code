@@ -1,20 +1,35 @@
 import { PageContainer, ProTable } from "@ant-design/pro-components";
-import { Button, Form, Input, Popconfirm, message } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Form, Input, Popconfirm, Tooltip, message } from "antd";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "umi";
+import styles from "./index.module.less";
+
+// 请求方法
+import TypeController from "@/services/type";
 
 function Type() {
   const { typeList } = useSelector((state) => state.type);
   const dispatch = useDispatch(); // 获取 dispatch
   const [newTypeInfo, setNewTypeInfo] = useState("");
 
-  useEffect(() => {
-    if (!typeList.length) {
-      dispatch({
-        type: "type/_initTypeList"
-      });
-    }
-  }, [typeList]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5
+  });
+
+  /**
+   *
+   * @param {*} page 当前页
+   * @param {*} pageSize 每页条数
+   */
+  function handlePageChange(current, pageSize) {
+    setPagination({
+      current,
+      pageSize
+    });
+  }
+
+  const ref = useRef();
 
   const columns = [
     {
@@ -22,25 +37,49 @@ function Type() {
       dataIndex: "typeName",
       key: "typeName",
       align: "center",
-      editable: true
+      editable: true,
+      width: "80%",
+      render: (val) => {
+        if (!val) {
+          return "-";
+        }
+        return (
+          <Tooltip
+            className={styles["tooltip-styles"]}
+            title={<div className={styles["tooltip-styles"]}>{val}</div>}
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{val}</div>
+          </Tooltip>
+        );
+      }
     },
     {
       title: "操作",
-      width: 200,
       key: "option",
       valueType: "option",
       fixed: "right",
       align: "center",
+      width: "20%",
       render: (_, row, index, action) => {
         return [
-          <div key={row._id}>
+          <div key={row._id} className={styles["handle-style"]}>
             <Popconfirm
               title='你确定要删除？'
               onConfirm={() => deleteHandle(row)}
               okText='删除'
               cancelText='取消'
             >
-              <Button type='link' size='small'>
+              <Button
+                type='link'
+                size='small'
+                disabled={row.numberOfArticles || row.numberOfBooks || row.numberOfIssues}
+              >
                 删除
               </Button>
             </Popconfirm>
@@ -61,11 +100,15 @@ function Type() {
       dispatch({
         type: "type/_addType",
         payload: {
-          typeName: newTypeInfo
+          typeName: newTypeInfo,
+          createTime: new Date().getTime().toString()
         }
       });
+      // 重置到默认值，包括表单
+      ref.current.reset();
       message.success("新增类型成功");
     }
+    setNewTypeInfo("");
   }
 
   /**
@@ -73,13 +116,12 @@ function Type() {
    * @param {*} adminInfo 一条管理员信息
    */
   function deleteHandle(typeInfo) {
-    // 删除类型之前，还需要判断该类型下是否有书籍或者问答、评论
-    // 这一块暂时放一放，回头来做
-
     dispatch({
       type: "type/_deleteType",
       payload: typeInfo
     });
+    // 刷新
+    ref.current.reload();
     message.success("删除类型成功");
   }
 
@@ -89,16 +131,15 @@ function Type() {
         {/* 新增分类 */}
         <div style={{ width: 500, margin: 10, marginBottom: 30 }}>
           <Form layout='inline'>
-            <Form.Item name='newTypeName'>
+            <Form.Item>
               <Input
                 placeholder='填写新增类型'
-                name='typeName'
                 value={newTypeInfo}
                 onChange={(e) => setNewTypeInfo(e.target.value)}
               />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' shape='round' onClick={addHandle}>
+              <Button type='primary' shape='round' onClick={addHandle} disabled={!newTypeInfo}>
                 新增
               </Button>
             </Form.Item>
@@ -109,11 +150,32 @@ function Type() {
         <ProTable
           headerTitle='分类信息'
           columns={columns}
-          dataSource={typeList}
           rowKey={(row) => row._id}
+          actionRef={ref}
           search={false}
           pagination={{
-            pageSize: 5
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: [5, 10, 20],
+            ...pagination,
+            onChange: handlePageChange
+          }}
+          request={async (params) => {
+            const result = await TypeController.getType(params);
+
+            dispatch({
+              type: "type/_initTypeList",
+              payload: [...result.data.allData]
+            });
+
+            return {
+              data: result.data.data,
+              // success 请返回 true，
+              // 不然 table 会停止解析数据，即使有数据
+              success: !result.code,
+              // 不传会使用 data 的长度，如果是分页一定要传
+              total: result.data.count
+            };
           }}
         />
       </>
