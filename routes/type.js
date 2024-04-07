@@ -18,7 +18,7 @@ const { formatResponse } = require("../utils/tools");
  * 查找所有类型
  */
 router.get("/", async function (req, res) {
-  const result = await findAllTypeService();
+  const result = await findAllTypeService(req.query);
   // 对返回数据进行格式化
   return res.send(formatResponse(0, "", result));
 });

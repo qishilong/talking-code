@@ -6,8 +6,13 @@ const { ValidationError } = require("../utils/errors");
 /**
  * 查询所有类型
  */
-module.exports.findAllTypeService = async function () {
-  return await findAllTypeDao();
+module.exports.findAllTypeService = async function (
+  params = {
+    current: 1,
+    pageSize: 5
+  }
+) {
+  return await findAllTypeDao(params);
 };
 
 /**

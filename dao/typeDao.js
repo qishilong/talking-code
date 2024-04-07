@@ -4,8 +4,62 @@ const typeModel = require("../models/typeModel");
 /**
  * 查询所有类型
  */
-module.exports.findAllTypeDao = async function () {
-  return await typeModel.find();
+module.exports.findAllTypeDao = async function (queryObj) {
+  const pageObj = {
+    currentPage: Number(queryObj.current),
+    pageSize: Number(queryObj.pageSize)
+  };
+  pageObj.count = await typeModel.countDocuments();
+  pageObj.totalPage = Math.ceil(pageObj.count / pageObj.pageSize);
+  pageObj.allData = await typeModel.find();
+
+  try {
+    pageObj.data = await typeModel.aggregate([
+      {
+        $lookup: {
+          from: "books",
+          localField: "_id",
+          foreignField: "typeId",
+          as: "relatedBooks"
+        }
+      },
+      {
+        $lookup: {
+          from: "articles",
+          localField: "_id",
+          foreignField: "typeId",
+          as: "relatedArticles"
+        }
+      },
+      {
+        $lookup: {
+          from: "issues",
+          localField: "_id",
+          foreignField: "typeId",
+          as: "relatedIssues"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          typeName: 1,
+          numberOfBooks: { $size: "$relatedBooks" },
+          numberOfArticles: { $size: "$relatedArticles" },
+          numberOfIssues: { $size: "$relatedIssues" }
+        }
+      },
+      {
+        $skip: (pageObj.currentPage - 1) * pageObj.pageSize
+      },
+      {
+        $limit: pageObj.pageSize
+      }
+    ]);
+  } catch (error) {
+    return pageObj;
+  }
+
+  return pageObj;
 };
 
 /**

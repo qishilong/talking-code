@@ -5,12 +5,9 @@ const adminModel = require("../models/adminModel");
  * 查询所有的管理员
  */
 module.exports.findAllAdminDao = async function (queryObj) {
-  console.log(queryObj, 22);
   if (!queryObj) {
     return await adminModel.find();
   }
-
-  console.log(queryObj, 11);
 
   const pageObj = {
     current: Number(queryObj.current),
