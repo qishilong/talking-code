@@ -1,12 +1,15 @@
 import { formatDate } from "@/utils/tool";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
-import { Button, Image, Modal, Popconfirm, Switch, Tag, message } from "antd";
+import { useModel } from "@umijs/max";
+import { Button, Image, Modal, Popconfirm, Switch, Tag, Tooltip, message } from "antd";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Access, useAccess } from "umi";
 
 // 请求方法
 import UserController from "@/services/user";
+
+import styles from "./index.module.less";
 
 function User() {
   const actionRef = useRef();
@@ -21,11 +24,13 @@ function User() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { initialState } = useModel("@@initialState");
+
   const columns = [
     {
       title: "序号",
       align: "center",
-      width: 50,
+      width: "5%",
       search: false,
       render: (text, record, index) => {
         return [(pagination.current - 1) * pagination.pageSize + index + 1];
@@ -35,20 +40,102 @@ function User() {
       title: "登录账号",
       dataIndex: "loginId",
       key: "loginId",
-      align: "center"
-    },
-    {
-      title: "登录密码",
-      dataIndex: "loginPwd",
-      key: "loginPwd",
       align: "center",
-      search: false
+      width: "15%",
+      render: (_, row) => {
+        let text = "-";
+        if (row?.loginId) {
+          text = row.loginId;
+        }
+        return (
+          <Tooltip
+            title={
+              row?.loginId.length > 0 ? (
+                <div className={styles["tooltip-styles"]}>{text}</div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{text}</div>
+          </Tooltip>
+        );
+      }
     },
     {
       title: "昵称",
       dataIndex: "nickname",
       key: "nickname",
-      align: "center"
+      align: "center",
+      width: "15%",
+      render: (val, row) => {
+        let text = "-";
+        if (row?.nickname) {
+          text = row.nickname;
+        }
+        return (
+          <Tooltip
+            title={
+              row?.nickname.length > 0 ? (
+                <div className={styles["tooltip-styles"]}>{text}</div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{text}</div>
+          </Tooltip>
+        );
+      }
+    },
+    {
+      title: "注册时间",
+      dataIndex: "registerDate",
+      key: "registerDate",
+      align: "center",
+      width: "15%",
+      search: false,
+      render: (val, row) => {
+        if (val) {
+          return formatDate(val);
+        }
+        return "-";
+      }
+    },
+    {
+      title: "上次登陆时间",
+      dataIndex: "lastLoginDate",
+      key: "lastLoginDate",
+      align: "center",
+      width: "15%",
+      search: false,
+      render: (val, row) => {
+        if (val) {
+          return formatDate(val);
+        }
+        return "-";
+      }
+    },
+    {
+      title: "当前积分",
+      dataIndex: "points",
+      key: "points",
+      align: "center",
+      width: "5%",
+      render: (val, row) => {
+        if (val) {
+          return val;
+        }
+        return "-";
+      }
     },
     {
       title: "头像",
@@ -56,7 +143,14 @@ function User() {
       key: "avatar",
       valueType: "image",
       align: "center",
-      search: false
+      search: false,
+      width: "5%",
+      render: (val, row) => {
+        if (val) {
+          return val;
+        }
+        return "-";
+      }
     },
     {
       title: "账号状态",
@@ -64,6 +158,7 @@ function User() {
       key: "enabled",
       align: "center",
       search: false,
+      width: "5%",
       render: (_, row, index, action) => {
         const defaultChecked = row.enabled ? true : false;
         return [
@@ -78,14 +173,14 @@ function User() {
     },
     {
       title: "操作",
-      width: 200,
+      width: "10%",
       key: "option",
       valueType: "option",
       fixed: "right",
       align: "center",
       render: (_, row, index, action) => {
         return [
-          <div key={row._id}>
+          <div key={row._id} className={styles["handle-style"]}>
             <Button type='link' size='small' onClick={() => showModal(row)}>
               详情
             </Button>
@@ -99,7 +194,7 @@ function User() {
                 okText='删除'
                 cancelText='取消'
               >
-                <Button type='link' size='small'>
+                <Button type='link' size='small' disabled={initialState.name === row.loginId}>
                   删除
                 </Button>
               </Popconfirm>
@@ -177,7 +272,6 @@ function User() {
             onChange: handlePageChange
           }}
           request={async (params) => {
-            console.log(params, "params");
             const result = await UserController.getUserByPage(params);
             return {
               data: result.data.data,

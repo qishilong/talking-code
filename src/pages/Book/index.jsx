@@ -1,12 +1,14 @@
 import { formatDate, typeOptionCreator } from "@/utils/tool";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
-import { Button, Popconfirm, Select, Tag, message } from "antd";
+import { Button, Popconfirm, Select, Tag, Tooltip, message } from "antd";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "umi";
 
 // 请求方法
 import BookController from "@/services/book";
+
+import styles from "./index.module.less";
 
 function Book() {
   const [pagination, setPagination] = useState({
@@ -35,7 +37,7 @@ function Book() {
     {
       title: "序号",
       align: "center",
-      width: 50,
+      width: "5%",
       search: false,
       render: (text, record, index) => {
         return [(pagination.current - 1) * pagination.pageSize + index + 1];
@@ -44,14 +46,98 @@ function Book() {
     {
       title: "书籍名称",
       dataIndex: "bookTitle",
-      width: 150,
-      key: "bookTitle"
+      width: "15%",
+      key: "bookTitle",
+      render: (_, row) => {
+        let text = "-";
+        if (row?.bookTitle) {
+          text = row.bookTitle;
+        }
+        return (
+          <Tooltip
+            title={
+              row?.bookTitle.length > 0 ? (
+                <div className={styles["tooltip-styles"]}>{text}</div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{text}</div>
+          </Tooltip>
+        );
+      }
+    },
+
+    {
+      title: "书籍简介",
+      dataIndex: "bookIntro",
+      key: "age",
+      width: "30%",
+      search: false,
+      render: (_, row) => {
+        // 将书籍简介的文字进行简化
+        let text = "-";
+        if (row?.bookIntro) {
+          text = row.bookIntro;
+        }
+        return (
+          <Tooltip
+            title={
+              row?.bookIntro.length > 0 ? (
+                <div
+                  className={styles["tooltip-styles"]}
+                  dangerouslySetInnerHTML={{ __html: text }}
+                ></div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]} dangerouslySetInnerHTML={{ __html: text }}></div>
+          </Tooltip>
+        );
+      }
+    },
+    {
+      title: "书籍封面",
+      dataIndex: "bookPic",
+      key: "bookPic",
+      valueType: "image",
+      align: "center",
+      width: "10%",
+      search: false
+    },
+    {
+      title: "浏览数",
+      dataIndex: "scanNumber",
+      key: "scanNumber",
+      align: "center",
+      search: false,
+      width: "5%"
+    },
+    {
+      title: "评论数",
+      dataIndex: "commentNumber",
+      key: "commentNumber",
+      align: "center",
+      search: false,
+      width: "5%"
     },
     {
       title: "书籍分类",
       dataIndex: "typeId",
       key: "typeId",
       align: "center",
+      width: "10%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
           <Select placeholder='请选择查询分类' onChange={handleChange}>
@@ -70,67 +156,26 @@ function Book() {
       }
     },
     {
-      title: "书籍简介",
-      dataIndex: "bookIntro",
-      key: "age",
-      align: "center",
-      width: 200,
-      search: false,
-      render: (_, row) => {
-        // 将书籍简介的文字进行简化
-        // 在表格中显示书籍简介时，过滤掉 html 标签
-        let reg = /<[^<>]+>/g;
-        let brief = row.bookIntro;
-        brief = brief.replace(reg, "");
-
-        if (brief.length > 15) {
-          brief = brief.slice(0, 15) + "...";
-        }
-        return [brief];
-      }
-    },
-    {
-      title: "书籍封面",
-      dataIndex: "bookPic",
-      key: "bookPic",
-      valueType: "image",
-      align: "center",
-      search: false
-    },
-    {
-      title: "浏览数",
-      dataIndex: "scanNumber",
-      key: "scanNumber",
-      align: "center",
-      search: false
-    },
-    {
-      title: "评论数",
-      dataIndex: "commentNumber",
-      key: "commentNumber",
-      align: "center",
-      search: false
-    },
-    {
       title: "上架日期",
       dataIndex: "onShelfDate",
       key: "onShelfDate",
       align: "center",
       search: false,
+      width: "15%",
       render: (_, row) => {
         return [formatDate(row.onShelfDate)];
       }
     },
     {
       title: "操作",
-      width: 150,
+      width: "10%",
       key: "option",
       valueType: "option",
       fixed: "right",
       align: "center",
       render: (_, row, index, action) => {
         return [
-          <div key={row._id}>
+          <div key={row._id} className={styles["handle-style"]}>
             <Button type='link' size='small' onClick={() => navigate(`/book/editBook/${row._id}`)}>
               编辑
             </Button>

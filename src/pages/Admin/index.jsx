@@ -1,9 +1,14 @@
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { useDispatch, useModel, useSelector } from "@umijs/max";
-import { Button, Modal, Popconfirm, Switch, Tag, message } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Modal, Popconfirm, Switch, Tag, Tooltip, message } from "antd";
+import { useRef, useState } from "react";
 
 import AdminForm from "./components/adminForm";
+
+// 请求方法
+import AdminController from "@/services/admin";
+
+import styles from "./index.module.less";
 
 function Admin(props) {
   const dispatch = useDispatch();
@@ -18,39 +23,95 @@ function Admin(props) {
   // 存储当前要修改的管理员信息
   const [adminInfo, setAdminInfo] = useState(null);
 
-  useEffect(() => {
-    if (!adminList.length) {
-      dispatch({
-        type: "admin/_initAdminList"
-      });
-    }
-  }, [adminList]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5
+  });
+
+  const ref = useRef();
 
   // 对应表格每一列的配置
   const columns = [
     {
+      title: "序号",
+      align: "center",
+      width: "5%",
+      search: false,
+      render: (text, record, index) => {
+        return [(pagination.current - 1) * pagination.pageSize + index + 1];
+      }
+    },
+    {
       title: "登录账号",
       dataIndex: "loginId",
       key: "loginId",
-      align: "center"
+      align: "center",
+      render: (_, row) => {
+        let text = "-";
+        if (row?.loginId) {
+          text = row.loginId;
+        }
+        return (
+          <Tooltip
+            title={
+              row?.loginId.length > 0 ? (
+                <div className={styles["tooltip-styles"]}>{text}</div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{text}</div>
+          </Tooltip>
+        );
+      }
     },
     {
       title: "登录密码",
       dataIndex: "loginPwd",
       key: "loginPwd",
-      align: "center"
+      align: "center",
+      search: false
     },
     {
       title: "昵称",
       dataIndex: "nickname",
       key: "nickname",
-      align: "center"
+      align: "center",
+      render: (_, row) => {
+        let text = "-";
+        if (row?.nickname) {
+          text = row.nickname;
+        }
+        return (
+          <Tooltip
+            title={
+              row?.nickname.length > 0 ? (
+                <div className={styles["tooltip-styles"]}>{text}</div>
+              ) : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text"]}>{text}</div>
+          </Tooltip>
+        );
+      }
     },
     {
       title: "头像",
       dataIndex: "avatar",
       key: "avatar",
       align: "center",
+      search: false,
       valueType: "avatar"
     },
     {
@@ -58,6 +119,7 @@ function Admin(props) {
       dataIndex: "permission",
       key: "permission",
       align: "center",
+      search: false,
       render: (_, row) => {
         let tag =
           row.permission === 1 ? (
@@ -77,6 +139,7 @@ function Admin(props) {
       dataIndex: "enabled",
       key: "enabled",
       align: "center",
+      search: false,
       render: (_, row) => {
         if (row._id === initialState.adminInfo._id) {
           // 说明是当前登录的账号
@@ -98,19 +161,24 @@ function Admin(props) {
       width: 150,
       key: "option",
       align: "center",
+      search: false,
       render: (_, row) => {
         return (
-          <div key={row._id}>
+          <div key={row._id} className={styles["handle-style"]}>
             <Button type='link' size='small' onClick={() => showModal(row)}>
               编辑
             </Button>
             <Popconfirm
               title='是否确定删除此管理员'
-              onConfirm={() => deleteHandle(row)}
+              onConfirm={() => {
+                deleteHandle(row);
+                // 重置到默认值，包括表单
+                ref.current.reset();
+              }}
               okText='确定'
               cancelText='取消'
             >
-              <Button type='link' size='small'>
+              <Button type='link' size='small' disabled={initialState.name === row.loginId}>
                 删除
               </Button>
             </Popconfirm>
@@ -139,6 +207,9 @@ function Admin(props) {
         newAdminInfo: adminInfo
       }
     });
+
+    // 刷新
+    ref.current.reload();
     message.success("修改管理员信息成功");
     setIsModalOpen(false);
   };
@@ -162,6 +233,9 @@ function Admin(props) {
       type: "admin/_deleteAdmin",
       payload: adminInfo
     });
+
+    ref.current.reset();
+
     message.success("删除管理员成功");
   }
 
@@ -179,7 +253,20 @@ function Admin(props) {
         }
       }
     });
+
     value ? message.success("管理员状态已激活") : message.success("管理员已禁用");
+  }
+
+  /**
+   *
+   * @param {*} page 当前页
+   * @param {*} pageSize 每页条数
+   */
+  function handlePageChange(current, pageSize) {
+    setPagination({
+      current,
+      pageSize
+    });
   }
 
   return (
@@ -187,12 +274,33 @@ function Admin(props) {
       <PageContainer>
         <ProTable
           headerTitle='管理员列表'
-          dataSource={adminList}
           rowKey={(row) => row._id}
+          actionRef={ref}
           columns={columns}
-          search={false}
           pagination={{
-            pageSize: 5
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: [5, 10, 20],
+            ...pagination,
+            onChange: handlePageChange
+          }}
+          request={async (params) => {
+            const result = await AdminController.getAdmin(params);
+            if (!adminList.length) {
+              dispatch({
+                type: "admin/_initAdminList",
+                payload: [...result.data.data]
+              });
+            }
+
+            return {
+              data: result.data.data,
+              // success 请返回 true，
+              // 不然 table 会停止解析数据，即使有数据
+              success: !result.code,
+              // 不传会使用 data 的长度，如果是分页一定要传
+              total: result.data.count
+            };
           }}
         />
       </PageContainer>

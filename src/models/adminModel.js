@@ -41,7 +41,6 @@ export default {
     },
     // 新增管理员
     addAdmin(state, { payload }) {
-      console.log(payload);
       const newState = { ...state };
       const arr = [...newState.adminList];
       arr.push(payload);
@@ -53,13 +52,11 @@ export default {
   // 处理异步副作用
   effects: {
     // 初始化管理员列表
-    *_initAdminList(_, { put, call }) {
-      // 和服务器进行通信，拿到所有的数据
-      const { data } = yield call(AdminController.getAdmin);
+    *_initAdminList({ payload }, { put, call }) {
       // 调用 reducer 更新本地仓库
       yield put({
         type: "initAdminList",
-        payload: data
+        payload: payload
       });
     },
     // 删除一个管理员
