@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const issueModel = require("./issueModel");
 
 // 定义对应的 Schema
 const commentSchema = new mongoose.Schema(
@@ -28,6 +29,21 @@ const commentSchema = new mongoose.Schema(
     versionKey: false
   }
 );
+
+commentSchema.post("findOneAndDelete", async function (doc, next) {
+  if (doc) {
+    try {
+      await issueModel.findByIdAndUpdate(
+        doc.issueId,
+        { $inc: { commentNumber: -1 } },
+        { new: true, runValidators: true }
+      );
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+});
 
 // 通过 Schema 来创建相应的数据模型
 // 创建数据模型的方法为 mongoose.model，只传一个名字，代表查找到对应名字的模型

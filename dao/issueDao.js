@@ -57,29 +57,21 @@ module.exports.addIssueDao = async function (newIssueInfo) {
  * 根据 id 删除问答
  */
 module.exports.deleteIssueDao = async function (id) {
-  const session = await mongoose.startSession();
+  const session = mongoose.startSession();
   try {
-    session.startTransaction();
-    await commentModel.deleteMany({ issueId: id }).session(session);
+    (await session).startTransaction();
 
-    const res = await issueModel
-      .deleteOne({
-        _id: id
-      })
-      .session(session);
+    await commentModel.deleteMany({ issueId: id });
+    const res = await issueModel.deleteOne({ _id: id });
 
-    if (!res) {
-      throw new Error("删除错误");
-    }
-
-    await session.commitTransaction();
+    (await session).commitTransaction();
 
     return res;
   } catch (error) {
-    await session.abortTransaction();
-    return res;
+    (await session).abortTransaction();
+    throw error;
   } finally {
-    session.endSession();
+    (await session).endSession();
   }
 };
 

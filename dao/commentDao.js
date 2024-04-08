@@ -1,5 +1,7 @@
 // 引入模型
 const commentModel = require("../models/commentModel");
+const issueModel = require("../models/issueModel");
+const mongoose = require("mongoose");
 
 /**
  * 根据分页查找问答评论或者书籍评论
@@ -139,9 +141,22 @@ module.exports.addCommentDao = async function (newCommentInfo) {
  * 根据 id 删除一条评论
  */
 module.exports.deleteCommentDao = async function (id) {
-  return commentModel.deleteOne({
-    _id: id
-  });
+  const session = mongoose.startSession();
+  try {
+    (await session).startTransaction();
+
+    const res = await commentModel.findOneAndDelete({
+      _id: id
+    });
+
+    (await session).commitTransaction();
+    return res;
+  } catch (error) {
+    (await session).abortTransaction();
+    throw error;
+  } finally {
+    (await session).endSession();
+  }
 };
 
 /**
