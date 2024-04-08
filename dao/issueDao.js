@@ -1,5 +1,7 @@
 // 引入模型
 const issueModel = require("../models/issueModel");
+const commentModel = require("../models/commentModel");
+const mongoose = require("mongoose");
 
 /**
  * 分页查找问答
@@ -37,9 +39,11 @@ module.exports.findIssueByPageDao = async function (queryObj) {
  * 根据 id 获取其中一个问答的详情
  */
 module.exports.findIssueByIdDao = async function (id) {
-  return issueModel.findOne({
-    _id: id
-  });
+  return issueModel
+    .findOne({
+      _id: id
+    })
+    .populate("userId");
 };
 
 /**
@@ -53,9 +57,30 @@ module.exports.addIssueDao = async function (newIssueInfo) {
  * 根据 id 删除问答
  */
 module.exports.deleteIssueDao = async function (id) {
-  return issueModel.deleteOne({
-    _id: id
-  });
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+    await commentModel.deleteMany({ issueId: id }).session(session);
+
+    const res = await issueModel
+      .deleteOne({
+        _id: id
+      })
+      .session(session);
+
+    if (!res) {
+      throw new Error("删除错误");
+    }
+
+    await session.commitTransaction();
+
+    return res;
+  } catch (error) {
+    await session.abortTransaction();
+    return res;
+  } finally {
+    session.endSession();
+  }
 };
 
 /**

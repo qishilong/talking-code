@@ -65,6 +65,20 @@ module.exports.findIssueCommentByIdDao = async function (issueId, pager) {
     .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
     .sort({ commentDate: -1 })
     .limit(pageObj.eachPage); // 查询条数
+
+  try {
+    pageObj.data = await commentModel
+      .find({
+        issueId
+      })
+      .populate("userId")
+      .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
+      .sort({ commentDate: -1 })
+      .limit(pageObj.eachPage); // 查询条数;
+  } catch (error) {
+    return error;
+  }
+
   return pageObj;
 };
 
@@ -94,6 +108,18 @@ module.exports.findBookCommentByIdDao = async function (bookId, pager) {
     .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
     .sort({ commentDate: -1 })
     .limit(pageObj.eachPage); // 查询条数
+
+  try {
+    pageObj.userInfo = await commentModel
+      .find({
+        commentType,
+        $or: [queryCondition]
+      })
+      .populate("userId");
+  } catch (error) {
+    return error;
+  }
+
   return pageObj;
 };
 

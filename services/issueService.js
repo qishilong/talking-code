@@ -6,7 +6,6 @@ const {
   updateIssueDao,
   searchIssueByPageDao
 } = require("../dao/issueDao");
-const { findIssueCommentByIdDao, deleteCommentDao } = require("../dao/commentDao");
 const { validate } = require("validate.js");
 const { issueRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
@@ -57,11 +56,18 @@ module.exports.deleteIssueService = async function (id) {
   // 首先需要删除该问答对应的评论
 
   // 获取该 issueId 对应的所有评论
-  const commentResult = await findIssueCommentByIdDao(id);
+  // const commentResult = await findIssueCommentByIdDao(id);
 
-  for (let i = 0; i < commentResult.length; i++) {
-    await deleteCommentDao(commentResult[i]._id);
-  }
+  // for (let i = 0; i < commentResult.length; i++) {
+  //   await deleteCommentDao(commentResult[i]._id);
+  // }
+  // const session = await mongoose.startSession();
+
+  // try {
+  //   session.startTransaction();
+  // } catch (error) {}
+
+  // await deleteManyCommentService({ issueId: id });
 
   // 接下来再删除该问答
   return await deleteIssueDao(id);

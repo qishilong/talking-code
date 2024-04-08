@@ -10,7 +10,8 @@ const {
   deleteCommentDao,
   findIssueCommentByIdDao,
   findBookCommentByIdDao,
-  updateCommentDao
+  updateCommentDao,
+  deleteManyCommentDao
 } = require("../dao/commentDao");
 
 const { commentRule } = require("./rules");
@@ -69,6 +70,15 @@ module.exports.addCommentService = async function (newCommentInfo) {
  */
 module.exports.deleteCommentService = async function (id) {
   return await deleteCommentDao(id);
+};
+
+/**
+ * 根据参数批量删除评论
+ * @param {*} params
+ * @returns
+ */
+module.exports.deleteManyCommentService = async function (params) {
+  return await deleteManyCommentDao(params);
 };
 
 /**
