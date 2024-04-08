@@ -54,9 +54,7 @@ function Admin(props) {
         return (
           <Tooltip
             title={
-              row?.loginId.length > 0 ? (
-                <div className={styles["tooltip-styles"]}>{text}</div>
-              ) : undefined
+              row?.loginId ? <div className={styles["tooltip-styles"]}>{text}</div> : undefined
             }
             placement='top'
             destroyTooltipOnHide={true}
@@ -90,9 +88,7 @@ function Admin(props) {
         return (
           <Tooltip
             title={
-              row?.nickname.length > 0 ? (
-                <div className={styles["tooltip-styles"]}>{text}</div>
-              ) : undefined
+              row?.nickname ? <div className={styles["tooltip-styles"]}>{text}</div> : undefined
             }
             placement='top'
             destroyTooltipOnHide={true}

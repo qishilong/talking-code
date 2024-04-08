@@ -164,7 +164,7 @@ function Type() {
             const result = await TypeController.getType(params);
 
             dispatch({
-              type: "type/_initTypeList",
+              type: "type/_resetTypeList",
               payload: [...result.data.allData]
             });
 

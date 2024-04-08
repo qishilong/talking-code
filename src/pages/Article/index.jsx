@@ -69,7 +69,7 @@ function Article() {
         return (
           <Tooltip
             title={
-              row?.articleTitle.length > 0 ? (
+              row?.articleTitle > 0 ? (
                 <div className={styles["tooltip-styles"]}>{text}</div>
               ) : undefined
             }
@@ -93,7 +93,11 @@ function Article() {
       width: "10%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
-          <Select placeholder='请选择查询分类' onChange={(e) => handleChange({ typeId: e })}>
+          <Select
+            placeholder='请选择查询分类'
+            onChange={(e) => handleChange({ typeId: e })}
+            allowClear
+          >
             {typeOptionCreator(Select, typeList)}
           </Select>
         );

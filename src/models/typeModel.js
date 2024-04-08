@@ -32,8 +32,14 @@ export default {
     // 初始化类型列表
     *_initTypeList({ payload }, { put, call }) {
       // 调用 reducer 方法更新本地仓库
+      const res = yield call(TypeController.getType);
+      yield put({ type: "initTypeList", payload: res.data });
+    },
+
+    *_resetTypeList({ payload }, { put }) {
       yield put({ type: "initTypeList", payload: payload });
     },
+
     // 新增类型
     *_addType({ payload }, { put, call }) {
       // 和服务器通信，进行新增

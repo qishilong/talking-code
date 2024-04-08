@@ -149,7 +149,7 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
         name='requirePoints'
         rules={[{ required: true, message: "请选择下载所需积分" }]}
       >
-        <Select style={{ width: 200 }} onChange={handlePointChange}>
+        <Select style={{ width: 200 }} onChange={handlePointChange} allowClear>
           <Select.Option value={20} key={20}>
             20
           </Select.Option>

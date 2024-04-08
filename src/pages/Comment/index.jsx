@@ -38,6 +38,8 @@ function Comment() {
   // 存储评论对应所有的用户
   const [userArr, setUserArr] = useState([]);
 
+  console.log(typeList, "type");
+
   // 存储评论对应的问答或者书籍标题
   const [titleArr, setTitleArr] = useState([]);
 
@@ -79,7 +81,7 @@ function Comment() {
         return (
           <Tooltip
             title={
-              title?.issueTitle.length > 0 || title?.bookTitle.length > 0 ? (
+              title?.issueTitle || title?.bookTitle ? (
                 <div className={styles["tooltip-styles"]}>{text}</div>
               ) : undefined
             }
@@ -154,7 +156,7 @@ function Comment() {
       width: "10%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
-          <Select placeholder='请选择查询分类' onChange={handleChange}>
+          <Select placeholder='请选择查询分类' onChange={handleChange} allowClear>
             {typeOptionCreator(Select, typeList)}
           </Select>
         );
@@ -179,15 +181,6 @@ function Comment() {
       render: (_, row, index, action) => {
         return [
           <div key={row?._id} className={styles["handle-style"]}>
-            {/* <Button
-							type='link'
-							size='small'
-							onClick={() => {
-								setCommentInfo(row);
-								showModal(row);
-							}}>
-							编辑
-						</Button> */}
             <Button type='link' size='small' onClick={() => showModal(row)}>
               详情
             </Button>

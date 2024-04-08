@@ -56,7 +56,7 @@ function Book() {
         return (
           <Tooltip
             title={
-              row?.bookTitle.length > 0 ? (
+              row?.bookTitle > 0 ? (
                 <div className={styles["tooltip-styles"]}>{text}</div>
               ) : undefined
             }
@@ -88,7 +88,7 @@ function Book() {
         return (
           <Tooltip
             title={
-              row?.bookIntro.length > 0 ? (
+              row?.bookIntro ? (
                 <div
                   className={styles["tooltip-styles"]}
                   dangerouslySetInnerHTML={{ __html: text }}
@@ -140,7 +140,7 @@ function Book() {
       width: "10%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
-          <Select placeholder='请选择查询分类' onChange={handleChange}>
+          <Select placeholder='请选择查询分类' onChange={handleChange} allowClear>
             {typeOptionCreator(Select, typeList)}
           </Select>
         );
@@ -243,6 +243,8 @@ function Book() {
           }}
           request={async (params) => {
             const result = await BookController.getBookByPage(params);
+            console.log(result, 1);
+
             return {
               data: result.data.data,
               // success 请返回 true，

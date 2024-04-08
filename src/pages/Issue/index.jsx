@@ -59,7 +59,7 @@ function Issue() {
         return (
           <Tooltip
             title={
-              row?.issueTitle.length > 0 ? (
+              row?.issueTitle ? (
                 <div
                   dangerouslySetInnerHTML={{ __html: text }}
                   className={styles["tooltip-styles"]}
@@ -139,7 +139,7 @@ function Issue() {
       align: "center",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
-          <Select placeholder='请选择查询分类' onChange={handleChange}>
+          <Select placeholder='请选择查询分类' onChange={handleChange} allowClear>
             {typeOptionCreator(Select, typeList)}
           </Select>
         );
@@ -236,14 +236,18 @@ function Issue() {
    */
   async function switchChange(row, value) {
     // 不同于管理员，这里直接通过控制器来发请求
-    await IssueController.editIssue(row._id, {
+
+    const res = await IssueController.editIssue(row._id, {
       issueStatus: value
     });
-
-    if (value) {
-      message.success("该问题审核已通过");
+    if (res.code === 0) {
+      if (value) {
+        message.success("该问题审核已通过");
+      } else {
+        message.info("该问题待审核");
+      }
     } else {
-      message.success("该问题待审核");
+      message.error("问题更改状态失败");
     }
   }
 
