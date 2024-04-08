@@ -11,6 +11,7 @@ function IssueItem(props) {
   const navigate = useNavigate();
   // 从仓库获取类型列表
   const { typeList } = useSelector((state) => state.type);
+
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState(null);
   const colorArr = ["#108ee9", "#2db7f5", "#f50", "green", "#87d068", "blue", "red", "purple"];

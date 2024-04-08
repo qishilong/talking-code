@@ -7,7 +7,6 @@ import { getType } from "../api/type";
 export const getTypeList = createAsyncThunk("type/getTypeList", async (_, action) => {
   // 发送 ajax 请求获取数据
   const response = await getType();
-  // action.dispatch(initTypeList(response.data));
   return response?.data;
 });
 

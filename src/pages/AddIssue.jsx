@@ -96,7 +96,7 @@ function AddIssue() {
           name='typeId'
           rules={[{ required: true, message: "请选择问题所属分类" }]}
         >
-          <Select style={{ width: 200 }} onChange={handleChange}>
+          <Select style={{ width: 200 }} onChange={handleChange} allowClear>
             {typeOptionCreator(Select, typeList)}
           </Select>
         </Form.Item>

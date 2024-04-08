@@ -9,7 +9,6 @@ import ScoreRank from "../components/ScoreRank";
 import Recommend from "../components/Recommend";
 import TypeSelect from "../components/TypeSelect";
 import AddIssue from "../components/AddIssueBtn";
-import { ExclamationCircleTwoTone } from "@ant-design/icons";
 
 import styles from "../css/Issue.module.css";
 
@@ -46,11 +45,6 @@ function Issue(props) {
     fetchData();
   }, [issueTypeId, pageInfo?.current, pageInfo?.pageSize]);
 
-  let questionData = [];
-  for (var i = 0; i < issueInfo.length; i++) {
-    questionData.push(<IssueItem key={i} issueInfo={issueInfo[i]} />);
-  }
-
   /**
    *
    * @param {*} p1age 当前页
@@ -71,8 +65,10 @@ function Issue(props) {
       <div className={styles.issueContainer}>
         {/* 左边部分 */}
         <div className={styles.leftSide}>
-          {questionData}
-          {issueInfo.length > 0 ?
+          {issueInfo.map((item) => {
+            return <IssueItem issueInfo={item} key={item._id} />;
+          })}
+          {issueInfo.length > 0 ? (
             <div className='paginationContainer'>
               <Pagination
                 showQuickJumper
@@ -81,7 +77,9 @@ function Issue(props) {
                 onChange={handlePageChange}
               />
             </div>
-          : <div className={styles.noIssue}>有问题，就来 Talking Code！</div>}
+          ) : (
+            <div className={styles.noIssue}>有问题，就来 Talking Code！</div>
+          )}
         </div>
         {/* 右边部分 */}
         <div className={styles.rightSide}>
