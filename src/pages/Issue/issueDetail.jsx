@@ -35,7 +35,7 @@ function IssueDetail() {
       const type = typeList.find((item) => item._id === data.typeId);
       setTypeName(type?.typeName);
       // 获取 userId 对应的 nickName
-      const result = await UserController.getUserById(data.userId);
+      const result = await UserController.getUserById(data.userId._id);
       setUserName(result.data.nickname);
     }
     fetchData();

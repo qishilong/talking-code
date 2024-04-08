@@ -88,7 +88,7 @@ const TableList: React.FC<unknown> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<API.UserInfo>();
   const [selectedRowsState, setSelectedRows] = useState<API.UserInfo[]>([]);
-  const columns: ProDescriptionsItemProps<API.UserInfo>[] = [
+  const columns: ProDescriptionsItemProps<API.UserInfo>[] | any = [
     {
       title: "名称",
       dataIndex: "name",
@@ -120,7 +120,7 @@ const TableList: React.FC<unknown> = () => {
       title: "操作",
       dataIndex: "option",
       valueType: "option",
-      render: (_, record) => (
+      render: (_: any, record: any) => (
         <>
           <a
             onClick={() => {
@@ -168,7 +168,7 @@ const TableList: React.FC<unknown> = () => {
             success
           };
         }}
-        columns={columns}
+        columns={columns as any}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows)
         }}
@@ -206,7 +206,7 @@ const TableList: React.FC<unknown> = () => {
           }}
           rowKey='id'
           type='form'
-          columns={columns}
+          columns={columns as any}
         />
       </CreateForm>
       {stepFormValues && Object.keys(stepFormValues).length ? (

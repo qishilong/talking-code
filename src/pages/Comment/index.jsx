@@ -21,11 +21,8 @@ function Comment() {
   const dispatch = useDispatch(); // 获取 dispatch
   const actionRef = useRef();
 
-  // 评论详情
-  // const [commentInfo, setCommentInfo] = useState(null);
-
   // 评论类型
-  const [commmentType, setCommentType] = useState(1);
+  const [commentType, setCommentType] = useState(1);
   const { typeList } = useSelector((state) => state.type);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,8 +34,6 @@ function Comment() {
 
   // 存储评论对应所有的用户
   const [userArr, setUserArr] = useState([]);
-
-  console.log(typeList, "type");
 
   // 存储评论对应的问答或者书籍标题
   const [titleArr, setTitleArr] = useState([]);
@@ -66,7 +61,7 @@ function Comment() {
       search: false
     },
     {
-      title: commmentType === 1 ? "问题标题" : "书籍标题",
+      title: commentType === 1 ? "问题标题" : "书籍标题",
       dataIndex: "commentTitle",
       search: false,
       width: "20%",
@@ -76,7 +71,7 @@ function Comment() {
 
         let text = "-";
         if (title?.issueTitle || title?.bookTitle) {
-          text = commmentType === 1 ? title.issueTitle : title.bookTitle;
+          text = commentType === 1 ? title.issueTitle : title.bookTitle;
         }
         return (
           <Tooltip
@@ -206,7 +201,7 @@ function Comment() {
   function showModal(row) {
     const id = row.issueId ? row.issueId : row.bookId;
     const title = titleArr.find((item) => item?._id === id);
-    setCurrentTitle(commmentType === 1 ? title.issueTitle : title.bookTitle);
+    setCurrentTitle(commentType === 1 ? title.issueTitle : title.bookTitle);
     setCurrentContent(row.commentContent);
     setIsModalOpen(true);
   }
@@ -254,7 +249,7 @@ function Comment() {
       <PageContainer>
         <Radio.Group
           onChange={onChange}
-          value={commmentType}
+          value={commentType}
           style={{
             marginTop: 30,
             marginBottom: 30
@@ -284,7 +279,7 @@ function Comment() {
             onChange: handlePageChange
           }}
           request={async (params) => {
-            const result = await CommentController.getCommentByType(params, commmentType);
+            const result = await CommentController.getCommentByType(params, commentType);
             const tableData = result.data.data;
 
             // 获取评论所对应的用户
@@ -295,7 +290,7 @@ function Comment() {
               const { data } = await UserController.getUserById(tableData[i].userId);
               userArr.push(data);
               const id = tableData[i].issueId ? tableData[i].issueId : tableData[i].bookId;
-              if (commmentType === 1) {
+              if (commentType === 1) {
                 const { data } = await IssueController.getIssueById(id);
                 titleArr.push(data);
               } else {
