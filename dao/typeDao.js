@@ -5,6 +5,9 @@ const typeModel = require("../models/typeModel");
  * 查询所有类型
  */
 module.exports.findAllTypeDao = async function (queryObj) {
+  if (!queryObj || Reflect.ownKeys(queryObj).length === 0) {
+    return await typeModel.find();
+  }
   const pageObj = {
     currentPage: Number(queryObj.current),
     pageSize: Number(queryObj.pageSize)

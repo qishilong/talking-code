@@ -5,7 +5,7 @@ const adminModel = require("../models/adminModel");
  * 查询所有的管理员
  */
 module.exports.findAllAdminDao = async function (queryObj) {
-  if (!queryObj) {
+  if (!queryObj || Reflect.ownKeys(queryObj).length === 0) {
     return await adminModel.find();
   }
 
