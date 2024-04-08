@@ -6,7 +6,6 @@ import Discuss from "../components/Discuss";
 import { useParams } from "react-router-dom";
 import { Avatar } from "antd";
 import { getIssueById } from "../api/issue";
-import { getUserById } from "../api/user";
 import { formatDate } from "../utils/tool";
 import { updateIssue } from "../api/issue";
 
@@ -24,10 +23,7 @@ function IssueDetail(props) {
       // 根据问答 id 获取该问答具体的信息
       const { data } = await getIssueById(id);
       setIssueInfo(data);
-
-      // 获取 userId 对应的用户
-      const result = await getUserById(data?.userId);
-      setIssueUserName(result?.data);
+      setIssueUserName(data?.userId);
 
       // 该问答的浏览数 +1
       updateIssue(data?._id, {

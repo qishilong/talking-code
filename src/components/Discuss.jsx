@@ -34,23 +34,18 @@ function Discuss(props) {
         // 传递过来的是问答 id
         const result = await getIssueCommentById(props.targetId, {
           current: 1,
-          pageSize: 10
+          pageSize: 99
         });
         data = result.data;
       } else if (props.commentType === 2) {
         // 传递过来的是书籍 id
         const result = await getBookCommentById(props.targetId, {
           current: 1,
-          pageSize: 10
+          pageSize: 99
         });
         data = result.data;
       }
 
-      // 获取每条评论对应的用户信息
-      for (let i = 0; i < data.data.length; i++) {
-        const result = await getUserById(data.data[i].userId);
-        data.data[i].userInfo = result?.data;
-      }
       setCommentList(data?.data);
       setPageInfo({
         currentPage: data?.currentPage,
@@ -168,7 +163,7 @@ function Discuss(props) {
           renderItem={function (props) {
             return (
               <Comment
-                avatar={<Avatar src={props?.userInfo?.avatar} />}
+                avatar={<Avatar src={props?.userId?.avatar} />}
                 content={<div dangerouslySetInnerHTML={{ __html: props?.commentContent }}></div>}
                 datetime={
                   <Tooltip title={formatDate(props?.commentDate)}>

@@ -35,6 +35,8 @@ function Issue(props) {
         searchParams.current = 1;
       }
       const { data } = await getIssueByPage(searchParams);
+      console.log(data, 11);
+
       setIssueInfo(data.data);
       setPageInfo({
         current: data.currentPage,
