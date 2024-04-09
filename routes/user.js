@@ -52,7 +52,7 @@ router.get("/whoami", async function (req, res, next) {
       })
     );
   } else {
-    return res.send(formatResponse(416, "登录过期，请重新登录", nul));
+    return res.send(formatResponse(416, "登录过期，请重新登录", null));
     next(new ValidationError("登录过期，请重新登录"));
   }
 });
