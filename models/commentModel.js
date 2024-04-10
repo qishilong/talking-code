@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const issueModel = require("./issueModel");
+const bookModel = require("./bookModel");
 
 // 定义对应的 Schema
 const commentSchema = new mongoose.Schema(
@@ -37,6 +38,11 @@ commentSchema.post("findOneAndDelete", async function (doc, next) {
     try {
       await issueModel.findByIdAndUpdate(
         doc.issueId,
+        { $inc: { commentNumber: -1 } },
+        { new: true, runValidators: true }
+      );
+      await bookModel.findByIdAndUpdate(
+        doc.bookId,
         { $inc: { commentNumber: -1 } },
         { new: true, runValidators: true }
       );

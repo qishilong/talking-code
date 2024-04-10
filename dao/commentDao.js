@@ -60,13 +60,6 @@ module.exports.findIssueCommentByIdDao = async function (issueId, pager) {
     issueId
   }); // 数据总条数
   pageObj.totalPage = Math.ceil(pageObj.count / pageObj.eachPage); // 总页数
-  pageObj.data = await commentModel
-    .find({
-      issueId
-    })
-    .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
-    .sort({ commentDate: -1 })
-    .limit(pageObj.eachPage); // 查询条数
 
   try {
     pageObj.data = await commentModel
@@ -103,16 +96,9 @@ module.exports.findBookCommentByIdDao = async function (bookId, pager) {
     bookId
   }); // 数据总条数
   pageObj.totalPage = Math.ceil(pageObj.count / pageObj.eachPage); // 总页数
-  pageObj.data = await commentModel
-    .find({
-      bookId
-    })
-    .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
-    .sort({ commentDate: -1 })
-    .limit(pageObj.eachPage); // 查询条数
 
   try {
-    pageObj.userInfo = await commentModel
+    pageObj.data = await commentModel
       .find({
         bookId
       })
