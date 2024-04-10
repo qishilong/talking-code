@@ -11,7 +11,8 @@ const {
   findIssueCommentByIdDao,
   findBookCommentByIdDao,
   updateCommentDao,
-  deleteManyCommentDao
+  deleteManyCommentDao,
+  updateCommentLikeOrDislikeDao
 } = require("../dao/commentDao");
 
 const { commentRule } = require("./rules");
@@ -88,4 +89,12 @@ module.exports.deleteManyCommentService = async function (params) {
  */
 module.exports.updateCommentService = async function (id, newInfo) {
   return await updateCommentDao(id, newInfo);
+};
+
+/**
+ * 根据 id 和 type 更新点赞或者点踩人员
+ */
+
+module.exports.updateCommentLikeOrDislikeService = async function (id, type, user) {
+  return await updateCommentLikeOrDislikeDao(id, type, user);
 };

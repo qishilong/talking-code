@@ -23,7 +23,9 @@ const commentSchema = new mongoose.Schema(
     }, //  所属分类
     commentContent: String, // 对应评论
     commentDate: String, // 评论日期
-    commentType: Number // 评论类型
+    commentType: Number, // 评论类型
+    commentLike: [String], // 点赞人员
+    commentDisLike: [String] // 点踩人员
   },
   {
     versionKey: false

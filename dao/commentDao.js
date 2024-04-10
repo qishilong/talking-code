@@ -165,3 +165,29 @@ module.exports.deleteCommentDao = async function (id) {
 module.exports.updateCommentDao = async function (id, newInfo) {
   return commentModel.updateOne({ _id: id }, newInfo);
 };
+
+/**
+ * 根据 id 和 type 新增或减少对应评论的点赞人员或者点踩人员
+ */
+module.exports.updateCommentLikeOrDislikeDao = async function (id, type, user) {
+  let session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+    let comment = await commentModel.findOne({ _id: id });
+    if (type === "like") {
+      comment.commentLike.push(user);
+      comment.commentDisLike = comment.dislike.filter((item) => item !== user);
+    } else {
+      comment.commentDisLike.push(user);
+      comment.commentLike = comment.like.filter((item) => item !== user);
+    }
+    await comment.save({ session });
+    await session.commitTransaction();
+    return comment;
+  } catch (err) {
+    await session.abortTransaction();
+    throw err;
+  } finally {
+    session.endSession();
+  }
+};

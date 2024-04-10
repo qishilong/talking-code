@@ -82,3 +82,22 @@ module.exports.deleteIssueDao = async function (id) {
 module.exports.updateIssueDao = async function (id, newInfo) {
   return issueModel.updateOne({ _id: id }, newInfo);
 };
+
+/**
+ * 根据 id 和 type 新增或减少对应文档的点赞人员或者点踩人员
+ */
+module.exports.updateIssueLikeOrDislikeDao = async function (id, type, user) {
+  const res = await issueModel.findOne({ _id: id });
+  if (type === "like") {
+    res.issueLike.push(user);
+    if (res.issueDislike.includes(user)) {
+      res.issueDislike.splice(res.issueDislike.indexOf(user), 1);
+    }
+  } else {
+    res.issueDislike.push(user);
+    if (res.issueLike.includes(user)) {
+      res.issueLike.splice(res.issueLike.indexOf(user), 1);
+    }
+  }
+  return await res.save();
+};

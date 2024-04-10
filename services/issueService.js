@@ -4,7 +4,8 @@ const {
   addIssueDao,
   deleteIssueDao,
   updateIssueDao,
-  searchIssueByPageDao
+  searchIssueByPageDao,
+  updateIssueLikeOrDislikeDao
 } = require("../dao/issueDao");
 const { validate } = require("validate.js");
 const { issueRule } = require("./rules");
@@ -62,4 +63,11 @@ module.exports.deleteIssueService = async function (id) {
  */
 module.exports.updateIssueService = async function (id, newInfo) {
   return await updateIssueDao(id, newInfo);
+};
+
+/**
+ * 更新点赞或者点踩数量
+ */
+module.exports.updateIssueLikeOrDislikeService = async function (id, likeOrDislike, user) {
+  return await updateIssueLikeOrDislikeDao(id, likeOrDislike, user);
 };

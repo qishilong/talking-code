@@ -11,6 +11,8 @@ const issueSchema = new mongoose.Schema(
     commentNumber: Number, //	评论数
     issueStatus: Boolean, //	问题状态
     issueDate: String, //	问题时间
+    issueLike: [String], //	点赞人员
+    issueDislike: [String], // 点踩人员
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "userModel" // 关联的模型
