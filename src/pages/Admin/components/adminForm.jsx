@@ -39,7 +39,6 @@ function AdminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
   async function checkLoginId() {
     if (adminInfo.loginId && type === "add") {
       const { data } = await AdminController.adminIsExist(adminInfo.loginId);
-      console.log(data, "data");
       if (data) {
         // 说明该 loginId 已经注册过了
         return Promise.reject("该管理员已经注册过了");

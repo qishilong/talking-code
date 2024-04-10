@@ -31,7 +31,6 @@ function ArticleDetail() {
       setArticleInfo(data);
       // 获取 typeId 对应的 typeName
       const type = typeList.find((item) => item._id === data.typeId);
-      console.log(type, "type");
       setTypeName(type?.typeName);
     }
     fetchData();

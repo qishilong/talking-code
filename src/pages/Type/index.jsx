@@ -184,8 +184,6 @@ function Type() {
           request={async (params) => {
             const result = await TypeController.getType(params);
 
-            console.log(result, 11);
-
             dispatch({
               type: "type/_resetTypeList",
               payload: [...result.data.allData]

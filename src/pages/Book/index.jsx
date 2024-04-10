@@ -243,8 +243,6 @@ function Book() {
           }}
           request={async (params) => {
             const result = await BookController.getBookByPage(params);
-            console.log(result, 1);
-
             return {
               data: result.data.data,
               // success 请返回 true，

@@ -17,6 +17,7 @@
     "@toast-ui/react-editor": "^3.2.2",
     "@umijs/max": "^4.0.78",
     "antd": "^5.4.0",
+    "exceljs": "^4.4.0",
     "install": "^0.13.0",
     "npm": "^9.1.2",
     "react-canvas-nest": "^1.1.1"

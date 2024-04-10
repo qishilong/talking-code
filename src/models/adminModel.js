@@ -45,7 +45,6 @@ export default {
       const arr = [...newState.adminList];
       arr.push(payload);
       newState.adminList = arr;
-      console.log(newState);
       return newState;
     }
   },
