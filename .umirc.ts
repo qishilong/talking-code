@@ -8,7 +8,7 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: {
-    title: "talking code",
+    title: "Talking Code",
     pure: true,
     loading: true
   },

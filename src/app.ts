@@ -3,6 +3,7 @@ import AdminController from "@/services/admin";
 import { message } from "antd";
 import type { RequestConfig } from "umi";
 import { history } from "umi";
+import img from "./favicon.png";
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
@@ -47,7 +48,7 @@ export async function getInitialState() {
 
 export const layout = () => {
   return {
-    logo: "https://qiniucloud.qishilong.space/images/202308261146613.png",
+    logo: img,
     menu: {
       locale: false
     },
