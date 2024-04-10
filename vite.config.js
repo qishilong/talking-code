@@ -1,0 +1,33 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:1818",
+        changeOrigin: true
+        // onProxyReq: (proxyReq, req, res) => {
+        //   proxyReq.setHeader("Authorization", "Bearer " + localStorage.getItem("token"));
+        // }
+      },
+      "/static": {
+        target: "http://127.0.0.1:1818",
+        changeOrigin: true
+        // onProxyReq: (proxyReq, req, res) => {
+        //   proxyReq.setHeader("Authorization", "Bearer " + localStorage.getItem("token"));
+        // }
+      },
+      "/res": {
+        target: "http://127.0.0.1:1818",
+        changeOrigin: true
+        // onProxyReq: (proxyReq, req, res) => {
+        //   proxyReq.setHeader("Authorization", "Bearer " + localStorage.getItem("token"));
+        // }
+      }
+    }
+  },
+  publicDir: "public" // 这是默认值，通常你不需要改变它
+});
