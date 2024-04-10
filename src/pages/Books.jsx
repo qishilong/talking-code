@@ -32,7 +32,6 @@ function Books(props) {
         // 如果按照分类进行查找，需要将当前页重新设置为第一页
         searchParams.current = 1;
       }
-      console.log(searchParams, "searchParams");
       const { data } = await getBookByPage(searchParams);
       setBookInfo(data?.data);
       setPageInfo({
@@ -104,14 +103,15 @@ function Books(props) {
       </PageHeader>
       <div className={styles.bookContainer}>{bookData}</div>
       <div className='paginationContainer'>
-        {bookData.length > 0 ?
+        {bookData.length > 0 ? (
           <Pagination
             showQuickJumper
             defaultCurrent={1}
             {...pageInfo}
             onChange={handlePageChange}
           />
-        : <div
+        ) : (
+          <div
             style={{
               fontSize: "26px",
               fontWeight: "200"
@@ -119,7 +119,7 @@ function Books(props) {
           >
             该分类下暂无书籍
           </div>
-        }
+        )}
       </div>
     </div>
   );

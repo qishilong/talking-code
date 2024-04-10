@@ -41,3 +41,18 @@ export function updateIssue(issueId, newIssueInfo) {
     data: newIssueInfo
   });
 }
+
+/**
+ * 根据 id 点赞或点踩
+ * @param {*} id
+ * @param {*} params
+ * @returns
+ */
+export function likeOrDislikeIssueById(id, params) {
+  return request(`/api/issue/likeOrDislike/${id}`, {
+    method: "PATCH",
+    data: {
+      ...params
+    }
+  });
+}

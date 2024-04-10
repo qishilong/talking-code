@@ -26,7 +26,6 @@ function Personal(props) {
 
   const showModal = (name) => {
     setPanelName(name);
-    console.log(userInfo);
 
     // 每次打开模态框的时候，清空上一次提交的新内容信息
     setEditInfo({});
@@ -37,7 +36,6 @@ function Personal(props) {
    * 模态框点击确定时的回调
    */
   const handleOk = () => {
-    console.log(editInfo);
     // 派发异步 action
     dispatch(
       updateUserInfo({

@@ -1,16 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Comment, Avatar, Button, Input, Form, message, List, Tooltip, Pagination } from "antd";
+import { Comment, Avatar, Button, Input, Form, message, List, Pagination } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { addComment, getIssueCommentById, getBookCommentById } from "../api/comment";
 import { getUserById, editUser } from "../api/user";
-import { formatDate } from "../utils/tool";
 import { updateIssue } from "../api/issue";
 import { updateBook } from "../api/book";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
 import styles from "../css/Discuss.module.css";
+
+import AntdComment from "./AntdComment";
 
 /**
  * 评论组件
@@ -25,6 +26,10 @@ function Discuss(props) {
   const [refresh, setRefresh] = useState(false);
   const [pageInfo, setPageInfo] = useState({});
   const editorRef = useRef();
+  const [pageParams, setPageParams] = useState({
+    current: 1,
+    pageSize: 5
+  });
 
   useEffect(() => {
     async function fetchCommentList() {
@@ -33,15 +38,13 @@ function Discuss(props) {
       if (props.commentType === 1) {
         // 传递过来的是问答 id
         const result = await getIssueCommentById(props.targetId, {
-          current: 1,
-          pageSize: 99
+          ...pageParams
         });
         data = result.data;
       } else if (props.commentType === 2) {
         // 传递过来的是书籍 id
         const result = await getBookCommentById(props.targetId, {
-          current: 1,
-          pageSize: 99
+          ...pageParams
         });
         data = result.data;
       }
@@ -57,7 +60,7 @@ function Discuss(props) {
     if (props.targetId) {
       fetchCommentList();
     }
-  }, [props.targetId, refresh]);
+  }, [props.targetId, refresh, pageParams]);
 
   // 头像
   let avatar = null;
@@ -154,33 +157,41 @@ function Discuss(props) {
           </>
         }
       />
+
+      <div
+        style={{
+          borderBottom: "1px solid #f0f0f0",
+          padding: "12px 0px",
+          background: "transparent"
+        }}
+      >
+        当前评论
+      </div>
       {/* 评论列表 */}
-      {commentList?.length > 0 && (
-        <List
-          dataSource={commentList}
-          header='当前评论'
-          itemLayout='horizontal'
-          renderItem={function (props) {
-            return (
-              <Comment
-                avatar={<Avatar src={props?.userId?.avatar} />}
-                content={<div dangerouslySetInnerHTML={{ __html: props?.commentContent }}></div>}
-                datetime={
-                  <Tooltip title={formatDate(props?.commentDate)}>
-                    <span>{formatDate(props?.commentDate, "year")}</span>
-                  </Tooltip>
-                }
-                author={props?.userId?.nickname ?? ""}
-              />
-            );
-          }}
-        />
-      )}
+      {commentList?.length > 0
+        ? commentList.map((item) => {
+            return <AntdComment props={item} key={item._id} />;
+          })
+        : undefined}
 
       {/* 分页 */}
       {commentList?.length > 0 ? (
         <div className={styles.paginationContainer}>
-          <Pagination showQuickJumper defaultCurrent={1} total={pageInfo?.totalPage} />
+          <Pagination
+            showQuickJumper
+            showSizeChanger
+            total={pageInfo?.count}
+            pageSize={pageParams.pageSize}
+            current={pageParams.current}
+            pageSizeOptions={[5, 10, 20, 30]}
+            showTotal={(total) => `共 ${total} 条`}
+            onChange={(page, pageSize) => {
+              setPageParams({
+                current: page,
+                pageSize: pageSize
+              });
+            }}
+          />
         </div>
       ) : (
         <div

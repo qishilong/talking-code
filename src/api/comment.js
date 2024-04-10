@@ -38,3 +38,18 @@ export function getBookCommentById(id, params) {
     }
   });
 }
+
+/**
+ * 根据 id 点赞或点踩
+ * @param {*} id
+ * @param {*} params
+ * @returns
+ */
+export function likeOrDislikeCommentById(id, params) {
+  return request(`/api/comment/likeOrDislike/${id}`, {
+    method: "PATCH",
+    data: {
+      ...params
+    }
+  });
+}

@@ -6,6 +6,16 @@ import { Tag } from "antd";
 import styles from "../css/IssueItem.module.css";
 import { getUserById } from "../api/user";
 import { formatDate } from "../utils/tool";
+import { likeOrDislikeIssueById } from "../api/issue";
+import {
+  CommentOutlined,
+  EyeOutlined,
+  LikeOutlined,
+  DislikeOutlined,
+  LikeFilled,
+  DislikeFilled
+} from "@ant-design/icons";
+import { message } from "antd";
 
 function IssueItem(props) {
   const navigate = useNavigate();
@@ -26,32 +36,115 @@ function IssueItem(props) {
     fetchUserData();
   }, []);
 
+  const [likeNumber, setLikeNumber] = useState(props.issueInfo.issueLike.length);
+  const [dislikeNumber, setDislikeNumber] = useState(props.issueInfo.issueDislike.length);
+
+  const { userInfo: curUserInfo } = useSelector((state) => state?.user);
+
+  const [like, setLike] = useState(false);
+  const [dislike, setDislike] = useState(false);
+
+  useEffect(() => {
+    setLike(props?.issueInfo.issueLike.includes(curUserInfo?.loginId));
+    setDislike(props?.issueInfo?.issueDislike.includes(curUserInfo?.loginId));
+  }, [curUserInfo]);
+
   const type = typeList.find((item) => item?._id === props?.issueInfo?.typeId);
   return (
     <div className={styles.container}>
-      {/* 回答数 */}
-      <div className={styles.issueNum}>
-        <div>{props?.issueInfo?.commentNumber}</div>
-        <div>回答</div>
+      <div className={styles.top} onClick={() => navigate(`/issues/${props?.issueInfo?._id}`)}>
+        {props?.issueInfo?.issueTitle}
       </div>
-      {/* 浏览数 */}
-      <div className={styles.issueNum}>
-        <div>{props?.issueInfo?.scanNumber}</div>
-        <div>浏览</div>
-      </div>
-      {/* 问题内容 */}
-      <div className={styles.issueContainer}>
-        <div className={styles.top} onClick={() => navigate(`/issues/${props?.issueInfo?._id}`)}>
-          {props?.issueInfo?.issueTitle}
+      <div className={styles.bottom}>
+        <div className={styles.left}>
+          <Tag color='volcano'>{userInfo?.nickname}</Tag>
+          <span className={styles.split}></span>
+          <span className={styles.icon}>
+            <CommentOutlined />
+            {props?.issueInfo?.commentNumber}
+          </span>
+          <span className={styles.icon}>
+            <EyeOutlined />
+            {props?.issueInfo?.scanNumber}
+          </span>
+          <span
+            className={styles.icon}
+            style={{
+              cursor: "pointer"
+            }}
+            onClick={async () => {
+              const type = like ? "cancelLike" : "like";
+              const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
+                type: type,
+                user: curUserInfo?.loginId
+              });
+              if (!res) {
+                message.error("操作失败");
+              } else {
+                if (type === "cancelLike") {
+                  setLike(false);
+                  setLikeNumber((prev) => {
+                    return prev - 1;
+                  });
+                } else {
+                  if (dislike) {
+                    setDislikeNumber((prev) => {
+                      return prev - 1;
+                    });
+                  }
+                  setLike(true);
+                  setDislike(false);
+                  setLikeNumber((prev) => {
+                    return prev + 1;
+                  });
+                }
+              }
+            }}
+          >
+            {like ? <LikeFilled /> : <LikeOutlined />}
+            {likeNumber}
+          </span>
+          <span
+            className={styles.icon}
+            style={{
+              cursor: "pointer"
+            }}
+            onClick={async () => {
+              const type = dislike ? "cancelDislike" : "dislike";
+              const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
+                type: type,
+                user: curUserInfo?.loginId
+              });
+              if (!res) {
+                message.error("操作失败");
+              } else {
+                if (type === "cancelDislike") {
+                  setDislike(false);
+                  setDislikeNumber((prev) => {
+                    return prev - 1;
+                  });
+                } else {
+                  setDislike(true);
+                  if (like) {
+                    setLikeNumber((prev) => {
+                      return prev - 1;
+                    });
+                  }
+                  setLike(false);
+                  setDislikeNumber((prev) => {
+                    return prev + 1;
+                  });
+                }
+              }
+            }}
+          >
+            {dislike ? <DislikeFilled /> : <DislikeOutlined />}
+            {dislikeNumber}
+          </span>
         </div>
-        <div className={styles.bottom}>
-          <div className={styles.left}>
-            <Tag color={colorArr[typeList.indexOf(type) % colorArr.length]}>{type?.typeName}</Tag>
-          </div>
-          <div className={styles.right}>
-            <Tag color='volcano'>{userInfo?.nickname}</Tag>
-            <span>{formatDate(props?.issueInfo?.issueDate, "year")}</span>
-          </div>
+        <div className={styles.right}>
+          <Tag color={colorArr[typeList.indexOf(type) % colorArr.length]}>{type?.typeName}</Tag>
+          <span>{formatDate(props?.issueInfo?.issueDate, "year")}</span>
         </div>
       </div>
     </div>

@@ -29,5 +29,5 @@ export default defineConfig({
       }
     }
   },
-  publicDir: "public" // 这是默认值，通常你不需要改变它
+  publicDir: "public"
 });
