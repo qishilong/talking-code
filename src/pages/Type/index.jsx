@@ -37,8 +37,7 @@ function Type() {
       dataIndex: "typeName",
       key: "typeName",
       align: "center",
-      editable: true,
-      width: "80%",
+      width: "20%",
       render: (val) => {
         if (!val) {
           return "-";
@@ -60,12 +59,34 @@ function Type() {
       }
     },
     {
+      title: "关联提问",
+      dataIndex: "numberOfIssues",
+      key: "numberOfIssues",
+      align: "center",
+      width: "20%"
+    },
+    {
+      title: "关联书籍",
+      dataIndex: "numberOfBooks",
+      key: "numberOfBooks",
+      align: "center",
+      width: "20%"
+    },
+    {
+      title: "关联文章",
+      dataIndex: "numberOfArticles",
+      key: "numberOfArticles",
+      align: "center",
+      width: "20%"
+    },
+    {
       title: "操作",
       key: "option",
       valueType: "option",
       fixed: "right",
       align: "center",
       width: "20%",
+      tooltip: "当前有关联内容的分类不可删",
       render: (_, row, index, action) => {
         return [
           <div key={row._id} className={styles["handle-style"]}>
@@ -162,6 +183,8 @@ function Type() {
           }}
           request={async (params) => {
             const result = await TypeController.getType(params);
+
+            console.log(result, 11);
 
             dispatch({
               type: "type/_resetTypeList",
