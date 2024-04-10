@@ -170,6 +170,7 @@ function Discuss(props) {
                     <span>{formatDate(props?.commentDate, "year")}</span>
                   </Tooltip>
                 }
+                author={props?.userId?.nickname ?? ""}
               />
             );
           }}

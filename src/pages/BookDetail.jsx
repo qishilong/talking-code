@@ -81,11 +81,11 @@ function BookDetail(props) {
               下载所需积分: <span className={styles.requirePoints}>{bookInfo?.requirePoints}</span>{" "}
               分
             </span>
-            {isLogin ?
+            {isLogin ? (
               <div className={styles.downloadLink} onClick={showModal}>
                 阿里云盘下载地址
               </div>
-            : null}
+            ) : null}
           </div>
         </div>
         <div className={styles.rightSide}>
