@@ -1,4 +1,4 @@
-import { typeOptionCreator } from "@/utils/tool";
+import { formatDate, typeOptionCreator } from "@/utils/tool";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Button, Popconfirm, Select, Switch, Tag, Tooltip, message } from "antd";
 import { useEffect, useRef, useState } from "react";
@@ -116,6 +116,31 @@ function Issue() {
       }
     },
     {
+      title: "提问时间",
+      dataIndex: "issueDate",
+      key: "issueDate",
+      align: "center",
+      width: "15%",
+      search: false,
+      render: (val, row) => {
+        return (
+          <Tooltip
+            title={
+              val ? <div className={styles["tooltip-styles"]}>{formatDate(val)}</div> : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text-date"]}>{val ? formatDate(val) : "-"}</div>
+          </Tooltip>
+        );
+      }
+    },
+    {
       title: "浏览数",
       dataIndex: "scanNumber",
       key: "scanNumber",
@@ -130,6 +155,28 @@ function Issue() {
       align: "center",
       width: "5%",
       search: false
+    },
+    {
+      title: "点赞数",
+      dataIndex: "issueLike",
+      key: "issueLike",
+      align: "center",
+      width: "5%",
+      search: false,
+      render: (_, row) => {
+        return row?.issueLike.length;
+      }
+    },
+    {
+      title: "点踩数",
+      dataIndex: "issueDislike",
+      key: "_id",
+      align: "center",
+      width: "5%",
+      search: false,
+      render: (_, row) => {
+        return row?.issueDislike.length;
+      }
     },
     {
       title: "问题分类",

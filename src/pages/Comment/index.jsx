@@ -1,4 +1,4 @@
-import { typeOptionCreator } from "@/utils/tool";
+import { formatDate, typeOptionCreator } from "@/utils/tool";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Button, Modal, Popconfirm, Radio, Select, Tag, Tooltip, message } from "antd";
 import { useEffect, useRef, useState } from "react";
@@ -97,7 +97,7 @@ function Comment() {
       dataIndex: "commentContent",
       key: "commentContent",
       valueType: "options",
-      width: "40%",
+      width: "30%",
       render: (_, row) => {
         // 将问答标题进行简化
         let text = "-";
@@ -126,6 +126,53 @@ function Comment() {
             <div dangerouslySetInnerHTML={{ __html: text }} className={styles["table-text"]}></div>
           </Tooltip>
         );
+      }
+    },
+    {
+      title: "评论时间",
+      dataIndex: "commentDate",
+      key: "commentDate",
+      align: "center",
+      width: "15%",
+      search: false,
+      render: (val, row) => {
+        return (
+          <Tooltip
+            title={
+              val ? <div className={styles["tooltip-styles"]}>{formatDate(val)}</div> : undefined
+            }
+            placement='top'
+            destroyTooltipOnHide={true}
+            color='#fff'
+            overlayStyle={{
+              maxWidth: "500px"
+            }}
+          >
+            <div className={styles["table-text-date"]}>{val ? formatDate(val) : "-"}</div>
+          </Tooltip>
+        );
+      }
+    },
+    {
+      title: "点赞数",
+      dataIndex: "commentLike",
+      key: "commentLike",
+      align: "center",
+      width: "10%",
+      search: false,
+      render: (_, row) => {
+        return row?.commentLike.length;
+      }
+    },
+    {
+      title: "点踩数",
+      dataIndex: "commentDislike",
+      key: "_id",
+      align: "center",
+      width: "10%",
+      search: false,
+      render: (_, row) => {
+        return row?.commentDislike.length;
       }
     },
     {
