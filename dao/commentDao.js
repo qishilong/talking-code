@@ -114,12 +114,14 @@ module.exports.findBookCommentByIdDao = async function (bookId, pager) {
   try {
     pageObj.userInfo = await commentModel
       .find({
-        commentType,
-        $or: [queryCondition]
+        bookId
       })
-      .populate("userId");
+      .populate("userId")
+      .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
+      .sort({ commentDate: -1 })
+      .limit(pageObj.eachPage); // 查询条数;
   } catch (error) {
-    return error;
+    throw error;
   }
 
   return pageObj;
@@ -169,21 +171,45 @@ module.exports.updateCommentDao = async function (id, newInfo) {
 /**
  * 根据 id 和 type 新增或减少对应评论的点赞人员或者点踩人员
  */
-module.exports.updateCommentLikeOrDislikeDao = async function (id, type, user) {
+module.exports.updateCommentLikeOrDislikeDao = async function (id, params) {
   let session = await mongoose.startSession();
   try {
     session.startTransaction();
     let comment = await commentModel.findOne({ _id: id });
-    if (type === "like") {
-      comment.commentLike.push(user);
-      comment.commentDisLike = comment.dislike.filter((item) => item !== user);
-    } else {
-      comment.commentDisLike.push(user);
-      comment.commentLike = comment.like.filter((item) => item !== user);
+
+    switch (params.type) {
+      case "like":
+        comment.commentLike.push(params.user);
+        if (comment.commentDislike.includes(params.user)) {
+          comment.commentDislike.splice(comment.commentDislike.indexOf(params.user), 1);
+        }
+        break;
+      case "dislike":
+        comment.commentDislike.push(params.user);
+        if (comment.commentLike.includes(params.user)) {
+          comment.commentLike.splice(comment.commentLike.indexOf(params.user), 1);
+        }
+        break;
+      case "cancelLike":
+        comment.commentLike.splice(comment.commentLike.indexOf(params.user), 1);
+        break;
+      case "cancelDislike":
+        comment.commentDislike.splice(comment.commentDislike.indexOf(params.user), 1);
+        break;
+      default:
+        break;
     }
-    await comment.save({ session });
+
+    comment.commentLike = comment.commentLike.filter(
+      (item, index, arr) => arr.indexOf(item) === index
+    );
+
+    comment.commentDislike = comment.commentDislike.filter(
+      (item, index, arr) => arr.indexOf(item) === index
+    );
+
     await session.commitTransaction();
-    return comment;
+    return await comment.save();
   } catch (err) {
     await session.abortTransaction();
     throw err;

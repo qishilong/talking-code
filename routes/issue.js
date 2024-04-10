@@ -12,7 +12,8 @@ const {
   findIssueByIdService,
   updateIssueService,
   deleteIssueService,
-  searchIssueByPageService
+  searchIssueByPageService,
+  updateIssueLikeOrDislikeService
 } = require("../services/issueService");
 
 const { formatResponse } = require("../utils/tools");
@@ -58,6 +59,14 @@ router.delete("/:id", async function (req, res) {
  */
 router.patch("/:id", async function (req, res) {
   const result = await updateIssueService(req.params.id, req.body);
+  return res.send(formatResponse(0, "", result));
+});
+
+/**
+ * 根据 id 点赞或者点踩
+ */
+router.patch("/likeOrDislike/:id", async function (req, res) {
+  const result = await updateIssueLikeOrDislikeService(req.params.id, req.body);
   return res.send(formatResponse(0, "", result));
 });
 

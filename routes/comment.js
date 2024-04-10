@@ -11,7 +11,8 @@ const {
   deleteCommentService,
   findIssueCommentByIdService,
   findBookCommentByIdService,
-  updateCommentService
+  updateCommentService,
+  updateCommentLikeOrDislikeService
 } = require("../services/commentService");
 
 const { formatResponse } = require("../utils/tools");
@@ -67,6 +68,14 @@ router.delete("/:id", async function (req, res) {
  */
 router.patch("/update/:id", async function (req, res) {
   const result = await updateCommentService(req.params.id, req.body);
+  return res.send(formatResponse(0, "", result));
+});
+
+/**
+ * 根据 id 点赞或者点踩
+ */
+router.patch("/likeOrDislike/:id", async function (req, res) {
+  const result = await updateCommentLikeOrDislikeService(req.params.id, req.body);
   return res.send(formatResponse(0, "", result));
 });
 

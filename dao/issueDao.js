@@ -86,18 +86,33 @@ module.exports.updateIssueDao = async function (id, newInfo) {
 /**
  * 根据 id 和 type 新增或减少对应文档的点赞人员或者点踩人员
  */
-module.exports.updateIssueLikeOrDislikeDao = async function (id, type, user) {
+module.exports.updateIssueLikeOrDislikeDao = async function (id, params) {
   const res = await issueModel.findOne({ _id: id });
-  if (type === "like") {
-    res.issueLike.push(user);
-    if (res.issueDislike.includes(user)) {
-      res.issueDislike.splice(res.issueDislike.indexOf(user), 1);
-    }
-  } else {
-    res.issueDislike.push(user);
-    if (res.issueLike.includes(user)) {
-      res.issueLike.splice(res.issueLike.indexOf(user), 1);
-    }
+  switch (params.type) {
+    case "like":
+      res.issueLike.push(params.user);
+      if (res.issueDislike.includes(params.user)) {
+        res.issueDislike.splice(res.issueDislike.indexOf(params.user), 1);
+      }
+      break;
+    case "dislike":
+      res.issueDislike.push(params.user);
+      if (res.issueLike.includes(params.user)) {
+        res.issueLike.splice(res.issueLike.indexOf(params.user), 1);
+      }
+      break;
+    case "cancelLike":
+      res.issueLike.splice(res.issueLike.indexOf(params.user), 1);
+      break;
+    case "cancelDislike":
+      res.issueDislike.splice(res.issueDislike.indexOf(params.user), 1);
+      break;
+    default:
+      break;
   }
+
+  res.issueLike = res.issueLike.filter((item, index, arr) => arr.indexOf(item) === index);
+  res.issueDislike = res.issueDislike.filter((item, index, arr) => arr.indexOf(item) === index);
+
   return await res.save();
 };

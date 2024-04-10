@@ -68,6 +68,6 @@ module.exports.updateIssueService = async function (id, newInfo) {
 /**
  * 更新点赞或者点踩数量
  */
-module.exports.updateIssueLikeOrDislikeService = async function (id, likeOrDislike, user) {
-  return await updateIssueLikeOrDislikeDao(id, likeOrDislike, user);
+module.exports.updateIssueLikeOrDislikeService = async function (id, params) {
+  return await updateIssueLikeOrDislikeDao(id, params);
 };

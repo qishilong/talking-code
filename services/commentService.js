@@ -95,6 +95,6 @@ module.exports.updateCommentService = async function (id, newInfo) {
  * 根据 id 和 type 更新点赞或者点踩人员
  */
 
-module.exports.updateCommentLikeOrDislikeService = async function (id, type, user) {
-  return await updateCommentLikeOrDislikeDao(id, type, user);
+module.exports.updateCommentLikeOrDislikeService = async function (id, params) {
+  return await updateCommentLikeOrDislikeDao(id, params);
 };
