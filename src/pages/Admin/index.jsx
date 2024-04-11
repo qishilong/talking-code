@@ -1,20 +1,22 @@
+import AdminController from "@/services/admin";
 import { download } from "@/utils/tool";
 import { ExportOutlined, FileExcelOutlined, ImportOutlined } from "@ant-design/icons";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { useDispatch, useModel, useSelector } from "@umijs/max";
 import { Button, Modal, Popconfirm, Switch, Tag, Tooltip, message } from "antd";
 import { Workbook } from "exceljs";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AdminForm from "./components/adminForm";
 
 // 请求方法
-import AdminController from "@/services/admin";
 
 import styles from "./index.module.less";
 
 function Admin(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { initialState } = useModel("@@initialState");
 
@@ -32,7 +34,12 @@ function Admin(props) {
   });
 
   const ref = useRef();
+  const inputRef = useRef();
   const id = useId();
+
+  useEffect(() => {
+    navigate("/admin/adminList");
+  }, [adminList.length]);
 
   // 对应表格每一列的配置
   const columns = [
@@ -302,6 +309,78 @@ function Admin(props) {
     download("管理员列表.xlsx", res);
   };
 
+  const inputFileChange = async (e) => {
+    const file = e.target.files[0];
+    const workbook = new Workbook();
+    const worksheet = await workbook.xlsx.load(file);
+    let value = null;
+    worksheet.eachSheet((sheet, index) => {
+      value = sheet.getSheetValues();
+    });
+    const objArr = [];
+    const map = new Map();
+    value = value.slice(1);
+    value.forEach((item, index) => {
+      const curItem = item.slice(2);
+      if (index === 0) {
+        curItem.forEach((val, index) => {
+          switch (val) {
+            case "管理员账号（管理员账号不可重复）":
+              map.set(index, ["loginId", undefined]);
+              break;
+            case "管理员密码（可选）":
+              map.set(index, ["loginPwd", "123123"]);
+              break;
+            case "管理员昵称（可选）":
+              map.set(index, ["nickname", "新增管理员"]);
+              break;
+            case "管理员权限选择（超级管理员1、普通管理员2， 默认2）":
+              map.set(index, ["permission", 2]);
+              break;
+            case "管理员头像地址（完整URL，可选）":
+              map.set(index, ["avatar", ""]);
+              break;
+            case "是否可用（可选，可用true，不可用false，默认true）":
+              map.set(index, ["enabled", true]);
+              break;
+            default:
+              break;
+          }
+        });
+      } else {
+        const obj = {};
+        curItem.forEach((val, index) => {
+          const curVal = map.get(index);
+          if (val) {
+            if (curVal[0] !== "permission") {
+              obj[curVal[0]] = String(val);
+            } else {
+              obj[curVal[0]] = val;
+            }
+          } else {
+            if (curVal[0] !== "permission") {
+              obj[curVal[0]] = String(curVal[1]);
+            } else {
+              obj[curVal[0]] = curVal[1];
+            }
+          }
+        });
+        objArr.push(obj);
+      }
+    });
+
+    for (const oneInfo of objArr) {
+      dispatch({
+        type: "admin/_addAdmin",
+        payload: oneInfo
+      });
+    }
+    queueMicrotask(() => {
+      // 刷新
+      ref.current.reload();
+    });
+  };
+
   return (
     <div>
       <PageContainer>
@@ -323,7 +402,12 @@ function Admin(props) {
                     />
                   </Tooltip>
                 </span>
-                <span className={styles["tools-span"]}>
+                <span
+                  className={styles["tools-span"]}
+                  onClick={() => {
+                    inputRef.current.click();
+                  }}
+                >
                   <Tooltip title='导入（建议下载模版然后导入）'>
                     <ImportOutlined
                       style={{
@@ -364,7 +448,7 @@ function Admin(props) {
             const result = await AdminController.getAdmin(params);
             dispatch({
               type: "admin/_initAdminList",
-              payload: [...result.data.data]
+              payload: result.data.data
             });
 
             return {
@@ -378,6 +462,15 @@ function Admin(props) {
           }}
         />
       </PageContainer>
+      <input
+        ref={inputRef}
+        type='file'
+        style={{
+          display: "none"
+        }}
+        onChange={inputFileChange}
+        accept={".xlsx,.xls"}
+      />
       {/* 修改面板 */}
       <Modal
         title='修改管理员信息'

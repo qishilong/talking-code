@@ -1,5 +1,4 @@
 import { PageContainer } from "@ant-design/pro-components";
-import { message } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "umi";
@@ -35,7 +34,6 @@ function AddAdmin(props) {
       type: "admin/_addAdmin",
       payload: newAdminInfo
     });
-    message.success("添加管理员成功");
     navigate("/admin/adminList");
   }
 

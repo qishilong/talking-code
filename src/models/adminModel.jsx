@@ -1,4 +1,5 @@
 import AdminController from "@/services/admin";
+import { message } from "antd";
 
 export default {
   // 命名空间
@@ -79,11 +80,17 @@ export default {
     // 新增管理员信息
     *_addAdmin({ payload }, { put, call }) {
       // 和服务器通信
-      const { data } = yield call(AdminController.addAdmin, payload);
+      const data = yield call(AdminController.addAdmin, payload);
+      if (data.code === 0) {
+        message.success("添加管理员成功");
+      } else {
+        message.error("添加管理员失败");
+        return;
+      }
       // 调用 reducer 的方法更新本地状态仓库
       yield put({
         type: "addAdmin",
-        payload: data
+        payload: data.data
       });
     }
   }
