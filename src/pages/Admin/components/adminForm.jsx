@@ -84,6 +84,7 @@ function AdminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
           value={adminInfo?.loginId}
           onChange={(e) => updateInfo(e.target.value, "loginId")}
           disabled={type === "edit" ? true : false}
+          placeholder='管理员账号为必填项'
         />
       </Form.Item>
 

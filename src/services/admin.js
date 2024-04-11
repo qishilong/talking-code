@@ -1,3 +1,4 @@
+import { download } from "@/utils/tool";
 import { request } from "@umijs/max";
 
 /**
@@ -89,6 +90,14 @@ function getAdminById(adminId) {
   });
 }
 
+async function getExcelFile() {
+  const response = await request("/api/admin/download/adminComplete", {
+    method: "GET",
+    responseType: "blob" // 确保响应类型为blob
+  });
+  download("管理员列表模版.xlsx", response);
+}
+
 export default {
   getAdmin,
   deleteAdmin,
@@ -98,5 +107,6 @@ export default {
   getCaptcha,
   login,
   getInfo,
-  getAdminById
+  getAdminById,
+  getExcelFile
 };

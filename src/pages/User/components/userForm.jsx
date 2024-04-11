@@ -63,7 +63,7 @@ function UserForm({ type, submitHandle, userInfo, setUserInfo }) {
       >
         <Input
           value={userInfo?.loginId}
-          placeholder='账号为必填项'
+          placeholder='登陆账号为必填项'
           onChange={(e) => updateInfo(e.target.value, "loginId")}
         />
       </Form.Item>

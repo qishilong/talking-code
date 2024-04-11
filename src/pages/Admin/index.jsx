@@ -1,7 +1,10 @@
+import { download } from "@/utils/tool";
+import { ExportOutlined, FileExcelOutlined, ImportOutlined } from "@ant-design/icons";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { useDispatch, useModel, useSelector } from "@umijs/max";
 import { Button, Modal, Popconfirm, Switch, Tag, Tooltip, message } from "antd";
-import { useRef, useState } from "react";
+import { Workbook } from "exceljs";
+import { useId, useRef, useState } from "react";
 
 import AdminForm from "./components/adminForm";
 
@@ -29,6 +32,7 @@ function Admin(props) {
   });
 
   const ref = useRef();
+  const id = useId();
 
   // 对应表格每一列的配置
   const columns = [
@@ -265,10 +269,86 @@ function Admin(props) {
     });
   }
 
+  const handleExport = async () => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet("管理员列表");
+    worksheet.columns = [
+      { header: "管理员ID", key: "_id", width: 50 },
+      { header: "管理员账号", key: "loginId", width: 20 },
+      { header: "管理员密码", key: "loginPwd", width: 50 },
+      { header: "管理员昵称", key: "nickname", width: 20 },
+      { header: "管理员头像", key: "avatar", width: 50 },
+      { header: "管理员权限", key: "permission", width: 20 },
+      { header: "账号状态", key: "enabled", width: 20 }
+    ];
+
+    const adminData = adminList.map((item) => {
+      return {
+        _id: item._id,
+        loginId: item.loginId,
+        loginPwd: item.loginPwd,
+        nickname: item.nickname,
+        avatar: `${window.location.origin}${item.avatar}`,
+        permission: item.permission === 1 ? "超级管理员" : "普通管理员",
+        enabled: item.enabled ? "可用" : "不可用"
+      };
+    });
+
+    worksheet.addRows(adminData);
+
+    const arraybuffer = new ArrayBuffer(10 * 1024 * 1024);
+    const res = await workbook.xlsx.writeBuffer(arraybuffer);
+
+    download("管理员列表.xlsx", res);
+  };
+
   return (
     <div>
       <PageContainer>
         <ProTable
+          toolbar={{
+            actions: [
+              <div key={id} className={styles["tools-style"]}>
+                <span
+                  className={styles["tools-span"]}
+                  onClick={() => {
+                    AdminController.getExcelFile();
+                  }}
+                >
+                  <Tooltip title='下载模版'>
+                    <FileExcelOutlined
+                      style={{
+                        fontSize: "16px"
+                      }}
+                    />
+                  </Tooltip>
+                </span>
+                <span className={styles["tools-span"]}>
+                  <Tooltip title='导入（建议下载模版然后导入）'>
+                    <ImportOutlined
+                      style={{
+                        fontSize: "16px"
+                      }}
+                    />
+                  </Tooltip>
+                </span>
+                <span
+                  className={styles["tools-span"]}
+                  onClick={() => {
+                    handleExport();
+                  }}
+                >
+                  <Tooltip title='导出'>
+                    <ExportOutlined
+                      style={{
+                        fontSize: "16px"
+                      }}
+                    />
+                  </Tooltip>
+                </span>
+              </div>
+            ]
+          }}
           headerTitle='管理员列表'
           rowKey={(row) => row._id}
           actionRef={ref}

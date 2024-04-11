@@ -61,3 +61,23 @@ export function typeOptionCreator(Select, typeList) {
   }
   return optionContainer;
 }
+
+/**
+ * 下载文件
+ * @param {*} filename
+ * @param {*} buffer
+ */
+export function download(filename, buffer) {
+  const blob = new Blob([buffer]);
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+
+  link.addEventListener("click", () => {
+    link.remove();
+    URL.revokeObjectURL(url);
+  });
+}
