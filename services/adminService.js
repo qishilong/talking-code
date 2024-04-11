@@ -32,8 +32,9 @@ module.exports.findAllAdminService = async function (queryObj) {
     { header: "管理员账号（管理员账号不可重复）", width: 20 },
     { header: "管理员密码（可选）", width: 20 },
     { header: "管理员昵称（可选）", width: 20 },
-    { header: "管理员权限选择（超级管理员1、普通管理员2）", width: 50 },
-    { header: "管理员头像地址（完整URL）", width: 50 }
+    { header: "管理员权限选择（超级管理员1、普通管理员2， 默认2）", width: 50 },
+    { header: "管理员头像地址（完整URL，可选）", width: 50 },
+    { header: "是否可用（可选，可用true，不可用false，默认true）", width: 50 }
   ];
 
   await createXlsx("管理员列表模版.xlsx", "管理员列表模版", columns, hasAdminData);
