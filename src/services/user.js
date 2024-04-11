@@ -1,3 +1,4 @@
+import { download } from "@/utils/tool";
 import { request } from "umi";
 
 /**
@@ -53,10 +54,22 @@ function editUser(userId, newUserInfo) {
   });
 }
 
+/**
+ * 获取用户列表模版
+ */
+async function getExcelFile() {
+  const response = await request("/api/user/download/userComplete", {
+    method: "GET",
+    responseType: "blob" // 确保响应类型为blob
+  });
+  download("用户列表模版.xlsx", response);
+}
+
 export default {
   getUserByPage,
   getUserById,
   addUser,
   deleteUser,
-  editUser
+  editUser,
+  getExcelFile
 };

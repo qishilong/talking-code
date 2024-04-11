@@ -82,9 +82,9 @@ export default {
       // 和服务器通信
       const data = yield call(AdminController.addAdmin, payload);
       if (data.code === 0) {
-        message.success("添加管理员成功");
+        message.success(`添加管理员 ${payload.loginId} 成功`);
       } else {
-        message.error("添加管理员失败");
+        message.error(`添加管理员 ${payload.loginId} 失败`);
         return;
       }
       // 调用 reducer 的方法更新本地状态仓库

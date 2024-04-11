@@ -5,7 +5,7 @@ import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { useDispatch, useModel, useSelector } from "@umijs/max";
 import { Button, Modal, Popconfirm, Switch, Tag, Tooltip, message } from "antd";
 import { Workbook } from "exceljs";
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AdminForm from "./components/adminForm";
@@ -27,6 +27,7 @@ function Admin(props) {
 
   // 存储当前要修改的管理员信息
   const [adminInfo, setAdminInfo] = useState(null);
+  const [allAdminData, setAllAdminData] = useState([]);
 
   const [pagination, setPagination] = useState({
     current: 1,
@@ -36,10 +37,6 @@ function Admin(props) {
   const ref = useRef();
   const inputRef = useRef();
   const id = useId();
-
-  useEffect(() => {
-    navigate("/admin/adminList");
-  }, [adminList.length]);
 
   // 对应表格每一列的配置
   const columns = [
@@ -289,7 +286,7 @@ function Admin(props) {
       { header: "账号状态", key: "enabled", width: 20 }
     ];
 
-    const adminData = adminList.map((item) => {
+    const adminData = allAdminData.map((item) => {
       return {
         _id: item._id,
         loginId: item.loginId,
@@ -316,43 +313,52 @@ function Admin(props) {
     let value = null;
     worksheet.eachSheet((sheet, index) => {
       value = sheet.getSheetValues();
+      console.log(value, 55);
     });
     const objArr = [];
     const map = new Map();
     value = value.slice(1);
-    value.forEach((item, index) => {
-      const curItem = item.slice(2);
-      if (index === 0) {
-        curItem.forEach((val, index) => {
+    for (let i = 0, len = value.length; i < len; i++) {
+      const curItem = value[i].slice(2);
+      console.log(curItem, 55);
+
+      if (i === 0) {
+        for (let j = 0, len = curItem.length; j < len; j++) {
+          const val = curItem[j] ?? undefined;
+          console.log(val, 44);
+
           switch (val) {
-            case "管理员账号（管理员账号不可重复）":
-              map.set(index, ["loginId", undefined]);
+            case "管理员账号（必填，管理员账号不可重复）":
+              map.set(j, ["loginId", undefined]);
               break;
-            case "管理员密码（可选）":
-              map.set(index, ["loginPwd", "123123"]);
+            case "管理员密码（可选，默认是123123）":
+              map.set(j, ["loginPwd", "123123"]);
               break;
-            case "管理员昵称（可选）":
-              map.set(index, ["nickname", "新增管理员"]);
+            case "管理员昵称（可选，默认是新增管理员）":
+              map.set(j, ["nickname", "新增管理员"]);
               break;
-            case "管理员权限选择（超级管理员1、普通管理员2， 默认2）":
-              map.set(index, ["permission", 2]);
+            case "管理员权限选择（必填，超级管理员1，普通管理员2）":
+              map.set(j, ["permission", 2]);
               break;
-            case "管理员头像地址（完整URL，可选）":
-              map.set(index, ["avatar", ""]);
+            case "管理员头像地址（可选，完整URL，默认为系统生成的随机头像）":
+              map.set(j, ["avatar", ""]);
               break;
             case "是否可用（可选，可用true，不可用false，默认true）":
-              map.set(index, ["enabled", true]);
+              map.set(j, ["enabled", true]);
               break;
             default:
               break;
           }
-        });
+        }
       } else {
         const obj = {};
-        curItem.forEach((val, index) => {
-          const curVal = map.get(index);
-          if (val) {
-            if (curVal[0] !== "permission") {
+        for (let j = 0, len = curItem.length; j < len; j++) {
+          const curVal = map.get(j);
+          const val = curItem[j] ?? undefined;
+          console.log(val, 22);
+
+          if (val || typeof val === "boolean") {
+            if (curVal[0] !== "permission" && typeof val !== "boolean") {
               obj[curVal[0]] = String(val);
             } else {
               obj[curVal[0]] = val;
@@ -364,21 +370,20 @@ function Admin(props) {
               obj[curVal[0]] = curVal[1];
             }
           }
-        });
+        }
         objArr.push(obj);
       }
-    });
+    }
 
     for (const oneInfo of objArr) {
-      dispatch({
-        type: "admin/_addAdmin",
-        payload: oneInfo
-      });
+      if (oneInfo?.loginId) {
+        dispatch({
+          type: "admin/_addAdmin",
+          payload: oneInfo
+        });
+        ref.current.reload();
+      }
     }
-    queueMicrotask(() => {
-      // 刷新
-      ref.current.reload();
-    });
   };
 
   return (
@@ -446,6 +451,8 @@ function Admin(props) {
           }}
           request={async (params) => {
             const result = await AdminController.getAdmin(params);
+            setAllAdminData(result.data.allData);
+
             dispatch({
               type: "admin/_initAdminList",
               payload: result.data.data

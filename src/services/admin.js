@@ -90,6 +90,9 @@ function getAdminById(adminId) {
   });
 }
 
+/**
+ * 获取管理员列表模版
+ */
 async function getExcelFile() {
   const response = await request("/api/admin/download/adminComplete", {
     method: "GET",
