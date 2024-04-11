@@ -4,6 +4,8 @@
 
 const express = require("express");
 const router = express.Router();
+const path = require("path");
+const fs = require("fs");
 
 // 引入业务层方法
 const {
@@ -68,6 +70,24 @@ router.get("/", async function (req, res) {
   const result = await findAllAdminService(req.query);
   // 对返回数据进行格式化
   return res.send(formatResponse(0, "", result));
+});
+
+/**
+ * 下载模版
+ */
+router.get("/download/adminComplete", (req, res) => {
+  // 文件路径
+  const filePath = path.join(__dirname, "../public/static/xlsx/管理员列表模版.xlsx");
+  // 设置下载的文件名
+  const fileName = path.basename(filePath);
+  // 发送文件供下载
+  res.download(filePath, fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err
+      });
+    }
+  });
 });
 
 /**

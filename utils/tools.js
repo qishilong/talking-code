@@ -4,6 +4,7 @@ const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
 const { UnknownError } = require("./errors");
+const { Workbook } = require("exceljs");
 
 // 格式化要响应的数据
 /* `module.exports.formatResponse`
@@ -72,3 +73,20 @@ module.exports.uploading = multer({
     files: 1
   }
 });
+
+/**
+ * 根据文件名，sheet名，columns数据，data数据生成表格
+ * @param {*} name
+ * @param {*} sheetName
+ * @param {*} columns
+ * @param {*} data
+ */
+module.exports.createXlsx = async (filename, sheetName, columns, data) => {
+  const basePath = path.resolve(__dirname, "../public/static/xlsx");
+  const filePath = path.join(basePath, filename);
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet(sheetName);
+  worksheet.columns = [...columns];
+  worksheet.addRows(data);
+  await workbook.xlsx.writeFile(filePath);
+};

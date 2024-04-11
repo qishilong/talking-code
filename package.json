@@ -11,6 +11,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
+    "exceljs": "^4.4.0",
     "express": "~4.16.1",
     "express-jwt": "^7.7.5",
     "express-session": "^1.17.3",
