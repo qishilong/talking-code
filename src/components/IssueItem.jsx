@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTypeList } from "../redux/typeSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { Tag } from "antd";
+import { Tag, message } from "antd";
 import styles from "../css/IssueItem.module.css";
 import { getUserById } from "../api/user";
 import { formatDate } from "../utils/tool";
@@ -15,12 +15,12 @@ import {
   LikeFilled,
   DislikeFilled
 } from "@ant-design/icons";
-import { message } from "antd";
 
 function IssueItem(props) {
   const navigate = useNavigate();
   // 从仓库获取类型列表
   const { typeList } = useSelector((state) => state.type);
+  const { userInfo: curUserInfo, isLogin } = useSelector((state) => state?.user);
 
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState(null);
@@ -39,15 +39,13 @@ function IssueItem(props) {
   const [likeNumber, setLikeNumber] = useState(props.issueInfo.issueLike.length);
   const [dislikeNumber, setDislikeNumber] = useState(props.issueInfo.issueDislike.length);
 
-  const { userInfo: curUserInfo } = useSelector((state) => state?.user);
-
   const [like, setLike] = useState(false);
   const [dislike, setDislike] = useState(false);
 
   useEffect(() => {
     setLike(props?.issueInfo.issueLike.includes(curUserInfo?.loginId));
     setDislike(props?.issueInfo?.issueDislike.includes(curUserInfo?.loginId));
-  }, [curUserInfo]);
+  }, [curUserInfo, isLogin]);
 
   const type = typeList.find((item) => item?._id === props?.issueInfo?.typeId);
   return (
@@ -73,6 +71,10 @@ function IssueItem(props) {
               cursor: "pointer"
             }}
             onClick={async () => {
+              if (!isLogin) {
+                message.info("请先登录");
+                return;
+              }
               const type = like ? "cancelLike" : "like";
               const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
                 type: type,
@@ -110,6 +112,10 @@ function IssueItem(props) {
               cursor: "pointer"
             }}
             onClick={async () => {
+              if (!isLogin) {
+                message.info("请先登录");
+                return;
+              }
               const type = dislike ? "cancelDislike" : "dislike";
               const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
                 type: type,

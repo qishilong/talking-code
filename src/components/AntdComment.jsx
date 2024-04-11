@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Comment, Tooltip, Avatar } from "antd";
+import { Comment, Tooltip, Avatar, message } from "antd";
 import { LikeOutlined, DislikeOutlined, LikeFilled, DislikeFilled } from "@ant-design/icons";
 import { likeOrDislikeCommentById } from "../api/comment";
 import { formatDate } from "../utils/tool";
@@ -13,14 +13,14 @@ function AntdComment(params) {
   const [likeNumber, setLikeNumber] = useState(0);
   const [dislikeNumber, setDislikeNumber] = useState(0);
 
-  const { userInfo: curUserInfo } = useSelector((state) => state?.user);
+  const { userInfo: curUserInfo, isLogin } = useSelector((state) => state?.user);
 
   useEffect(() => {
     setLike(props?.commentLike.includes(curUserInfo?.loginId));
     setDislike(props?.commentDislike.includes(curUserInfo?.loginId));
     setLikeNumber(props?.commentLike.length);
     setDislikeNumber(props?.commentDislike.length);
-  }, [curUserInfo]);
+  }, [curUserInfo, isLogin]);
 
   const actions = useMemo(() => {
     return [
@@ -30,6 +30,10 @@ function AntdComment(params) {
             cursor: "pointer"
           }}
           onClick={async () => {
+            if (!isLogin) {
+              message.info("请先登录");
+              return;
+            }
             const type = like ? "cancelLike" : "like";
             const res = await likeOrDislikeCommentById(props?._id, {
               type: type,
@@ -73,6 +77,10 @@ function AntdComment(params) {
             paddingLeft: "8px"
           }}
           onClick={async () => {
+            if (!isLogin) {
+              message.info("请先登录");
+              return;
+            }
             const type = dislike ? "cancelDislike" : "dislike";
             const res = await likeOrDislikeCommentById(props?._id, {
               type: type,
