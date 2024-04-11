@@ -14,14 +14,38 @@ const {
 } = require("../dao/userDao");
 const { userRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
-const { randomAvatar } = require("../utils/tools");
+const { randomAvatar, createXlsx } = require("../utils/tools");
 
 /**
  * 根据分页信息来查询用户
  * @returns 返回查询结果
  */
 module.exports.findUserByPageService = async function (pager) {
-  return await findUserByPageDao(pager);
+  const allDataList = await findUserByPageDao();
+  const data = await findUserByPageDao(pager);
+  data.allData = allDataList;
+  const hasAdminData = allDataList.map((item) => {
+    return {
+      loginId: item.loginId
+    };
+  });
+
+  const columns = [
+    { header: "已有用户账号", key: "loginId", width: 20 },
+    { header: "用户账号（必填，用户账号不可重复）", width: 50 },
+    { header: "用户密码（可选，默认密码为123456）", width: 50 },
+    { header: "用户昵称（可选，默认为新用户）", width: 50 },
+    { header: "用户头像地址（可选，完整URL，默认为系统生成的随机头像）", width: 50 },
+    { header: "用户邮箱（可选，默认为空）", width: 50 },
+    { header: "QQ号码（可选，默认为空）", width: 50 },
+    { header: "微信号（可选，默认为空）", width: 50 },
+    { header: "自我介绍（可选，默认为空）", width: 50 },
+    { header: "是否可用（可选，可用true，不可用false，默认true）", width: 50 }
+  ];
+
+  await createXlsx("用户列表模版.xlsx", "用户列表模版", columns, hasAdminData);
+
+  return data;
 };
 
 /**
@@ -108,8 +132,8 @@ module.exports.addUserService = async function (newUserInfo) {
       // 初始积分
       newUserInfo.points = 100;
 
-      // 默认是可用状态
-      newUserInfo.enabled = true;
+      newUserInfo.enabled =
+        newUserInfo.enabled === false || newUserInfo.enabled ? newUserInfo.enabled : true;
 
       if (!newUserInfo.avatar) {
         // 如果用户没有上传头像，则使用随机头像

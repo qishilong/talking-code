@@ -4,6 +4,7 @@
 
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 // 引入业务层方法
 const {
@@ -87,11 +88,31 @@ router.post("/", async function (req, res, next) {
     return;
   }
   const result = await addUserService(req.body);
+
   if (result && result._id) {
     return res.send(formatResponse(0, "", result));
   } else {
     next(result);
+    return res.send(formatResponse(406, "", "数据验证失败"));
   }
+});
+
+/**
+ * 下载用户列表模版
+ */
+router.get("/download/userComplete", (req, res) => {
+  // 文件路径
+  const filePath = path.join(__dirname, "../public/static/xlsx/用户列表模版.xlsx");
+  // 设置下载的文件名
+  const fileName = path.basename(filePath);
+  // 发送文件供下载
+  res.download(filePath, fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err
+      });
+    }
+  });
 });
 
 /**

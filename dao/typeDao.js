@@ -59,7 +59,7 @@ module.exports.findAllTypeDao = async function (queryObj) {
       }
     ]);
   } catch (error) {
-    return pageObj;
+    throw error;
   }
 
   return pageObj;

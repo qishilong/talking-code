@@ -5,7 +5,6 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const fs = require("fs");
 
 // 引入业务层方法
 const {
@@ -73,7 +72,7 @@ router.get("/", async function (req, res) {
 });
 
 /**
- * 下载模版
+ * 下载管理员列表模版
  */
 router.get("/download/adminComplete", (req, res) => {
   // 文件路径

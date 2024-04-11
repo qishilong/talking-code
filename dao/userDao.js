@@ -6,6 +6,9 @@ const userModel = require("../models/userModel");
  * @param {*} param0
  */
 module.exports.findUserByPageDao = async function (queryObj) {
+  if (!queryObj || Reflect.ownKeys(queryObj).length === 0) {
+    return await userModel.find();
+  }
   const pageObj = {
     currentPage: Number(queryObj.current),
     eachPage: Number(queryObj.pageSize)
@@ -54,7 +57,11 @@ module.exports.loginDao = async function ({ loginId, loginPwd }) {
  * @returns
  */
 module.exports.addUserDao = async function (newUserInfo) {
-  return await userModel.create(newUserInfo);
+  try {
+    return await userModel.create(newUserInfo);
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**

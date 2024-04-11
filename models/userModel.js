@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     wechat: String, // 微信号
     intro: String, // 个人介绍
     registerDate: String, // 注册时间
-    lastLoginDate: String, // 上次登录事件
+    lastLoginDate: String, // 上次登录时间
     points: Number, // 积分
     enabled: Boolean // 是否可用
   },

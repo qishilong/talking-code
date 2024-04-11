@@ -19,9 +19,10 @@ const { randomAvatar, createXlsx } = require("../utils/tools");
  * @returns 返回查询结果
  */
 module.exports.findAllAdminService = async function (queryObj) {
+  const allDataList = await findAllAdminDao();
   const data = await findAllAdminDao(queryObj);
-  const dataList = data.data;
-  const hasAdminData = dataList.map((item) => {
+  data.allData = allDataList;
+  const hasAdminData = allDataList.map((item) => {
     return {
       loginId: item.loginId
     };
@@ -29,11 +30,11 @@ module.exports.findAllAdminService = async function (queryObj) {
 
   const columns = [
     { header: "已有管理员账号", key: "loginId", width: 20 },
-    { header: "管理员账号（管理员账号不可重复）", width: 20 },
-    { header: "管理员密码（可选）", width: 20 },
-    { header: "管理员昵称（可选）", width: 20 },
-    { header: "管理员权限选择（超级管理员1、普通管理员2， 默认2）", width: 50 },
-    { header: "管理员头像地址（完整URL，可选）", width: 50 },
+    { header: "管理员账号（必填，管理员账号不可重复）", width: 50 },
+    { header: "管理员密码（可选，默认是123123）", width: 50 },
+    { header: "管理员昵称（可选，默认是新增管理员）", width: 50 },
+    { header: "管理员权限选择（必填，超级管理员1，普通管理员2）", width: 50 },
+    { header: "管理员头像地址（可选，完整URL，默认为系统生成的随机头像）", width: 50 },
     { header: "是否可用（可选，可用true，不可用false，默认true）", width: 50 }
   ];
 
@@ -121,8 +122,9 @@ module.exports.addAdminService = async function (newAdminInfo) {
         // 如果用户没有书写昵称，则使用默认的管理员昵称
         newAdminInfo.nickname = process.env.NEW_ADMIN_NICKNAME;
       }
-      // 默认是可用状态
-      newAdminInfo.enabled = true;
+
+      newAdminInfo.enabled =
+        newAdminInfo.enabled === false || newAdminInfo.enabled ? newAdminInfo.enabled : true;
 
       return await addAdminDao(newAdminInfo);
     },
