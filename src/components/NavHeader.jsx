@@ -32,49 +32,59 @@ function NavHeader(props) {
     <div className='headerContainer'>
       {/* 头部 logo */}
       <div className='logoContainer' onClick={() => navigate("/")}>
-        <div className='logo'></div>
+        <div className='logo'>
+          <span>Talking</span>
+          <span>Code</span>
+        </div>
       </div>
-      {/* 头部导航 */}
-      <nav className='navContainer'>
-        <NavLink to='/' className='navgation'>
-          问答
-        </NavLink>
-        <NavLink to='/books' className='navgation'>
-          书籍
-        </NavLink>
-        <NavLink to='/articles' className='navgation'>
-          文章
-        </NavLink>
-        <a href='https://time.geekbang.org/' className='navgation' target='_blank' rel='noreferrer'>
-          视频教程
-        </a>
-      </nav>
-      {/* 搜索框 */}
-      <div className='searchContainer'>
-        <Input.Group compact>
-          <Select
-            defaultValue='issue'
-            size='large'
-            style={{
-              width: "20%"
-            }}
-            onChange={onChange}
+      <div className='nav'>
+        {/* 头部导航 */}
+        <nav className='navContainer'>
+          <NavLink to='/issues' className='navgation'>
+            问答
+          </NavLink>
+          <NavLink to='/books' className='navgation'>
+            书籍
+          </NavLink>
+          <NavLink to='/articles' className='navgation'>
+            文章
+          </NavLink>
+          <a
+            href='https://time.geekbang.org/'
+            className='navgation'
+            target='_blank'
+            rel='noreferrer'
           >
-            <Option value='issue'>问答</Option>
-            <Option value='book'>书籍</Option>
-            {/* <Option value="jobs">招聘</Option> */}
-          </Select>
-          <Search
-            placeholder='请输入要搜索的内容'
-            allowClear
-            enterButton='搜索'
-            size='large'
-            onSearch={onSearch}
-            style={{
-              width: "80%"
-            }}
-          />
-        </Input.Group>
+            视频教程
+          </a>
+        </nav>
+        {/* 搜索框 */}
+        <div className='searchContainer'>
+          <Input.Group compact>
+            <Select
+              defaultValue='issue'
+              size='large'
+              style={{
+                width: "20%"
+              }}
+              onChange={onChange}
+            >
+              <Option value='issue'>问答</Option>
+              <Option value='book'>书籍</Option>
+              {/* <Option value="jobs">招聘</Option> */}
+            </Select>
+            <Search
+              placeholder='请输入要搜索的内容'
+              allowClear
+              enterButton='搜索'
+              size='large'
+              onSearch={onSearch}
+              style={{
+                width: "80%"
+              }}
+            />
+          </Input.Group>
+        </div>
       </div>
       {/* 登录按钮 */}
       <div className='loginBtnContainer'>

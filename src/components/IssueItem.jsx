@@ -23,17 +23,11 @@ function IssueItem(props) {
   const { userInfo: curUserInfo, isLogin } = useSelector((state) => state?.user);
 
   const dispatch = useDispatch();
-  const [userInfo, setUserInfo] = useState(null);
   const colorArr = ["#108ee9", "#2db7f5", "#f50", "green", "#87d068", "blue", "red", "purple"];
   useEffect(() => {
     if (!typeList.length) {
       dispatch(getTypeList());
     }
-    async function fetchUserData() {
-      const { data } = await getUserById(props.issueInfo.userId);
-      setUserInfo(data);
-    }
-    fetchUserData();
   }, []);
 
   const [likeNumber, setLikeNumber] = useState(props.issueInfo.issueLike.length);
@@ -55,7 +49,7 @@ function IssueItem(props) {
       </div>
       <div className={styles.bottom}>
         <div className={styles.left}>
-          <Tag color='volcano'>{userInfo?.nickname}</Tag>
+          <Tag color='volcano'>{props?.issueInfo?.userId?.nickname}</Tag>
           <span className={styles.split}></span>
           <span className={styles.icon}>
             <CommentOutlined />
