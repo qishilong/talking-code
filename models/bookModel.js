@@ -11,7 +11,7 @@ const bookSchema = new mongoose.Schema(
     scanNumber: Number, // 浏览数
     commentNumber: Number, // 评论数
     onShelfDate: String, // 上架日期
-    requirePoints: Number, // 下砸所需积分
+    requirePoints: Number, // 下载所需积分
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "typeModel" // 关联的模型

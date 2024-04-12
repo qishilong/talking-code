@@ -38,6 +38,8 @@ module.exports.findArticleByPageDao = async function (queryObj) {
     .sort({ onShelfDate: -1 })
     .limit(pageObj.eachPage); // 查询条数
 
+  pageObj.allData = await articleModel.find();
+
   return pageObj;
 };
 

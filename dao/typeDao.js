@@ -14,7 +14,6 @@ module.exports.findAllTypeDao = async function (queryObj) {
   };
   pageObj.count = await typeModel.countDocuments();
   pageObj.totalPage = Math.ceil(pageObj.count / pageObj.pageSize);
-  pageObj.allData = await typeModel.find();
 
   try {
     pageObj.data = await typeModel.aggregate([
@@ -56,6 +55,42 @@ module.exports.findAllTypeDao = async function (queryObj) {
       },
       {
         $limit: pageObj.pageSize
+      }
+    ]);
+
+    pageObj.allData = await typeModel.aggregate([
+      {
+        $lookup: {
+          from: "books",
+          localField: "_id",
+          foreignField: "typeId",
+          as: "relatedBooks"
+        }
+      },
+      {
+        $lookup: {
+          from: "articles",
+          localField: "_id",
+          foreignField: "typeId",
+          as: "relatedArticles"
+        }
+      },
+      {
+        $lookup: {
+          from: "issues",
+          localField: "_id",
+          foreignField: "typeId",
+          as: "relatedIssues"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          typeName: 1,
+          numberOfBooks: { $size: "$relatedBooks" },
+          numberOfArticles: { $size: "$relatedArticles" },
+          numberOfIssues: { $size: "$relatedIssues" }
+        }
       }
     ]);
   } catch (error) {

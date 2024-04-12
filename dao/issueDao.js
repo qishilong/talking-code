@@ -21,7 +21,7 @@ module.exports.findIssueByPageDao = async function (queryObj) {
     // 用户要按照分类进行搜索
     queryCondition.typeId = queryObj.typeId;
   }
-  if (queryObj.issueStatus != undefined) {
+  if (queryObj.issueStatus !== undefined) {
     queryCondition.issueStatus = queryObj.issueStatus;
   }
 
@@ -29,9 +29,19 @@ module.exports.findIssueByPageDao = async function (queryObj) {
   pageObj.totalPage = Math.ceil(pageObj.count / pageObj.eachPage); // 总页数
   pageObj.data = await issueModel
     .find(queryCondition)
+    .populate({
+      path: "userId",
+      select: "loginId nickname"
+    })
     .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
     .sort({ issueDate: -1 })
     .limit(pageObj.eachPage); // 查询条数
+
+  pageObj.allData = await issueModel.find().populate({
+    path: "userId",
+    select: "loginId nickname"
+  });
+
   return pageObj;
 };
 

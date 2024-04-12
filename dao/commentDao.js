@@ -34,9 +34,31 @@ module.exports.findCommentByPageAndTypeDao = async function (commentType, queryO
       commentType,
       $or: [queryCondition]
     })
+    .populate([
+      {
+        path: "userId",
+        select: "loginId nickname"
+      },
+      { path: "issueId", select: "issueTitle" },
+      { path: "bookId", select: "bookTitle" }
+    ])
     .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
     .sort({ commentDate: -1 })
     .limit(pageObj.eachPage); // 查询条数
+
+  pageObj.allData = await commentModel
+    .find({
+      commentType,
+      $or: [queryCondition]
+    })
+    .populate([
+      {
+        path: "userId",
+        select: "loginId nickname"
+      },
+      { path: "issueId", select: "issueTitle" },
+      { path: "bookId", select: "bookTitle" }
+    ]);
 
   return pageObj;
 };
