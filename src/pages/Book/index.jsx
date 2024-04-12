@@ -1,7 +1,9 @@
-import { formatDate, typeOptionCreator } from "@/utils/tool";
+import { download, formatDate, typeOptionCreator } from "@/utils/tool";
+import { ExportOutlined } from "@ant-design/icons";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Button, Popconfirm, Select, Tag, Tooltip, message } from "antd";
-import { useRef, useState } from "react";
+import { Workbook } from "exceljs";
+import { useId, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "umi";
 
@@ -20,6 +22,8 @@ function Book() {
   const dispatch = useDispatch(); // 获取 dispatch
   const actionRef = useRef();
   const navigate = useNavigate();
+  const id = useId();
+  const [allBookData, setAllBookData] = useState([]);
 
   // 按类型进行搜索
   const [searchType, setSearchType] = useState({
@@ -56,7 +60,7 @@ function Book() {
         return (
           <Tooltip
             title={
-              row?.bookTitle > 0 ? (
+              row?.bookTitle.length > 0 ? (
                 <div className={styles["tooltip-styles"]}>{text}</div>
               ) : undefined
             }
@@ -219,11 +223,80 @@ function Book() {
     message.success("删除书籍成功");
   }
 
+  const handleExport = async () => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet("书籍列表");
+    worksheet.columns = [
+      { header: "书籍ID", key: "_id", width: 50 },
+      { header: "书籍名称", key: "bookTitle", width: 50 },
+      { header: "书籍简介", key: "bookIntro", width: 50 },
+      { header: "书籍封面", key: "bookPic", width: 50 },
+      { header: "书籍下载链接", key: "downloadLink", width: 50 },
+      { header: "下载所需积分", key: "requirePoints", width: 20 },
+      { header: "书籍浏览数", key: "scanNumber", width: 20 },
+      { header: "书籍评论数", key: "commentNumber", width: 20 },
+      { header: "书籍所属类型", key: "type", width: 50 },
+      { header: "书籍上架时间", key: "onShelfDate", width: 50 }
+    ];
+
+    const bookData = allBookData.map((item) => {
+      if (item.bookIntro) {
+        // 在表格中显示书籍简介时，过滤掉 html 标签
+        let reg = /<[^<>]+>/g;
+        item.bookIntro = item.bookIntro.replace(reg, "");
+      }
+
+      if (item.typeId) {
+        item.type = typeList.find((val) => val._id === item.typeId)?.typeName;
+      }
+
+      return {
+        _id: item._id,
+        bookTitle: item.bookTitle,
+        bookIntro: item.bookIntro,
+        bookPic: `${window.location.origin}${item.bookPic}`,
+        downloadLink: item.downloadLink,
+        requirePoints: item.requirePoints,
+        scanNumber: item.scanNumber,
+        commentNumber: item.commentNumber,
+        type: item.type,
+        onShelfDate: formatDate(item.onShelfDate)
+      };
+    });
+
+    worksheet.addRows(bookData);
+
+    const arraybuffer = new ArrayBuffer(10 * 1024 * 1024);
+    const res = await workbook.xlsx.writeBuffer(arraybuffer);
+
+    download("书籍列表.xlsx", res);
+  };
+
   return (
     <>
       {/* 书籍列表 */}
       <PageContainer>
         <ProTable
+          toolbar={{
+            actions: [
+              <div key={id} className={styles["tools-style"]}>
+                <span
+                  className={styles["tools-span"]}
+                  onClick={() => {
+                    handleExport();
+                  }}
+                >
+                  <Tooltip title='导出'>
+                    <ExportOutlined
+                      style={{
+                        fontSize: "16px"
+                      }}
+                    />
+                  </Tooltip>
+                </span>
+              </div>
+            ]
+          }}
           headerTitle='书籍列表'
           actionRef={actionRef}
           columns={columns}
@@ -243,6 +316,7 @@ function Book() {
           }}
           request={async (params) => {
             const result = await BookController.getBookByPage(params);
+            setAllBookData(result.data.allData);
             return {
               data: result.data.data,
               // success 请返回 true，

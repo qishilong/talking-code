@@ -69,7 +69,7 @@ function Article() {
         return (
           <Tooltip
             title={
-              row?.articleTitle > 0 ? (
+              row?.articleTitle.length > 0 ? (
                 <div className={styles["tooltip-styles"]}>{text}</div>
               ) : undefined
             }
