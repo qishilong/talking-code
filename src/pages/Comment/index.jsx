@@ -1,14 +1,13 @@
-import { formatDate, typeOptionCreator } from "@/utils/tool";
+import { download, formatDate, typeOptionCreator } from "@/utils/tool";
+import { ExportOutlined } from "@ant-design/icons";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Button, Modal, Popconfirm, Radio, Select, Tag, Tooltip, message } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Workbook } from "exceljs";
+import { useEffect, useId, useRef, useState } from "react";
 import { useDispatch, useSelector } from "umi";
 
 // 请求方法
-import BookController from "@/services/book";
 import CommentController from "@/services/comment";
-import IssueController from "@/services/issue";
-import UserController from "@/services/user";
 
 import styles from "./index.module.less";
 
@@ -20,6 +19,7 @@ function Comment() {
 
   const dispatch = useDispatch(); // 获取 dispatch
   const actionRef = useRef();
+  const id = useId();
 
   // 评论类型
   const [commentType, setCommentType] = useState(1);
@@ -32,14 +32,10 @@ function Comment() {
     typeId: null
   });
 
-  // 存储评论对应所有的用户
-  const [userArr, setUserArr] = useState([]);
-
-  // 存储评论对应的问答或者书籍标题
-  const [titleArr, setTitleArr] = useState([]);
-
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentContent, setCurrentContent] = useState("");
+
+  const [allCommentData, setAllCommentData] = useState([]);
 
   useEffect(() => {
     // 如果类型列表为空，则初始化一次
@@ -64,22 +60,17 @@ function Comment() {
       title: commentType === 1 ? "问题标题" : "书籍标题",
       dataIndex: "commentTitle",
       search: false,
-      width: "20%",
-      render: (_, row) => {
-        const id = row.issueId ? row.issueId : row.bookId;
-        const title = titleArr.find((item) => item?._id === id);
-
+      width: "15%",
+      render: (val, row) => {
         let text = "-";
-        if (title?.issueTitle || title?.bookTitle) {
-          text = commentType === 1 ? title.issueTitle : title.bookTitle;
+        const title = commentType === 1 ? row?.issueId?.issueTitle : row?.bookId?.bookTitle;
+
+        if (title) {
+          text = title;
         }
         return (
           <Tooltip
-            title={
-              title?.issueTitle || title?.bookTitle ? (
-                <div className={styles["tooltip-styles"]}>{text}</div>
-              ) : undefined
-            }
+            title={title ? <div className={styles["tooltip-styles"]}>{text}</div> : undefined}
             placement='top'
             destroyTooltipOnHide={true}
             color='#fff'
@@ -97,7 +88,7 @@ function Comment() {
       dataIndex: "commentContent",
       key: "commentContent",
       valueType: "options",
-      width: "30%",
+      width: "25%",
       render: (_, row) => {
         // 将问答标题进行简化
         let text = "-";
@@ -158,7 +149,7 @@ function Comment() {
       dataIndex: "commentLike",
       key: "commentLike",
       align: "center",
-      width: "10%",
+      width: "5%",
       search: false,
       render: (_, row) => {
         return row?.commentLike.length;
@@ -169,25 +160,40 @@ function Comment() {
       dataIndex: "commentDislike",
       key: "_id",
       align: "center",
-      width: "10%",
+      width: "5%",
       search: false,
       render: (_, row) => {
         return row?.commentDislike.length;
       }
     },
     {
-      title: "评论用户",
+      title: "用户账号",
+      dataIndex: ["userId", "loginId"],
+      key: ["userId", "loginId"],
       align: "center",
-      dataIndex: "nickname",
-      search: false,
       width: "10%",
-      render: (_, row) => {
-        const user = userArr.find((item) => item?._id === row?.userId);
-        return [
-          <Tag color='blue' key={row.userId}>
-            {user?.nickname}
+      search: false,
+      render: (val, row) => {
+        return (
+          <Tag color='red' key={row?.typeId}>
+            {val}
           </Tag>
-        ];
+        );
+      }
+    },
+    {
+      title: "用户昵称",
+      dataIndex: ["userId", "nickname"],
+      key: ["userId", "nickname"],
+      align: "center",
+      width: "10%",
+      search: false,
+      render: (val, row) => {
+        return (
+          <Tag color='blue' key={row?.typeId}>
+            {val}
+          </Tag>
+        );
       }
     },
     {
@@ -246,9 +252,7 @@ function Comment() {
    * 打开修改对话框
    */
   function showModal(row) {
-    const id = row.issueId ? row.issueId : row.bookId;
-    const title = titleArr.find((item) => item?._id === id);
-    setCurrentTitle(commentType === 1 ? title.issueTitle : title.bookTitle);
+    setCurrentTitle(commentType === 1 ? title.issueId.issueTitle : title.bookId.bookTitle);
     setCurrentContent(row.commentContent);
     setIsModalOpen(true);
   }
@@ -290,6 +294,73 @@ function Comment() {
     actionRef.current.reload(); // 再次刷新请求
   };
 
+  const handleExport = async () => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet(commentType === 1 ? "问题评论列表" : "书籍评论列表");
+    commentType === 1
+      ? (worksheet.columns = [
+          { header: "问题评论ID", key: "_id", width: 50 },
+          { header: "问题标题", key: "issueTitle", width: 50 },
+          { header: "评论内容", key: "commentContent", width: 50 },
+          { header: "评论时间", key: "commentDate", width: 50 },
+          { header: "评论点赞数", key: "commentLikeNumber", width: 20 },
+          { header: "评论点踩数", key: "commentDislikeNumber", width: 20 },
+          { header: "评论点赞人员", key: "commentLike", width: 20 },
+          { header: "评论点踩人员", key: "commentDislike", width: 20 },
+          { header: "评论用户账号", key: "loginId", width: 20 },
+          { header: "评论用户昵称", key: "nickname", width: 50 },
+          { header: "评论分类", key: "type", width: 50 }
+        ])
+      : (worksheet.columns = [
+          { header: "书籍评论ID", key: "_id", width: 50 },
+          { header: "书籍标题", key: "bookTitle", width: 50 },
+          { header: "评论内容", key: "commentContent", width: 50 },
+          { header: "评论时间", key: "commentDate", width: 20 },
+          { header: "评论点赞数", key: "commentLikeNumber", width: 20 },
+          { header: "评论点踩数", key: "commentDislikeNumber", width: 20 },
+          { header: "评论点赞人员", key: "commentLike", width: 20 },
+          { header: "评论点踩人员", key: "commentDislike", width: 20 },
+          { header: "评论用户账号", key: "loginId", width: 20 },
+          { header: "评论用户昵称", key: "nickname", width: 50 },
+          { header: "评论分类", key: "type", width: 50 }
+        ]);
+
+    const bookData = allCommentData.map((item) => {
+      if (item.commentContent) {
+        // 在表格中显示评论内容时，过滤掉 html 标签
+        let reg = /<[^<>]+>/g;
+        item.commentContent = item.commentContent.replace(reg, "");
+      }
+
+      if (item.typeId) {
+        item.type = typeList.find((val) => val._id === item.typeId)?.typeName;
+      }
+
+      return {
+        _id: item._id,
+        issueTitle: item?.issueId?.issueTitle,
+        bookTitle: item?.bookId?.bookTitle,
+        commentContent: item.commentContent,
+        commentDate: formatDate(item.commentDate),
+        commentLikeNumber: item.commentLike.length,
+        commentDislikeNumber: item.commentDislike.length,
+        commentLike: item.commentLike,
+        commentDislike: item.commentDislike,
+        issueDislike: item.issueDislike,
+        loginId: item.userId.loginId,
+        nickname: item.userId.nickname,
+        type: item.type
+      };
+    });
+
+    worksheet.addRows(bookData);
+
+    const arraybuffer = new ArrayBuffer(10 * 1024 * 1024);
+    const res = await workbook.xlsx.writeBuffer(arraybuffer);
+
+    download(commentType === 1 ? "问题评论列表.xlsx" : "书籍评论列表.xlsx", res);
+  };
+
   return (
     <>
       {/* 评论列表 */}
@@ -303,12 +374,35 @@ function Comment() {
           }}
         >
           <Radio.Button value={1} defaultChecked>
-            问答评论
+            问题评论
           </Radio.Button>
           <Radio.Button value={2}>书籍评论</Radio.Button>
         </Radio.Group>
         <ProTable
           headerTitle='评论列表'
+          scroll={{
+            x: "max-content"
+          }}
+          toolbar={{
+            actions: [
+              <div key={id} className={styles["tools-style"]}>
+                <span
+                  className={styles["tools-span"]}
+                  onClick={() => {
+                    handleExport();
+                  }}
+                >
+                  <Tooltip title='导出'>
+                    <ExportOutlined
+                      style={{
+                        fontSize: "16px"
+                      }}
+                    />
+                  </Tooltip>
+                </span>
+              </div>
+            ]
+          }}
           actionRef={actionRef}
           columns={columns}
           params={searchType}
@@ -327,29 +421,9 @@ function Comment() {
           }}
           request={async (params) => {
             const result = await CommentController.getCommentByType(params, commentType);
-            const tableData = result.data.data;
-
-            // 获取评论所对应的用户
-            // 获取评论所对应的问答或者书籍标题
-            const userArr = [];
-            const titleArr = [];
-            for (let i = 0; i < tableData.length; i++) {
-              const { data } = await UserController.getUserById(tableData[i].userId);
-              userArr.push(data);
-              const id = tableData[i].issueId ? tableData[i].issueId : tableData[i].bookId;
-              if (commentType === 1) {
-                const { data } = await IssueController.getIssueById(id);
-                titleArr.push(data);
-              } else {
-                const { data } = await BookController.getBookById(id);
-                titleArr.push(data);
-              }
-            }
-            setUserArr(userArr);
-            setTitleArr(titleArr);
-
+            setAllCommentData(result.data.allData);
             return {
-              data: tableData,
+              data: result.data.data,
               // success 请返回 true，
               // 不然 table 会停止解析数据，即使有数据
               success: !result.code,

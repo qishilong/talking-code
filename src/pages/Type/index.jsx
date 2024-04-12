@@ -1,6 +1,9 @@
+import { download } from "@/utils/tool";
+import { ExportOutlined } from "@ant-design/icons";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Button, Form, Input, Popconfirm, Tooltip, message } from "antd";
-import { useRef, useState } from "react";
+import { Workbook } from "exceljs";
+import { useId, useRef, useState } from "react";
 import { useDispatch, useSelector } from "umi";
 import styles from "./index.module.less";
 
@@ -16,6 +19,7 @@ function Type() {
     current: 1,
     pageSize: 5
   });
+  const [allTypeData, setAllTypeData] = useState([]);
 
   /**
    *
@@ -30,6 +34,7 @@ function Type() {
   }
 
   const ref = useRef();
+  const id = useId();
 
   const columns = [
     {
@@ -59,21 +64,21 @@ function Type() {
       }
     },
     {
-      title: "关联提问",
+      title: "关联问题数量",
       dataIndex: "numberOfIssues",
       key: "numberOfIssues",
       align: "center",
       width: "20%"
     },
     {
-      title: "关联书籍",
+      title: "关联书籍数量",
       dataIndex: "numberOfBooks",
       key: "numberOfBooks",
       align: "center",
       width: "20%"
     },
     {
-      title: "关联文章",
+      title: "关联文章数量",
       dataIndex: "numberOfArticles",
       key: "numberOfArticles",
       align: "center",
@@ -146,6 +151,35 @@ function Type() {
     message.success("删除类型成功");
   }
 
+  const handleExport = async () => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet("分类列表");
+    worksheet.columns = [
+      { header: "分类ID", key: "_id", width: 50 },
+      { header: "分类名称", key: "typeName", width: 50 },
+      { header: "关联问题数量", key: "numberOfIssues", width: 20 },
+      { header: "关联书籍数量", key: "numberOfBooks", width: 20 },
+      { header: "关联文章数量", key: "numberOfArticles", width: 20 }
+    ];
+
+    const bookData = allTypeData.map((item) => {
+      return {
+        _id: item._id,
+        typeName: item.typeName,
+        numberOfIssues: item.numberOfIssues,
+        numberOfBooks: item.numberOfBooks,
+        numberOfArticles: item.numberOfArticles
+      };
+    });
+
+    worksheet.addRows(bookData);
+
+    const arraybuffer = new ArrayBuffer(10 * 1024 * 1024);
+    const res = await workbook.xlsx.writeBuffer(arraybuffer);
+
+    download("分类列表.xlsx", res);
+  };
+
   return (
     <PageContainer>
       <>
@@ -170,6 +204,26 @@ function Type() {
         {/* 分类列表 */}
         <ProTable
           headerTitle='分类信息'
+          toolbar={{
+            actions: [
+              <div key={id} className={styles["tools-style"]}>
+                <span
+                  className={styles["tools-span"]}
+                  onClick={() => {
+                    handleExport();
+                  }}
+                >
+                  <Tooltip title='导出'>
+                    <ExportOutlined
+                      style={{
+                        fontSize: "16px"
+                      }}
+                    />
+                  </Tooltip>
+                </span>
+              </div>
+            ]
+          }}
           columns={columns}
           rowKey={(row) => row._id}
           actionRef={ref}
@@ -183,7 +237,7 @@ function Type() {
           }}
           request={async (params) => {
             const result = await TypeController.getType(params);
-
+            setAllTypeData(result.data.allData);
             dispatch({
               type: "type/_resetTypeList",
               payload: [...result.data.allData]
