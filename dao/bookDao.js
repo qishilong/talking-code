@@ -28,6 +28,9 @@ module.exports.findBookByPageDao = async function (queryObj) {
     .skip((pageObj.currentPage - 1) * pageObj.eachPage) // 设置跳过的数据条数
     .sort({ onShelfDate: -1 })
     .limit(pageObj.eachPage); // 查询条数
+
+  pageObj.allData = await bookModel.find();
+
   return pageObj;
 };
 
