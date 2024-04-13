@@ -1,11 +1,12 @@
 import React from "react";
-import { Tree, BackTop } from "antd";
+import { Tree, BackTop, Button } from "antd";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getArticleTitleList } from "../redux/articleSlice";
 import { getTypeList } from "../redux/typeSlice";
 import { useState, useEffect } from "react";
-import { getArticleById } from "../api/article";
+import { getArticleById, getArticleToWord, getArticleToMarkdown } from "../api/article";
+import { ExportOutlined } from "@ant-design/icons";
 
 import PageHeader from "../components/PageHeader";
 
@@ -75,6 +76,26 @@ function Articles(props) {
     articleRightSide = (
       <div className={styles.content}>
         <h1 className={styles?.articleRightTitle}>{articleInfo?.articleTitle}</h1>
+        <div className={styles["handle-export"]}>
+          <Button
+            type='dashed'
+            icon={<ExportOutlined />}
+            onClick={() => {
+              getArticleToWord(articleInfo?._id, `${articleInfo?.articleTitle}.docx`);
+            }}
+          >
+            导出为Word文件
+          </Button>
+          <Button
+            type='dashed'
+            icon={<ExportOutlined />}
+            onClick={() => {
+              getArticleToMarkdown(articleInfo?._id, `${articleInfo?.articleTitle}.md`);
+            }}
+          >
+            导出为Markdown文件
+          </Button>
+        </div>
         <div className={styles.contentContainer}>
           <div dangerouslySetInnerHTML={{ __html: articleInfo?.articleContent }}></div>
         </div>

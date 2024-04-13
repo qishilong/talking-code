@@ -69,3 +69,10 @@
   font-weight: 200;
   font-size: 16px;
 }
+
+.handle-export {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  gap: 8px;
+}
