@@ -21,6 +21,8 @@ const typeRouter = require("./routes/type");
 const articleRouter = require("./routes/article");
 const commentRouter = require("./routes/comment");
 const uploadRouter = require("./routes/upload");
+const recommendCarouselRouter = require("./routes/recommendCarousel");
+const recommendDetailRouter = require("./routes/recommendDetail");
 
 // 创建服务器实例
 const app = express();
@@ -56,6 +58,8 @@ app.use("/api/issue", issueRouter);
 app.use("/api/book", bookRouter);
 app.use("/api/article", articleRouter);
 app.use("/api/comment", commentRouter);
+app.use("/api/recommendCarousel", recommendCarouselRouter);
+app.use("/api/recommendDetail", recommendDetailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
