@@ -10,6 +10,8 @@ const {
 const { validate } = require("validate.js");
 const { articleRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
+const htmlToDocx = require("html-to-docx");
+const TurndownService = require("turndown");
 
 /**
  * 按照分页查询文章
@@ -64,4 +66,30 @@ module.exports.deleteArticleService = async function (id) {
  */
 module.exports.updateArticleService = async function (id, newInfo) {
   return await updateArticleDao(id, newInfo);
+};
+
+/**
+ * 根据 id 将文章转换成 Word 文件
+ * @param {*} id
+ * @returns
+ */
+module.exports.htmlToDocxService = async function (id) {
+  const article = await findArticleByIdDao(id);
+  return await htmlToDocx(article.articleContent, null, {
+    title: article.articleTitle,
+    table: { row: { cantSplit: true } },
+    footer: true,
+    pageNumber: true
+  });
+};
+
+/**
+ * 根据 id 将文章转换成 Markdown 文件
+ * @param {*} id
+ * @returns
+ */
+module.exports.htmlToMarkdownService = async function (id) {
+  const article = await findArticleByIdDao(id);
+  const turndownService = new TurndownService();
+  return await turndownService.turndown(article.articleContent);
 };

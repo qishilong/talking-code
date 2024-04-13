@@ -11,7 +11,9 @@ const {
   findArticleByIdService,
   addArticleService,
   deleteArticleService,
-  updateArticleService
+  updateArticleService,
+  htmlToDocxService,
+  htmlToMarkdownService
 } = require("../services/articleService");
 
 const { formatResponse } = require("../utils/tools");
@@ -66,6 +68,40 @@ router.delete("/:id", async function (req, res) {
 router.patch("/:id", async function (req, res) {
   const result = await updateArticleService(req.params.id, req.body);
   return res.send(formatResponse(0, "", result));
+});
+
+/**
+ * 根据 id 将文章转换成 Word 文件
+ */
+router.get("/word/:id", async function (req, res) {
+  try {
+    const result = await htmlToDocxService(req.params.id);
+    res.set({
+      "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "Content-Disposition": "attachment; filename=article.docx"
+    });
+    return res.send(result);
+  } catch (error) {
+    console.error("Error converting HTML to DOCX:", error);
+    res.status(500).send("Error exporting article to Word file");
+  }
+});
+
+/**
+ * 根据 id 将文章转换成 Markdown 文件
+ */
+router.get("/markdown/:id", async function (req, res) {
+  try {
+    const result = await htmlToMarkdownService(req.params.id);
+    res.set({
+      "Content-Type": "text/markdown",
+      "Content-Disposition": "attachment; filename=article.md"
+    });
+    return res.send(result);
+  } catch (error) {
+    console.error("Error converting HTML to DOCX:", error);
+    res.status(500).send("Error exporting article to Word file");
+  }
 });
 
 module.exports = router;
