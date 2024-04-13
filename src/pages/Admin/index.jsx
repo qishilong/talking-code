@@ -313,19 +313,16 @@ function Admin(props) {
     let value = null;
     worksheet.eachSheet((sheet, index) => {
       value = sheet.getSheetValues();
-      console.log(value, 55);
     });
     const objArr = [];
     const map = new Map();
     value = value.slice(1);
     for (let i = 0, len = value.length; i < len; i++) {
       const curItem = value[i].slice(2);
-      console.log(curItem, 55);
 
       if (i === 0) {
         for (let j = 0, len = curItem.length; j < len; j++) {
           const val = curItem[j] ?? undefined;
-          console.log(val, 44);
 
           switch (val) {
             case "管理员账号（必填，管理员账号不可重复）":
@@ -355,7 +352,6 @@ function Admin(props) {
         for (let j = 0, len = curItem.length; j < len; j++) {
           const curVal = map.get(j);
           const val = curItem[j] ?? undefined;
-          console.log(val, 22);
 
           if (val || typeof val === "boolean") {
             if (curVal[0] !== "permission" && typeof val !== "boolean") {
