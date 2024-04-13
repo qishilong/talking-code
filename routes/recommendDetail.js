@@ -11,8 +11,8 @@ const { formatResponse } = require("../utils/tools");
 
 router.get("/", async (req, res, next) => {
   const result = await getRecommendDetailService();
-  return res.send(formatResponse(0, "", result));
   if (result) {
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -20,8 +20,8 @@ router.get("/", async (req, res, next) => {
 
 router.patch("/update/:id", async (req, res, next) => {
   const result = await updateRecommendDetailService(req.params.id, req.body);
-  return res.send(formatResponse(0, "", result));
   if (result) {
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -29,8 +29,8 @@ router.patch("/update/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   const result = await deleteRecommendDetailService(req.params.id);
-  return res.send(formatResponse(0, "", result));
   if (result) {
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }
@@ -38,8 +38,8 @@ router.delete("/:id", async (req, res, next) => {
 
 router.post("/add", async (req, res, next) => {
   const result = await addRecommendDetailService(req.body);
-  return res.send(formatResponse(0, "", result));
   if (result) {
+    return res.send(formatResponse(0, "", result));
   } else {
     next(result);
   }

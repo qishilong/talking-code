@@ -1,7 +1,7 @@
 const recommendCarouselModel = require("../models/recommendCarouselModel");
 
-module.exports.getRecommendCarouselDao = function () {
-  return recommendCarouselModel.find();
+module.exports.getRecommendCarouselDao = async function () {
+  return await recommendCarouselModel.find();
 };
 
 /**
@@ -9,18 +9,20 @@ module.exports.getRecommendCarouselDao = function () {
  * @param {*} newData
  * @returns
  */
-module.exports.updateRecommendCarouselDao = function (id, newData) {
-  return recommendCarouselModel.findOneAndUpdate(
-    { _id: id },
-    newData,
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.error("Error updating recommend carousel:", err);
-        throw err;
-      }
+module.exports.updateRecommendCarouselDao = async function (id, newData) {
+  try {
+    const res = await recommendCarouselModel.findOneAndUpdate(
+      { _id: id },
+      { $set: newData },
+      { new: true }
+    );
+    if (res) {
+      return res;
     }
-  );
+    throw new Error("更新失败", 500);
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -28,19 +30,26 @@ module.exports.updateRecommendCarouselDao = function (id, newData) {
  * @param {*} newData
  * @returns
  */
-module.exports.deleteRecommendCarouselDao = function (id) {
-  return recommendCarouselModel.findByIdAndDelete(id, (err, doc) => {
-    if (err) {
-      console.error("Error delete recommend carousel:", err);
-      throw err;
+module.exports.deleteRecommendCarouselDao = async function (id) {
+  try {
+    const res = await recommendCarouselModel.findByIdAndDelete(id);
+    if (res) {
+      return res;
     }
-  });
+    throw new Error("删除失败", 500);
+  } catch (error) {
+    throw error;
+  }
 };
 
-module.exports.addRecommendCarouselDao = function (newInfo) {
-  return recommendCarouselModel.create(newInfo, (err, doc) => {
-    if (err) {
-      console.error("新增出错：", err);
+module.exports.addRecommendCarouselDao = async function (newInfo) {
+  try {
+    const res = await recommendCarouselModel.create(newInfo);
+    if (res) {
+      return res;
     }
-  });
+    throw new Error("添加失败", 500);
+  } catch (error) {
+    throw error;
+  }
 };
