@@ -28,3 +28,8 @@
 .ant-card-body img {
   max-width: 800px;
 }
+
+.ant-upload {
+  height: 80px !important;
+  width: 80px !important;
+}

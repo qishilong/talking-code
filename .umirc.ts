@@ -135,6 +135,25 @@ export default defineConfig({
       ]
     },
     {
+      name: "推荐",
+      path: "/recommend",
+      icon: "GiftOutlined",
+      routes: [
+        {
+          path: "recommendList",
+          name: "推荐详情",
+          access: "NormalAdmin",
+          component: "./Recommend"
+        },
+        {
+          path: "editRecommend",
+          name: "修改推荐详情",
+          access: "NormalAdmin",
+          component: "./Recommend/EditRecommend"
+        }
+      ]
+    },
+    {
       name: " 问答",
       path: "/issue",
       icon: "ProfileOutlined",
