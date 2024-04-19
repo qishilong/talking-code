@@ -82,6 +82,14 @@ const noNeedTokenApi = [
   {
     method: "GET",
     path: "/api/user/:id"
+  },
+  {
+    method: "GET",
+    path: "/api/recommendCarousel"
+  },
+  {
+    method: "GET",
+    path: "/api/recommendDetail"
   }
 ];
 
