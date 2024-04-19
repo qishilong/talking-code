@@ -317,8 +317,8 @@ function LoginForm(props) {
       message.success("用户注册成功，新用户默认密码123456");
       setValue(1);
       // 将用户信息存储到数据仓库
-      dispatch(changeLoginStatus(true));
-      dispatch(initUserInfo(result.data));
+      // dispatch(changeLoginStatus(true));
+      // dispatch(initUserInfo(result.data));
       // 注册新用户后实现自动登录
       handleCancel();
     } else {
