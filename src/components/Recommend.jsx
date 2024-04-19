@@ -31,7 +31,7 @@ function Recommend(props) {
         <Carousel autoplay>
           {recommendCarouselData?.map((item, index) => {
             return (
-              <div>
+              <div key={item._id}>
                 <a
                   style={{
                     background: `url(${item.imageUrl}) center/cover no-repeat`
@@ -46,7 +46,6 @@ function Recommend(props) {
           })}
         </Carousel>
       </div>
-
       {recommendDetailData?.map((item, index) => {
         return (
           <RecommendItem
@@ -55,6 +54,7 @@ function Recommend(props) {
               title: item.title,
               href: item.href
             }}
+            key={item._id}
           />
         );
       })}
