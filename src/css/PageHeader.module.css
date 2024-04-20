@@ -1,13 +1,20 @@
 .row {
   display: flex;
   height: 100px;
+  justify-content: center;
+  width: 100%;
+  padding: 0px 60px 0px 20px;
   align-items: center;
   background: linear-gradient(rgb(238, 237, 237), white);
 }
 
 .pageHeader {
   font-size: 26px;
-  margin: 0px 40px 0px 20px;
   color: rgb(102, 102, 102);
   font-weight: 200;
+  min-width: 120px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }

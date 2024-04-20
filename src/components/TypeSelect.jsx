@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTypeList } from "../redux/typeSlice";
 import { useState, useEffect } from "react";
 import { updateStoreIssueTypeId, updateStoreBookTypeId } from "../redux/typeSlice";
+import styles from "../css/TypeSelect.module.css";
 
 function TypeSelect(props) {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function TypeSelect(props) {
     }
   }
 
-  return <div>{tagContainer}</div>;
+  return <div className={styles.tagContainer}>{tagContainer}</div>;
 }
 
 export default TypeSelect;
