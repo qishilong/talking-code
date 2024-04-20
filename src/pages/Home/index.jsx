@@ -144,7 +144,7 @@ const HomePage = () => {
   };
   useEffect(() => {
     run(ref.current);
-  });
+  }, []);
 
   return (
     <PageContainer ghost>
