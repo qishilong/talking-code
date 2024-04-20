@@ -44,7 +44,7 @@ function Personal(props) {
       })
     );
     setIsModalOpen(false);
-    message.success("信息修改成功！");
+    message.success("信息修改成功");
   };
 
   /**
