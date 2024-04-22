@@ -14,11 +14,11 @@ const issueSchema = new mongoose.Schema(
       required: true,
       default: " "
     }, // 问题描述
-    issuePic: {
-      type: String,
-      required: true,
-      default: "#"
-    }, // 问题图片
+    // issuePic: {
+    //   type: String,
+    //   required: true,
+    //   default: "#"
+    // }, // 问题图片
     scanNumber: {
       type: Number,
       required: true,
