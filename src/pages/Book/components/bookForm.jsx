@@ -18,7 +18,6 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
   // 这里需要注意的就是关于有 markdown 编辑器时数据的回填
   useEffect(() => {
     if (formRef.current && firstIn && bookInfo) {
-      formRef.current.setFieldsValue(bookInfo);
       // 关键就是关于编辑器的回填
       editorRef.current.getInstance().setHTML(bookInfo?.bookIntro);
       // 将 firstIn 设置为 false
@@ -202,7 +201,21 @@ function BookForm({ type, bookInfo, setBookInfo, submitHandle }) {
           {type === "add" ? "确认新增" : "修改"}
         </Button>
 
-        <Button type='link' htmlType='submit' className='resetBtn'>
+        <Button
+          type='link'
+          className='resetBtn'
+          onClick={() => {
+            setBookInfo({
+              bookTitle: "",
+              bookIntro: "",
+              downloadLink: "",
+              requirePoints: "",
+              bookPic: "",
+              typeId: ""
+            });
+            editorRef.current.getInstance().setHTML("");
+          }}
+        >
           重置
         </Button>
       </Form.Item>

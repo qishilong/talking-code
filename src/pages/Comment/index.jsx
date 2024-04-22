@@ -227,6 +227,8 @@ function Comment() {
       fixed: "right",
       align: "center",
       render: (_, row, index, action) => {
+        console.log(row, 11);
+
         return [
           <div key={row?._id} className={styles["handle-style"]}>
             <Button type='link' size='small' onClick={() => showModal(row)}>
@@ -252,7 +254,7 @@ function Comment() {
    * 打开修改对话框
    */
   function showModal(row) {
-    setCurrentTitle(commentType === 1 ? title.issueId.issueTitle : title.bookId.bookTitle);
+    setCurrentTitle(commentType === 1 ? row.issueId.issueTitle : row.bookId.bookTitle);
     setCurrentContent(row.commentContent);
     setIsModalOpen(true);
   }

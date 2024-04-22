@@ -4,7 +4,7 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import dayjs from "dayjs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "umi";
 
 function ArticleForm({ type, submitHandle, articleInfo, setArticleInfo }) {
@@ -13,15 +13,18 @@ function ArticleForm({ type, submitHandle, articleInfo, setArticleInfo }) {
   const editorRef = useRef();
   const [firstIn, setFirstIn] = useState(true);
 
-  if (type === "edit") {
-    if (formRef.current && firstIn) {
-      setFirstIn(false);
+  useEffect(() => {
+    // 这里需要注意的就是关于有 markdown 编辑器时数据的回填
+    if (formRef.current && firstIn && articleInfo) {
+      // 关键就是关于编辑器的回填
       editorRef.current.getInstance().setHTML(articleInfo?.articleContent);
+      // 将 firstIn 设置为 false
+      setFirstIn(false);
     }
     if (formRef.current) {
       formRef.current.setFieldsValue(articleInfo);
     }
-  }
+  }, [articleInfo]);
 
   // 从仓库获取类型列表
   const { typeList } = useSelector((state) => state.type);
@@ -129,7 +132,19 @@ function ArticleForm({ type, submitHandle, articleInfo, setArticleInfo }) {
           {type === "add" ? "确认新增" : "修改"}
         </Button>
 
-        <Button type='link' htmlType='submit' className='resetBtn'>
+        <Button
+          type='link'
+          className='resetBtn'
+          onClick={() => {
+            setArticleInfo({
+              articleTitle: "",
+              articleContent: "",
+              onShelfDate: "",
+              typeId: ""
+            });
+            editorRef.current.getInstance().setHTML("");
+          }}
+        >
           重置
         </Button>
       </Form.Item>

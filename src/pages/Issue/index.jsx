@@ -18,7 +18,7 @@ function Issue() {
     pageSize: 10
   });
 
-  const [checkStatus, setCheckStatus] = useState(true);
+  const [checkStatus, setCheckStatus] = useState(null);
 
   const dispatch = useDispatch(); // 获取 dispatch
   const navigate = useNavigate();
