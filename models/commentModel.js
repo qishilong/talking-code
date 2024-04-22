@@ -25,7 +25,7 @@ const commentSchema = new mongoose.Schema(
     commentContent: {
       type: String,
       required: true,
-      default: ""
+      default: " "
     }, // 评论内容
     commentDate: {
       type: String,
