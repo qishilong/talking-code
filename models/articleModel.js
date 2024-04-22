@@ -3,10 +3,22 @@ const mongoose = require("mongoose");
 // 定义对应的 Schema
 const articleSchema = new mongoose.Schema(
   {
-    id: String, // mongodb 自动生成的 id
-    articleTitle: String, // 文章标题
-    articleContent: String, // 文章内容
-    onShelfDate: String, // 上架日期
+    // id: String, // mongodb 自动生成的 id
+    articleTitle: {
+      type: String,
+      required: true,
+      default: " "
+    }, // 文章标题
+    articleContent: {
+      type: String,
+      required: true,
+      default: " "
+    }, // 文章内容
+    onShelfDate: {
+      type: String,
+      required: true,
+      default: String(Date.now())
+    }, // 发布日期
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "typeModel" // 关联的模型

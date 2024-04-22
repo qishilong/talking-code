@@ -3,9 +3,17 @@ const mongoose = require("mongoose");
 // 定义对应的 Schema
 const typeSchema = new mongoose.Schema(
   {
-    id: String, // mongodb 自动生成的 id
-    typeName: String, // 类型名称
-    createTime: String // 注册时间
+    // id: String, // mongodb 自动生成的 id
+    typeName: {
+      type: String,
+      required: true,
+      default: " "
+    }, // 类型名称
+    createTime: {
+      type: String,
+      required: true,
+      default: String(Date.now())
+    } // 创建时间
   },
   {
     versionKey: false

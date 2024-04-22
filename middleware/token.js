@@ -17,15 +17,19 @@ const noNeedTokenApi = [
   },
   {
     method: "GET",
-    path: "/api/article"
-  },
-  {
-    method: "GET",
     path: "/api/article/articleTitle"
   },
   {
     method: "GET",
     path: "/api/article/:id"
+  },
+  {
+    method: "GET",
+    path: "/api/article/markdown/:id"
+  },
+  {
+    method: "GET",
+    path: "/api/article/word/:id"
   },
   {
     method: "GET",
@@ -50,10 +54,6 @@ const noNeedTokenApi = [
   {
     method: "GET",
     path: "/api/issue"
-  },
-  {
-    method: "GET",
-    path: "/api/issue/:id"
   },
   {
     method: "GET",
