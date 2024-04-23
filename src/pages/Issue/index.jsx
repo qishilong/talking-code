@@ -163,7 +163,7 @@ function Issue() {
       title: "用户账号",
       dataIndex: ["userId", "loginId"],
       key: ["userId", "loginId"],
-      width: "5%",
+      width: "10%",
       align: "center",
       search: false,
       render: (val, row) => {
@@ -178,7 +178,7 @@ function Issue() {
       title: "用户昵称",
       dataIndex: ["userId", "nickname"],
       key: ["userId", "nickname"],
-      width: "5%",
+      width: "10%",
       align: "center",
       search: false,
       render: (val, row) => {
@@ -193,7 +193,7 @@ function Issue() {
       title: "问题分类",
       dataIndex: "typeId",
       key: "typeId",
-      width: "5%",
+      width: "10%",
       align: "center",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
@@ -421,7 +421,7 @@ function Issue() {
         params={{ typeId: searchType.typeId, issueStatus: checkStatus }}
         rowKey={(row) => row._id}
         scroll={{
-          x: "2000px"
+          x: "2200px"
         }}
         toolbar={{
           actions: [
