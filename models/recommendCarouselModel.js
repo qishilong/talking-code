@@ -7,14 +7,13 @@ const recommendCarouselSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
       required: true,
-      default:
-        "https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6b4e5c26085400bba154fd522ad29ec~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1920&h=1080&s=624521&e=png&b=09152a"
-    },
+      default: "#"
+    }, // 轮播图图片地址
     href: {
       type: String,
       required: true,
       default: "#"
-    }
+    } // 轮播图跳转链接
   },
   {
     versionKey: false

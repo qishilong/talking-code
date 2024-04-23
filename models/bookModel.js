@@ -42,7 +42,7 @@ const bookSchema = new mongoose.Schema(
     requirePoints: {
       type: Number,
       required: true,
-      default: 100
+      default: 20
     }, // 下载所需积分
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
