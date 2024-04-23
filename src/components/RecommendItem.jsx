@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "antd";
 
 import styles from "../css/RecommendItem.module.css";
 
@@ -11,7 +12,17 @@ function RecommendItem(props) {
       rel='noreferrer'
     >
       <div className={styles.leftSide}>{props?.recommendInfo?.num}</div>
-      <div className={styles.rightSide}>{props?.recommendInfo?.title}</div>
+      <Tooltip
+        title={
+          props?.recommendInfo?.title ? (
+            <div className={styles.tooltipStyles}>{props?.recommendInfo?.title}</div>
+          ) : null
+        }
+        destroyTooltipOnHide={true}
+        color='#fff'
+      >
+        <div className={styles.rightSide}>{props?.recommendInfo?.title}</div>
+      </Tooltip>
     </a>
   );
 }
