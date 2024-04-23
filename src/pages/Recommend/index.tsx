@@ -232,6 +232,9 @@ const Recommend: FC = () => {
         actionRef={carouseRef}
         columns={carouseColumns}
         pagination={undefined}
+        scroll={{
+          x: "1000"
+        }}
         request={async () => {
           const result = await getRecommendCarousel();
           setRecommendCarouselData(result.data);
@@ -250,6 +253,9 @@ const Recommend: FC = () => {
         actionRef={detailRef}
         columns={detailColumns}
         pagination={undefined}
+        scroll={{
+          x: "1000"
+        }}
         request={async () => {
           const result = await getRecommendDetail();
           setRecommendDetailData(result.data);
