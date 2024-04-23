@@ -15,6 +15,7 @@
   font-weight: 500;
   font-size: 16px;
   height: 60px;
+  width: 100%;
   cursor: pointer;
   white-space: nowrap; /* 确保文本在一行显示 */
   overflow: hidden; /* 隐藏超出容器的文本 */

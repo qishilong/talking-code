@@ -4,7 +4,6 @@ import { getTypeList } from "../redux/typeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Tag, message } from "antd";
 import styles from "../css/IssueItem.module.css";
-import { getUserById } from "../api/user";
 import { formatDate } from "../utils/tool";
 import { likeOrDislikeIssueById } from "../api/issue";
 import {
