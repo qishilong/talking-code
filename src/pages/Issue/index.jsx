@@ -421,7 +421,7 @@ function Issue() {
         params={{ typeId: searchType.typeId, issueStatus: checkStatus }}
         rowKey={(row) => row._id}
         scroll={{
-          x: "max-content"
+          x: "2000px"
         }}
         toolbar={{
           actions: [
