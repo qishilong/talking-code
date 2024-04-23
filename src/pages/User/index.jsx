@@ -132,7 +132,7 @@ function User() {
       dataIndex: "points",
       key: "points",
       align: "center",
-      width: "5%",
+      width: "10%",
       render: (val, row) => {
         if (val) {
           return val;
@@ -161,7 +161,7 @@ function User() {
       key: "enabled",
       align: "center",
       search: false,
-      width: "5%",
+      width: "10%",
       render: (_, row, index, action) => {
         const defaultChecked = row.enabled ? true : false;
         return [
@@ -436,6 +436,9 @@ function User() {
                 </span>
               </div>
             ]
+          }}
+          scroll={{
+            x: "max-content"
           }}
           headerTitle='用户列表'
           actionRef={actionRef}

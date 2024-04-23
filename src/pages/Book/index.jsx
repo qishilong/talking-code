@@ -126,7 +126,7 @@ function Book() {
       key: "scanNumber",
       align: "center",
       search: false,
-      width: "5%"
+      width: "10%"
     },
     {
       title: "评论数",
@@ -134,7 +134,7 @@ function Book() {
       key: "commentNumber",
       align: "center",
       search: false,
-      width: "5%"
+      width: "10%"
     },
     {
       title: "书籍分类",
@@ -165,7 +165,7 @@ function Book() {
       key: "onShelfDate",
       align: "center",
       search: false,
-      width: "15%",
+      width: "20%",
       render: (_, row) => {
         return [formatDate(row.onShelfDate)];
       }
@@ -296,6 +296,9 @@ function Book() {
                 </span>
               </div>
             ]
+          }}
+          scroll={{
+            x: "1200"
           }}
           headerTitle='书籍列表'
           actionRef={actionRef}
