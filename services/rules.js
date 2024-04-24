@@ -1,7 +1,7 @@
 const { validate } = require("validate.js");
-const { findAdminByLoginId } = require("../dao/adminDao");
-const { findUserByLoginId } = require("../dao/userDao");
-const { findTypeByTypeName } = require("../dao/typeDao");
+const { findAdminByLoginId } = require("../daos/adminDao");
+const { findUserByLoginId } = require("../daos/userDao");
+const { findTypeByTypeName } = require("../daos/typeDao");
 
 /**
  * 管理员验证规则

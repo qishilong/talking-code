@@ -9,7 +9,7 @@ const {
   findAdminByIdDao,
   updateAdminDao,
   findAdminByLoginId
-} = require("../dao/adminDao");
+} = require("../daos/adminDao");
 const { adminRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
 const { randomAvatar, createXlsx } = require("../utils/tools");
