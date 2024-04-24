@@ -3,65 +3,45 @@ const mongoose = require("mongoose");
 // 定义对应的 Schema
 const userSchema = new mongoose.Schema(
   {
-    // id: String, // mongodb 自动生成的 id
     loginId: {
       type: String,
-      required: true,
-      default: " "
+      required: true
     }, // 账号
     loginPwd: {
-      type: String,
-      required: true,
-      default: "123456"
+      type: String
     }, // 密码
     avatar: {
-      type: String,
-      required: true,
-      default: " "
+      type: String
     }, // 头像
     nickname: {
-      type: String,
-      required: true,
-      default: "新用户"
+      type: String
     }, // 昵称
     mail: {
-      type: String,
-      required: true,
-      default: " "
+      type: String
     }, // 邮箱
     qq: {
-      type: String,
-      required: true,
-      default: " "
+      type: String
     }, // QQ
     wechat: {
-      type: String,
-      required: true,
-      default: " "
+      type: String
     }, // 微信号
     intro: {
-      type: String,
-      required: true,
-      default: " "
+      type: String
     }, // 个人介绍
     registerDate: {
       type: String,
-      required: true,
       default: String(Date.now())
     }, // 注册时间
     lastLoginDate: {
       type: String,
-      required: true,
       default: String(Date.now())
     }, // 上次登录时间
     points: {
       type: Number,
-      required: true,
       default: 100
     }, // 积分
     enabled: {
       type: Boolean,
-      required: true,
       default: true
     } // 是否可用
   },

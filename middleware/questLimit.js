@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   };
   const now = Date.now();
   if (!Number.isInteger(req.session.nums)) {
-    // 如果这时第一次请求，设置请求次数为0
+    // 如果这是第一次请求，设置请求次数为0
     req.session.nums = 0;
   }
   if (!Number.isInteger(req.session.begin)) {

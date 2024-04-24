@@ -3,26 +3,19 @@ const mongoose = require("mongoose");
 // 定义对应的 Schema
 const adminSchema = new mongoose.Schema(
   {
-    // id: String, // mongodb 自动生成的 id
     loginId: {
       type: String,
       required: true,
-      default: " "
+      default: "adminInit"
     }, // 账号
     loginPwd: {
-      type: String,
-      required: true,
-      default: "123123"
+      type: String
     }, // 密码
     nickname: {
-      type: String,
-      required: true,
-      default: "新增管理员"
+      type: String
     }, //昵称
     avatar: {
-      type: String,
-      required: true,
-      default: " "
+      type: String
     }, // 头像
     permission: {
       type: Number,
@@ -31,7 +24,6 @@ const adminSchema = new mongoose.Schema(
     }, // 权限
     enabled: {
       type: Boolean,
-      required: true,
       default: true
     } // 是否可用
   },

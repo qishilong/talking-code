@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 // 定义推荐轮播图的 Schema
 const recommendCarouselSchema = new mongoose.Schema(
   {
-    // id: String,
     imageUrl: {
       type: String,
       required: true,

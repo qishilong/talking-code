@@ -3,50 +3,36 @@ const mongoose = require("mongoose");
 // 定义对应的 Schema
 const issueSchema = new mongoose.Schema(
   {
-    // id: String, // mongodb 自动生成的 id
     issueTitle: {
       type: String,
-      required: true,
-      default: " "
+      required: true
     }, // 问题标题
     issueContent: {
       type: String,
-      required: true,
-      default: " "
+      required: true
     }, // 问题描述
-    // issuePic: {
-    //   type: String,
-    //   required: true,
-    //   default: "#"
-    // }, // 问题图片
     scanNumber: {
       type: Number,
-      required: true,
       default: 0
     }, //	问题浏览量
     commentNumber: {
       type: Number,
-      required: true,
       default: 0
     }, //	评论数
     issueStatus: {
       type: Boolean,
-      required: true,
       default: false
     }, //	问题状态
     issueDate: {
       type: String,
-      required: true,
       default: String(Date.now())
     }, //	问题时间
     issueLike: {
       type: [String],
-      required: true,
       default: []
     }, //	点赞人员
     issueDislike: {
       type: [String],
-      required: true,
       default: []
     }, // 点踩人员
     userId: {

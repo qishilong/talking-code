@@ -5,7 +5,6 @@ const bookModel = require("./bookModel");
 // 定义对应的 Schema
 const commentSchema = new mongoose.Schema(
   {
-    // id: String, // mongodb 自动生成的 id
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "userModel" // 关联的模型
@@ -24,12 +23,10 @@ const commentSchema = new mongoose.Schema(
     }, //  所属分类
     commentContent: {
       type: String,
-      required: true,
-      default: " "
+      required: true
     }, // 评论内容
     commentDate: {
       type: String,
-      required: true,
       default: String(Date.now())
     }, // 评论日期
     commentType: {
@@ -39,12 +36,10 @@ const commentSchema = new mongoose.Schema(
     }, // 评论类型
     commentLike: {
       type: [String],
-      required: true,
       default: []
     }, // 点赞人员
     commentDislike: {
       type: [String],
-      required: true,
       default: []
     } // 点踩人员
   },
