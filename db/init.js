@@ -77,7 +77,6 @@ const md5 = require("md5");
         href: "https://juejin.cn/post/7325719278676901927"
       }
     );
+    console.log("初始化推荐详情数据完毕...");
   }
-
-  console.log("初始化推荐详情数据完毕...");
 })();
