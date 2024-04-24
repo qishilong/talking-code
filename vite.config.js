@@ -9,23 +9,14 @@ export default defineConfig({
       "/api": {
         target: "http://127.0.0.1:1818",
         changeOrigin: true
-        // onProxyReq: (proxyReq, req, res) => {
-        //   proxyReq.setHeader("Authorization", "Bearer " + localStorage.getItem("token"));
-        // }
       },
       "/static": {
         target: "http://127.0.0.1:1818",
         changeOrigin: true
-        // onProxyReq: (proxyReq, req, res) => {
-        //   proxyReq.setHeader("Authorization", "Bearer " + localStorage.getItem("token"));
-        // }
       },
       "/res": {
         target: "http://127.0.0.1:1818",
         changeOrigin: true
-        // onProxyReq: (proxyReq, req, res) => {
-        //   proxyReq.setHeader("Authorization", "Bearer " + localStorage.getItem("token"));
-        // }
       }
     }
   },
