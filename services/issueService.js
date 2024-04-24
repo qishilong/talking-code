@@ -6,7 +6,7 @@ const {
   updateIssueDao,
   searchIssueByPageDao,
   updateIssueLikeOrDislikeDao
-} = require("../dao/issueDao");
+} = require("../daos/issueDao");
 const { validate } = require("validate.js");
 const { issueRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");

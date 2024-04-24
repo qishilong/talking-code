@@ -2,6 +2,7 @@ const { publish, verify } = require("./jwt");
 const { pathToRegexp } = require("path-to-regexp");
 const { ValidationError } = require("../utils/errors");
 
+// 不需要校验token的请求路由
 const noNeedTokenApi = [
   {
     method: "POST",
@@ -99,6 +100,8 @@ module.exports = (req, res, next) => {
     const path = pathToRegexp(item.path);
     return req.method === item.method && path.test(req.path);
   });
+
+  // 说明当前请求路由不需要校验
   if (apis.length > 0) {
     next();
     return;

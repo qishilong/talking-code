@@ -13,7 +13,7 @@ const {
   updateCommentDao,
   deleteManyCommentDao,
   updateCommentLikeOrDislikeDao
-} = require("../dao/commentDao");
+} = require("../daos/commentDao");
 
 const { commentRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");

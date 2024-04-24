@@ -43,7 +43,7 @@ module.exports.findUserByPointsRankDao = async function () {
 };
 
 /**
- * 登录
+ * 用户登录
  * @param {*} 用户输入的账号密码
  * @returns 返回查询到的数据
  */
@@ -53,7 +53,7 @@ module.exports.loginDao = async function ({ loginId, loginPwd }) {
 
 /**
  * 添加新的用户
- * @param {*} newUserInfo 新管理员信息
+ * @param {*} newUserInfo 新用户信息
  * @returns
  */
 module.exports.addUserDao = async function (newUserInfo) {

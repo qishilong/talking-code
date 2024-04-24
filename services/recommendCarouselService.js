@@ -3,7 +3,7 @@ const {
   updateRecommendCarouselDao,
   deleteRecommendCarouselDao,
   addRecommendCarouselDao
-} = require("../dao/recommendCarouselDao");
+} = require("../daos/recommendCarouselDao");
 
 module.exports.getRecommendCarouselService = async function () {
   return await getRecommendCarouselDao();

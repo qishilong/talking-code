@@ -2,6 +2,7 @@ const md5 = require("md5");
 const jwt = require("jsonwebtoken");
 const { validate } = require("validate.js");
 
+// 引用数据访问层定义的方法
 const {
   findUserByPageDao,
   loginDao,
@@ -11,7 +12,7 @@ const {
   updateUserDao,
   findUserByLoginId,
   findUserByPointsRankDao
-} = require("../dao/userDao");
+} = require("../daos/userDao");
 const { userRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
 const { randomAvatar, createXlsx } = require("../utils/tools");

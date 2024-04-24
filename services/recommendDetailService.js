@@ -3,7 +3,7 @@ const {
   updateRecommendDetailDao,
   deleteRecommendDetailDao,
   addRecommendDetailDao
-} = require("../dao/recommendDetailDao");
+} = require("../daos/recommendDetailDao");
 
 module.exports.getRecommendDetailService = async function () {
   return await getRecommendDetailDao();

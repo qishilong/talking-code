@@ -5,7 +5,7 @@ const {
   addArticleDao,
   deleteArticleDao,
   updateArticleDao
-} = require("../dao/articleDao");
+} = require("../daos/articleDao");
 
 const { validate } = require("validate.js");
 const { articleRule } = require("./rules");

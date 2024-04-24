@@ -1,4 +1,4 @@
-const { findAllTypeDao, addTypeDao, deleteTypeDao, updateTypeDao } = require("../dao/typeDao");
+const { findAllTypeDao, addTypeDao, deleteTypeDao, updateTypeDao } = require("../daos/typeDao");
 const { validate } = require("validate.js");
 const { typeRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");

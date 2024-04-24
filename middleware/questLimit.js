@@ -2,10 +2,10 @@ const { formatResponse } = require("../utils/tools");
 
 module.exports = async (req, res, next) => {
   const limitOptions = {
-    duration: 10,
-    nums: 10000,
-    message: "您的请求过于频繁，请稍后再试",
-    limit: 60
+    duration: 10, // 超过请求次数后的禁止访问时间
+    nums: 10000, // 固定时间间隔内最大请求次数
+    message: "您的请求过于频繁，请稍后再试", // 超过最大请求次数后的提示信息
+    limit: 60 // 固定的时间间隔
   };
   const now = Date.now();
   if (!Number.isInteger(req.session.nums)) {
@@ -38,8 +38,11 @@ module.exports = async (req, res, next) => {
     }
   }
 
+  // 此时说明请求次数达到固定时间间隔内的最大值
   if (currentNum === limitOptions.nums) {
+    // 记录当前的请求时间
     req.session.begin = now;
+    // 更新禁止访问时间
     req.session.timeout = limitOptions.duration * 1000;
   }
   await next();

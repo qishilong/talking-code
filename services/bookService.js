@@ -4,8 +4,8 @@ const {
   addBookDao,
   deleteBookDao,
   updateBookDao
-} = require("../dao/bookDao");
-const { findBookCommentByIdDao, deleteCommentDao } = require("../dao/commentDao");
+} = require("../daos/bookDao");
+const { findBookCommentByIdDao, deleteCommentDao } = require("../daos/commentDao");
 const { validate } = require("validate.js");
 const { bookRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
