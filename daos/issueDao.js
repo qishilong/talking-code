@@ -14,7 +14,7 @@ module.exports.findIssueByPageDao = async function (queryObj) {
 
   const queryCondition = {};
   if (queryObj.issueTitle) {
-    // 用户要按照书籍标题进行搜索
+    // 用户要按照问题标题进行搜索
     queryCondition.issueTitle = new RegExp(queryObj.issueTitle, "i");
   }
   if (queryObj.typeId) {
@@ -97,7 +97,9 @@ module.exports.updateIssueDao = async function (id, newInfo) {
  * 根据 id 和 type 新增或减少对应文档的点赞人员或者点踩人员
  */
 module.exports.updateIssueLikeOrDislikeDao = async function (id, params) {
+  // 根据 id 查找文档
   const res = await issueModel.findOne({ _id: id });
+  // 判断是什么类型的事件
   switch (params.type) {
     case "like":
       res.issueLike.push(params.user);
@@ -121,8 +123,10 @@ module.exports.updateIssueLikeOrDislikeDao = async function (id, params) {
       break;
   }
 
+  // 去重逻辑
   res.issueLike = res.issueLike.filter((item, index, arr) => arr.indexOf(item) === index);
   res.issueDislike = res.issueDislike.filter((item, index, arr) => arr.indexOf(item) === index);
 
+  // 更新后保存文档
   return await res.save();
 };

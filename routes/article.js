@@ -75,11 +75,14 @@ router.patch("/:id", async function (req, res) {
  */
 router.get("/word/:id", async function (req, res) {
   try {
+    // 调用业务逻辑层定义的方法
     const result = await htmlToDocxService(req.params.id);
+    // 设置响应头，告诉浏览器，这是个文件流
     res.set({
       "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "Content-Disposition": "attachment; filename=article.docx"
     });
+    // 返回文件流
     return res.send(result);
   } catch (error) {
     console.error("Error converting HTML to DOCX:", error);
