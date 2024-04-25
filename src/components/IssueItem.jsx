@@ -41,6 +41,72 @@ function IssueItem(props) {
   }, [curUserInfo, isLogin]);
 
   const type = typeList.find((item) => item?._id === props?.issueInfo?.typeId);
+
+  const handleLike = async () => {
+    if (!isLogin) {
+      message.info("请先登录");
+      return;
+    }
+    const type = like ? "cancelLike" : "like";
+    const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
+      type: type,
+      user: curUserInfo?.loginId
+    });
+    if (!res) {
+      message.error("操作失败");
+    } else {
+      if (type === "cancelLike") {
+        setLike(false);
+        setLikeNumber((prev) => {
+          return prev - 1;
+        });
+      } else {
+        if (dislike) {
+          setDislikeNumber((prev) => {
+            return prev - 1;
+          });
+        }
+        setLike(true);
+        setDislike(false);
+        setLikeNumber((prev) => {
+          return prev + 1;
+        });
+      }
+    }
+  };
+
+  const handleDislike = async () => {
+    if (!isLogin) {
+      message.info("请先登录");
+      return;
+    }
+    const type = dislike ? "cancelDislike" : "dislike";
+    const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
+      type: type,
+      user: curUserInfo?.loginId
+    });
+    if (!res) {
+      message.error("操作失败");
+    } else {
+      if (type === "cancelDislike") {
+        setDislike(false);
+        setDislikeNumber((prev) => {
+          return prev - 1;
+        });
+      } else {
+        setDislike(true);
+        if (like) {
+          setLikeNumber((prev) => {
+            return prev - 1;
+          });
+        }
+        setLike(false);
+        setDislikeNumber((prev) => {
+          return prev + 1;
+        });
+      }
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.top} onClick={() => navigate(`/issues/${props?.issueInfo?._id}`)}>
@@ -63,38 +129,7 @@ function IssueItem(props) {
             style={{
               cursor: "pointer"
             }}
-            onClick={async () => {
-              if (!isLogin) {
-                message.info("请先登录");
-                return;
-              }
-              const type = like ? "cancelLike" : "like";
-              const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
-                type: type,
-                user: curUserInfo?.loginId
-              });
-              if (!res) {
-                message.error("操作失败");
-              } else {
-                if (type === "cancelLike") {
-                  setLike(false);
-                  setLikeNumber((prev) => {
-                    return prev - 1;
-                  });
-                } else {
-                  if (dislike) {
-                    setDislikeNumber((prev) => {
-                      return prev - 1;
-                    });
-                  }
-                  setLike(true);
-                  setDislike(false);
-                  setLikeNumber((prev) => {
-                    return prev + 1;
-                  });
-                }
-              }
-            }}
+            onClick={handleLike}
           >
             {like ? <LikeFilled /> : <LikeOutlined />}
             {likeNumber}
@@ -104,38 +139,7 @@ function IssueItem(props) {
             style={{
               cursor: "pointer"
             }}
-            onClick={async () => {
-              if (!isLogin) {
-                message.info("请先登录");
-                return;
-              }
-              const type = dislike ? "cancelDislike" : "dislike";
-              const res = await likeOrDislikeIssueById(props?.issueInfo?._id, {
-                type: type,
-                user: curUserInfo?.loginId
-              });
-              if (!res) {
-                message.error("操作失败");
-              } else {
-                if (type === "cancelDislike") {
-                  setDislike(false);
-                  setDislikeNumber((prev) => {
-                    return prev - 1;
-                  });
-                } else {
-                  setDislike(true);
-                  if (like) {
-                    setLikeNumber((prev) => {
-                      return prev - 1;
-                    });
-                  }
-                  setLike(false);
-                  setDislikeNumber((prev) => {
-                    return prev + 1;
-                  });
-                }
-              }
-            }}
+            onClick={handleDislike}
           >
             {dislike ? <DislikeFilled /> : <DislikeOutlined />}
             {dislikeNumber}

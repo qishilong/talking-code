@@ -206,13 +206,7 @@ function LoginForm(props) {
   } else {
     container = (
       <div className={styles.container} key={"register"}>
-        <Form
-          name='basic2'
-          autoComplete='off'
-          ref={registerFormRef}
-          onFinish={registerHandle}
-          // initialValues={registerInfo}
-        >
+        <Form name='basic2' autoComplete='off' ref={registerFormRef} onFinish={registerHandle}>
           <Form.Item
             label='登录账号'
             name='loginId'
@@ -309,20 +303,20 @@ function LoginForm(props) {
    */
   async function registerHandle() {
     const result = await addUser({
-      loginId: registerInfo.loginId,
-      nickname: registerInfo.nickname,
-      captcha: registerInfo.captcha
+      loginId: registerInfo.loginId, // 登录账号
+      nickname: registerInfo.nickname, // 用户昵称
+      captcha: registerInfo.captcha // 验证码
     });
     if (result.data) {
+      // 说明注册成功
       message.success("用户注册成功，新用户默认密码123456");
       setValue(1);
-      // 将用户信息存储到数据仓库
-      // dispatch(changeLoginStatus(true));
-      // dispatch(initUserInfo(result.data));
-      // 注册新用户后实现自动登录
+      // 注册成功，重置注册表单
       handleCancel();
     } else {
+      // 说明注册失败
       message.warning(result.msg);
+      // 刷新验证码
       captchaClickHandle();
     }
   }
@@ -350,10 +344,13 @@ function LoginForm(props) {
         const result = await getUserById(data.data._id);
         dispatch(initUserInfo(result.data));
         dispatch(changeLoginStatus(true));
+        // 重置登录表单
         handleCancel();
       }
     } else {
+      // 说明登录失败
       message.warning(result.msg);
+      // 刷新验证码
       captchaClickHandle();
     }
   }

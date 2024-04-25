@@ -279,6 +279,7 @@ function Personal(props) {
    */
   async function checkPassword() {
     if (passwordInfo.oldpassword) {
+      // 发请求询问旧密码是否输入是否正确
       const { data } = await checkPasswordIsRight(userInfo._id, passwordInfo.oldpassword);
       if (!data) {
         return Promise.reject("密码不正确");
