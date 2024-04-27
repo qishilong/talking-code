@@ -1,7 +1,7 @@
 import { PageContainer } from "@ant-design/pro-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "umi";
+import { useDispatch } from "umi";
 
 import AdminForm from "./components/adminForm";
 
@@ -14,18 +14,8 @@ function AddAdmin(props) {
     permission: 2 // 默认是普通管理员
   });
 
-  const { adminList } = useSelector((state) => state.admin);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!adminList.length) {
-      dispatch({
-        type: "admin/_initAdminList"
-      });
-    }
-  }, [adminList]);
 
   function submitHandle() {
     // 用户点击表单的确认时，要做的事儿

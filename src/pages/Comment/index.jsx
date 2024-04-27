@@ -227,8 +227,6 @@ function Comment() {
       fixed: "right",
       align: "center",
       render: (_, row, index, action) => {
-        console.log(row, 11);
-
         return [
           <div key={row?._id} className={styles["handle-style"]}>
             <Button type='link' size='small' onClick={() => showModal(row)}>
@@ -383,7 +381,7 @@ function Comment() {
         <ProTable
           headerTitle='评论列表'
           scroll={{
-            x: "max-content"
+            x: "1800px"
           }}
           toolbar={{
             actions: [

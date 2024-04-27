@@ -306,14 +306,19 @@ function Admin(props) {
     download("管理员列表.xlsx", res);
   };
 
+  // 读取用户上传的excel文件数据，并且根据excel的数据批量添加用户
   const inputFileChange = async (e) => {
+    // 获取上传的excel文件
     const file = e.target.files[0];
     const workbook = new Workbook();
+    // 读取excel文件数据
     const worksheet = await workbook.xlsx.load(file);
     let value = null;
+    // 取出读取的excel文件数据
     worksheet.eachSheet((sheet, index) => {
       value = sheet.getSheetValues();
     });
+    // 存储excel表格中每行的数据
     const objArr = [];
     const map = new Map();
     value = value.slice(1);
@@ -371,8 +376,10 @@ function Admin(props) {
       }
     }
 
+    // 批量添加用户
     for (const oneInfo of objArr) {
       if (oneInfo?.loginId) {
+        // 触发添加用户事件
         dispatch({
           type: "admin/_addAdmin",
           payload: oneInfo

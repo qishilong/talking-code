@@ -355,8 +355,10 @@ function Issue() {
     }
   }
 
+  // 导出为excel文件
   const handleExport = async () => {
     const workbook = new Workbook();
+    // 创建excel表格
     const worksheet = workbook.addWorksheet("问题列表");
     worksheet.columns = [
       { header: "问题ID", key: "_id", width: 50 },
@@ -375,6 +377,7 @@ function Issue() {
       { header: "问题状态", key: "issueStatus", width: 20 }
     ];
 
+    // 得到表格格式的数据
     const bookData = allIssueData.map((item) => {
       if (item.issueContent) {
         // 在表格中显示问题简介时，过滤掉 html 标签
@@ -404,11 +407,14 @@ function Issue() {
       };
     });
 
+    // 将数据填充到创建的表格中
     worksheet.addRows(bookData);
 
+    // 将表格数据转换为Buffer格式
     const arraybuffer = new ArrayBuffer(10 * 1024 * 1024);
     const res = await workbook.xlsx.writeBuffer(arraybuffer);
 
+    // 下载表格
     download("问题列表.xlsx", res);
   };
 
@@ -457,6 +463,7 @@ function Issue() {
         }}
         request={async (params) => {
           const result = await IssueController.getIssueByPage(params);
+          // 存储后端返回的所有问题数据
           setAllIssueData(result.data.allData);
           return {
             data: result.data.data,
