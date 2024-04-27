@@ -72,14 +72,18 @@ function Discuss(props) {
 
   function onSubmit() {
     let newComment = null;
+    let editorContent = "editor";
     if (props.commentType === 1) {
       // 新增问答评论
       newComment = editorRef?.current.getInstance().getHTML();
+      // 去掉newComment里的html标签
+      editorContent = newComment.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, "");
     } else if (props.commentType === 2) {
       // 新增书籍评论
       newComment = value;
     }
-    if (!newComment) {
+
+    if (!newComment || !editorContent) {
       message.warning("请输入评论内容");
       return;
     } else {

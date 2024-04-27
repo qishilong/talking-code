@@ -15,7 +15,6 @@ import styles from "../css/LoginAvatar.module.css";
 function LoginAvatar(props) {
   const navigate = useNavigate();
   const { isLogin, userInfo } = useSelector((state) => state?.user);
-  // console.log(isLogin,'isLogin');
   const dispatch = useDispatch();
 
   let loginStatus = null;

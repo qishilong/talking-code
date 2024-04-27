@@ -17,10 +17,7 @@ export default class ErrorBoundary extends Component {
     };
   }
 
-  componentDidCatch(error, errorInfo) {
-    // console.log('error:', error);
-    // console.log('errorInfo:', errorInfo);
-  }
+  componentDidCatch(error, errorInfo) {}
 
   countDown() {
     setTimeout(() => {
