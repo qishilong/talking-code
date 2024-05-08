@@ -19,10 +19,12 @@
     "antd": "^5.4.0",
     "exceljs": "^4.4.0",
     "install": "^0.13.0",
+    "lodash-es": "^4.17.21",
     "npm": "^9.1.2",
     "react-canvas-nest": "^1.1.1"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "happypack": "^5.0.1",

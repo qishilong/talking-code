@@ -54,7 +54,7 @@ const Recommend: FC = () => {
       width: "5%",
       search: false,
       render: (text: any, record: any, index: number) => {
-        return index;
+        return index + 1;
       }
     },
     {
@@ -145,7 +145,7 @@ const Recommend: FC = () => {
       width: "5%",
       search: false,
       render: (text: any, record: any, index: number) => {
-        return index;
+        return index + 1;
       }
     },
     {

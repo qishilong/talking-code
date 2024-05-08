@@ -1,28 +1,31 @@
 import { getRecommendCarousel } from "@/services/recommendCarousel";
 import { PageContainer } from "@ant-design/pro-components";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DesItem from "./components/DesItem";
 import styles from "./edit.module.less";
 
 interface RecommendCarouselProps {
   imageUrl: string;
   href: string;
-  _id: string;
+  curIndex: number;
+  _id?: string;
 }
 
 const EditRecommend: FC = () => {
   const [recommendCarouselData, setRecommendCarouselData] = useState<RecommendCarouselProps[]>();
+  const [renderList, setRenderList] = useState<boolean>(false);
+
+  const fn = useCallback(async () => {
+    const res = await getRecommendCarousel();
+    if (res.code === 0) {
+      setRecommendCarouselData(res.data);
+    }
+  }, []);
 
   useEffect(() => {
-    const Fn = async () => {
-      const res = await getRecommendCarousel();
-      if (res.code === 0) {
-        setRecommendCarouselData(res.data);
-      }
-    };
-    Fn();
-  }, []);
+    fn();
+  }, [renderList]);
   return (
     <PageContainer
       style={{
@@ -35,7 +38,16 @@ const EditRecommend: FC = () => {
           <div className={styles.container}>
             {recommendCarouselData?.map((item, index) => {
               return (
-                <DesItem imageUrl={item.imageUrl} href={item.href} key={item._id} index={index} />
+                <DesItem
+                  imageUrl={item.imageUrl}
+                  href={item.href}
+                  key={item._id}
+                  index={index}
+                  setRenderList={setRenderList}
+                  canAdd={recommendCarouselData.length < 10}
+                  _id={item._id}
+                  canDel={recommendCarouselData.length > 1}
+                />
               );
             })}
           </div>
