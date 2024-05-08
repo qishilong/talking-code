@@ -1,7 +1,8 @@
 const recommendCarouselModel = require("../models/recommendCarouselModel");
+const mongoose = require("mongoose");
 
 module.exports.getRecommendCarouselDao = async function () {
-  return await recommendCarouselModel.find();
+  return await recommendCarouselModel.find().sort({ curIndex: 1 });
 };
 
 /**
@@ -32,6 +33,15 @@ module.exports.updateRecommendCarouselDao = async function (id, newData) {
  */
 module.exports.deleteRecommendCarouselDao = async function (id) {
   try {
+    const allData = await recommendCarouselModel.find().sort({ curIndex: 1 });
+    const newData = allData.slice(allData.findIndex((item) => String(item._id) === id) + 1);
+    for (const item of newData) {
+      await recommendCarouselModel.findByIdAndUpdate(
+        item._id,
+        { $inc: { curIndex: -1 } },
+        { new: true }
+      );
+    }
     const res = await recommendCarouselModel.findByIdAndDelete(id);
     if (res) {
       return res;
@@ -42,8 +52,24 @@ module.exports.deleteRecommendCarouselDao = async function (id) {
   }
 };
 
+/**
+ * 新增
+ * @param {*} newInfo
+ * @returns
+ */
 module.exports.addRecommendCarouselDao = async function (newInfo) {
   try {
+    const curIndex = newInfo.curIndex;
+    const allData = await recommendCarouselModel.find().sort({ curIndex: 1 });
+    for (const item of allData) {
+      if (item.curIndex >= curIndex) {
+        await recommendCarouselModel.findByIdAndUpdate(
+          item._id,
+          { $inc: { curIndex: 1 } },
+          { new: true }
+        );
+      }
+    }
     const res = await recommendCarouselModel.create(newInfo);
     if (res) {
       return res;

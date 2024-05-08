@@ -12,7 +12,11 @@ const recommendCarouselSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: "#"
-    } // 轮播图跳转链接
+    }, // 轮播图跳转链接
+    curIndex: {
+      type: Number,
+      require: true
+    } // 当前轮播图的位置
   },
   {
     versionKey: false

@@ -12,5 +12,9 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // 监听
 mongoose.connection.on("connected", function () {
-  console.log(`talkingcode 数据库已经连接...`);
+  console.log(`${process.env.DB_NAME} 数据库已经连接...`);
+});
+
+mongoose.connection.on("disconnected", function () {
+  console.log(`${process.env.DB_NAME} 数据库断开链接`);
 });

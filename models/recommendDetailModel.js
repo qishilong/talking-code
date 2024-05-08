@@ -7,12 +7,16 @@ const recommendDetailSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: "默认推荐标题"
-    }, // 推荐详情标题
+    }, // 推荐列表标题
     href: {
       type: String,
       required: true,
       default: "#"
-    } // 推荐详情链接
+    }, // 推荐列表链接
+    curIndex: {
+      type: Number,
+      require: true
+    } // 当前推荐列表的位置
   },
   {
     versionKey: false
