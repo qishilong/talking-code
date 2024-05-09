@@ -1,7 +1,7 @@
 const recommendDetailModel = require("../models/recommendDetailModel");
 
 module.exports.getRecommendDetailDao = async function () {
-  return await recommendDetailModel.find();
+  return await recommendDetailModel.find().sort({ curIndex: 1 });
 };
 
 /**
@@ -32,6 +32,15 @@ module.exports.updateRecommendDetailDao = async function (id, newData) {
  */
 module.exports.deleteRecommendDetailDao = async function (id) {
   try {
+    const allData = await recommendDetailModel.find().sort({ curIndex: 1 });
+    const newData = allData.slice(allData.findIndex((item) => String(item._id) === id) + 1);
+    for (const item of newData) {
+      await recommendDetailModel.findByIdAndUpdate(
+        item._id,
+        { $inc: { curIndex: -1 } },
+        { new: true }
+      );
+    }
     const res = await recommendDetailModel.findByIdAndDelete(id);
     if (res) {
       return res;
@@ -44,6 +53,17 @@ module.exports.deleteRecommendDetailDao = async function (id) {
 
 module.exports.addRecommendDetailDao = async function (newInfo) {
   try {
+    const curIndex = newInfo.curIndex;
+    const allData = await recommendDetailModel.find().sort({ curIndex: 1 });
+    for (const item of allData) {
+      if (item.curIndex >= curIndex) {
+        await recommendDetailModel.findByIdAndUpdate(
+          item._id,
+          { $inc: { curIndex: 1 } },
+          { new: true }
+        );
+      }
+    }
     const res = await recommendDetailModel.create(newInfo);
     if (res) {
       return res;
