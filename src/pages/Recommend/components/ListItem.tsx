@@ -50,6 +50,8 @@ const ListItem: FC<ListItemProps> = ({
                   title: titleVal,
                   href: hrefVal
                 };
+                console.log(newData, originRef.current, isEqual(newData, originRef.current), 11);
+
                 if (isEqual(newData, originRef.current)) {
                   setEditStatus(false);
                 } else {
@@ -57,6 +59,7 @@ const ListItem: FC<ListItemProps> = ({
                     const res = await updateRecommendDetail(_id, newData);
                     if (res.code === 0) {
                       setEditStatus(false);
+                      originRef.current = newData;
                       message.success("更新成功");
                     } else {
                       message.error("更新失败");

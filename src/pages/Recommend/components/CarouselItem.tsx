@@ -76,6 +76,7 @@ const DesItem: FC<CarouselItemProps> = ({
                     const res = await updateRecommendCarousel(_id, newData);
                     if (res.code === 0) {
                       setEditStatus(false);
+                      originRef.current = newData;
                       message.success("更新成功");
                     } else {
                       message.error("更新失败");
