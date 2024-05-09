@@ -9,23 +9,23 @@ import { Button, Image, Input, Tooltip, message } from "antd";
 import { isEqual } from "lodash-es";
 import type { ChangeEvent, Dispatch, FC, SetStateAction } from "react";
 import { useRef, useState } from "react";
-import styles from "./desItem.module.less";
+import styles from "./carouselItem.module.less";
 
-interface DesItemProps {
+interface CarouselItemProps {
   imageUrl: string;
   href: string;
   _id?: string;
-  index: number;
-  setRenderList: Dispatch<SetStateAction<boolean>>;
+  curIndex: number;
+  setRenderCarouselList: Dispatch<SetStateAction<boolean>>;
   canAdd: boolean;
   canDel: boolean;
 }
 
-const DesItem: FC<DesItemProps> = ({
+const DesItem: FC<CarouselItemProps> = ({
   imageUrl,
   href,
-  index,
-  setRenderList,
+  curIndex,
+  setRenderCarouselList,
   canAdd,
   _id,
   canDel
@@ -98,14 +98,14 @@ const DesItem: FC<DesItemProps> = ({
                 const newData = {
                   imageUrl: "#",
                   href: "#",
-                  curIndex: index + 2
+                  curIndex: curIndex + 1
                 };
                 try {
                   const res = await addRecommendCarousel(newData);
 
                   if (res.code === 0) {
                     message.success("新增成功");
-                    setRenderList((prev) => !prev);
+                    setRenderCarouselList((prev) => !prev);
                   } else {
                     message.error("新增失败");
                   }
@@ -132,7 +132,7 @@ const DesItem: FC<DesItemProps> = ({
                   const res = await deleteRecommendCarousel(_id);
                   if (res.code === 0) {
                     message.success("删除成功");
-                    setRenderList((prev) => !prev);
+                    setRenderCarouselList((prev) => !prev);
                   } else {
                     message.error("删除失败");
                   }
@@ -153,7 +153,7 @@ const DesItem: FC<DesItemProps> = ({
         </div>
       </div>
       <div className={styles.content}>
-        <span className={styles.index}>{index + 1}</span>
+        <span className={styles.index}>{curIndex}</span>
         <div className={styles.right}>
           <div className={styles.avatar}>
             <div className={styles["image-text"]}>图片</div>
