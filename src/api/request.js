@@ -3,7 +3,7 @@ import { message } from "antd";
 
 // 创建一个axios实例
 const service = axios.create({
-  timeout: 5000 // 超时时间
+  timeout: 30000 // 超时时间
 });
 
 // 请求拦截器
