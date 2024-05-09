@@ -62,7 +62,7 @@ export const layout = () => {
 };
 
 export const request: RequestConfig = {
-  timeout: 3000,
+  timeout: 30000,
   // 请求拦截器
   requestInterceptors: [
     function (url: any, options: any) {
