@@ -126,7 +126,7 @@ function Book() {
       key: "scanNumber",
       align: "center",
       search: false,
-      width: "10%"
+      width: "5%"
     },
     {
       title: "评论数",
@@ -134,14 +134,14 @@ function Book() {
       key: "commentNumber",
       align: "center",
       search: false,
-      width: "10%"
+      width: "5%"
     },
     {
       title: "书籍分类",
       dataIndex: "typeId",
       key: "typeId",
       align: "center",
-      width: "10%",
+      width: "15%",
       renderFormItem: (item, { type, defaultRender, formItemProps, fieldProps, ...rest }, form) => {
         return (
           <Select placeholder='请选择查询分类' onChange={handleChange} allowClear>
@@ -298,7 +298,7 @@ function Book() {
             ]
           }}
           scroll={{
-            x: "1200"
+            x: "1400px"
           }}
           headerTitle='书籍列表'
           actionRef={actionRef}
