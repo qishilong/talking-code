@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "umi";
 
 // 请求方法
 import IssueController from "@/services/issue";
+import UserController from "@/services/user";
 
 import styles from "./index.module.less";
 
@@ -344,9 +345,17 @@ function Issue() {
     const res = await IssueController.editIssue(row._id, {
       issueStatus: value
     });
+
     if (res.code === 0) {
       if (value) {
-        message.success("该问题审核已通过");
+        const userId = row.userId._id;
+        const { data: userData } = await UserController.getUserById(userId);
+        const userRes = await UserController.editUser(userId, { points: userData.points + 8 });
+        if (userRes.code === 0) {
+          message.success("该问题审核已通过，该用户积分+8");
+        } else {
+          message.success("该问题审核已通过");
+        }
       } else {
         message.info("该问题待审核");
       }
