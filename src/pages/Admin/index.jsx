@@ -306,7 +306,7 @@ function Admin(props) {
     download("管理员列表.xlsx", res);
   };
 
-  // 读取用户上传的excel文件数据，并且根据excel的数据批量添加用户
+  // 读取管理员上传的excel文件数据，并且根据excel的数据批量添加管理员
   const inputFileChange = async (e) => {
     // 获取上传的excel文件
     const file = e.target.files[0];
@@ -376,10 +376,10 @@ function Admin(props) {
       }
     }
 
-    // 批量添加用户
+    // 批量添加管理员
     for (const oneInfo of objArr) {
       if (oneInfo?.loginId) {
-        // 触发添加用户事件
+        // 触发添加管理员事件
         dispatch({
           type: "admin/_addAdmin",
           payload: oneInfo
